@@ -674,7 +674,7 @@
     </button>
     <button class="sound-toggle" id="homeSound" data-app="sound" aria-pressed="false"></button>
     <p class="page-note" id="soundNote"></p>
-    <p class="page-links"><a href="about.html" data-page="about.html" data-t="사이트 소개">사이트 소개</a> <a href="privacy.html" data-page="privacy.html" data-t="개인정보처리방침">개인정보처리방침</a></p>
+    <p class="page-links"><a href="about.html" data-page="about.html" data-t="사이트 소개">사이트 소개</a> <a href="privacy.html" data-page="privacy.html" data-t="개인정보처리방침">개인정보처리방침</a> <a href="guide-en.html" data-guide data-t="외국인용 키오스크 안내">외국인용 키오스크 안내</a></p>
   </section>
 
   <!-- ===== 미션 목록 ===== -->
@@ -687,7 +687,7 @@
     <h1 id="missionTitle" tabindex="-1" data-t="🎯 미션 모드">🎯 미션 모드</h1>
     <p class="page-sub" data-t="미션을 골라 그대로 해 보세요. 막히면 '💡 도움말'을 누르면 다음에 누를 곳이 반짝여요.">미션을 골라 그대로 해 보세요. 막히면 '💡 도움말'을 누르면 다음에 누를 곳이 반짝여요.</p>
     <div id="missionList" class="mission-group-list"></div>
-    <p class="page-links"><a href="about.html" data-page="about.html" data-t="사이트 소개">사이트 소개</a> <a href="privacy.html" data-page="privacy.html" data-t="개인정보처리방침">개인정보처리방침</a></p>
+    <p class="page-links"><a href="about.html" data-page="about.html" data-t="사이트 소개">사이트 소개</a> <a href="privacy.html" data-page="privacy.html" data-t="개인정보처리방침">개인정보처리방침</a> <a href="guide-en.html" data-guide data-t="외국인용 키오스크 안내">외국인용 키오스크 안내</a></p>
   </section>
 
   <!-- ===== 연습 화면 ===== -->
@@ -743,11 +743,12 @@
    번역이 없으면 한국어가 그대로 나옵니다.
    ===================================================================== */
 const LANGS = [
-  { id: 'ko', name: '한국어', code: 'KO', speech: 'ko-KR', locale: 'ko-KR', flag: 'kr' },
-  { id: 'en', name: 'English', code: 'EN', speech: 'en-US', locale: 'en-US', flag: 'us' },
-  { id: 'ja', name: '日本語', code: 'JA', speech: 'ja-JP', locale: 'ja-JP', flag: 'jp' },
-  { id: 'zh-Hans', name: '简体中文', code: '简', speech: 'zh-CN', locale: 'zh-CN', flag: 'cn' },
-  { id: 'zh-Hant', name: '繁體中文', code: '繁', speech: 'zh-TW', locale: 'zh-TW', flag: 'tw' },
+  // guide: 외국인용 키오스크 안내 페이지 (한국어 화면에서는 영어 안내로 연결)
+  { id: 'ko', name: '한국어', code: 'KO', speech: 'ko-KR', locale: 'ko-KR', flag: 'kr', guide: 'guide-en.html' },
+  { id: 'en', name: 'English', code: 'EN', speech: 'en-US', locale: 'en-US', flag: 'us', guide: 'guide-en.html' },
+  { id: 'ja', name: '日本語', code: 'JA', speech: 'ja-JP', locale: 'ja-JP', flag: 'jp', guide: 'guide-ja.html' },
+  { id: 'zh-Hans', name: '简体中文', code: '简', speech: 'zh-CN', locale: 'zh-CN', flag: 'cn', guide: 'guide-zh-hans.html' },
+  { id: 'zh-Hant', name: '繁體中文', code: '繁', speech: 'zh-TW', locale: 'zh-TW', flag: 'tw', guide: 'guide-zh-hant.html' },
 ];
 
 // 한국어 문장(값이 들어가는 것) — 다른 언어는 언어 묶음의 m에 같은 이름으로 둠
@@ -1438,6 +1439,7 @@ addLang('en', {
     "정해진 주문·접수를 그대로 해 봐요": "Follow a given order or check-in exactly",
     "사이트 소개": "About",
     "개인정보처리방침": "Privacy policy",
+    "외국인용 키오스크 안내": "Korean kiosk guide",
     "🎯 미션 모드": "🎯 Mission mode",
     "미션을 골라 그대로 해 보세요. 막히면 '💡 도움말'을 누르면 다음에 누를 곳이 반짝여요.": "Pick a mission and do exactly what it says. If you get stuck, tap '💡 Help' and the next spot to tap will flash.",
     "지금 할 일": "What to do",
@@ -2045,6 +2047,7 @@ addLang('ja', {
     "정해진 주문·접수를 그대로 해 봐요": "決められた注文・受付をそのとおりにやってみよう",
     "사이트 소개": "サイト紹介",
     "개인정보처리방침": "プライバシーポリシー",
+    "외국인용 키오스크 안내": "韓国キオスクの使い方",
     "🎯 미션 모드": "🎯 ミッションモード",
     "미션을 골라 그대로 해 보세요. 막히면 '💡 도움말'을 누르면 다음에 누를 곳이 반짝여요.": "ミッションを選んで、そのとおりにやってみましょう。困ったら「💡 ヘルプ」を押すと、次に押す所が光ります。",
     "지금 할 일": "やること",
@@ -2652,6 +2655,7 @@ addLang('zh-Hans', {
     "정해진 주문·접수를 그대로 해 봐요": "按照指定内容点餐或挂号",
     "사이트 소개": "网站介绍",
     "개인정보처리방침": "隐私政策",
+    "외국인용 키오스크 안내": "韩国自助机使用指南",
     "🎯 미션 모드": "🎯 任务模式",
     "미션을 골라 그대로 해 보세요. 막히면 '💡 도움말'을 누르면 다음에 누를 곳이 반짝여요.": "选择任务并照着做。遇到困难时点“💡 帮助”,下一步要点的地方就会闪烁。",
     "지금 할 일": "现在要做",
@@ -3259,6 +3263,7 @@ addLang('zh-Hant', {
     "정해진 주문·접수를 그대로 해 봐요": "照著指定內容點餐或掛號",
     "사이트 소개": "網站介紹",
     "개인정보처리방침": "隱私權政策",
+    "외국인용 키오스크 안내": "韓國自助機使用指南",
     "🎯 미션 모드": "🎯 任務模式",
     "미션을 골라 그대로 해 보세요. 막히면 '💡 도움말'을 누르면 다음에 누를 곳이 반짝여요.": "選擇任務並照著做。遇到困難時點「💡 幫助」,下一步要點的地方就會閃爍。",
     "지금 할 일": "現在要做",
@@ -6177,6 +6182,11 @@ function leavePractice(to) {
   app.practice = null;
   app.mission = null;
   document.documentElement.style.removeProperty('--lang-accent');
+  // 안내 페이지에서 바로 들어온 경우(?practice=cafe) 주소에서 지워 둠
+  try {
+    const url = new URL(location.href);
+    if (url.searchParams.has('practice')) { url.searchParams.delete('practice'); history.replaceState(null, '', url); }
+  } catch (e) { /* 주소를 못 바꿔도 화면은 바뀜 */ }
   showView(dest);
 }
 
@@ -6206,6 +6216,7 @@ function applyStatic() {
   $$('[data-ta]').forEach(el => { el.setAttribute('aria-label', T(el.dataset.ta)); });
   const keepLang = lang !== 'ko' || new URLSearchParams(location.search).has('lang');
   $$('a[data-page]').forEach(a => { a.href = a.dataset.page + (keepLang ? `?lang=${lang}` : ''); });
+  $$('a[data-guide]').forEach(a => { a.href = curLang().guide; });
   $$('.lang-flag').forEach(el => { el.innerHTML = flagSVG(curLang().flag); });
   $$('.lang-cur').forEach(el => { el.textContent = curLang().name; });
   $$('.lang-code').forEach(el => { el.textContent = curLang().code; });
@@ -6293,6 +6304,9 @@ lang = detectLang();
 applyStatic();
 if (speech.supported && 'onvoiceschanged' in window.speechSynthesis) window.speechSynthesis.onvoiceschanged = () => {};
 showView('home');
+// 안내 페이지의 '직접 해 보기' 버튼: ?practice=cafe 처럼 들어오면 그 연습을 바로 시작
+const directPractice = new URLSearchParams(location.search).get('practice');
+if (directPractice && PRACTICES[directPractice]) startPractice(directPractice);
 </script>
 </body>
 </html>

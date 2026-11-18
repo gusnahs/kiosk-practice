@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>韓國自助機使用方法:咖啡店、速食店和醫院</title>
+<meta name="description" content="用簡單的方式說明在韓國自助機點餐和付款的步驟,並整理畫面上會出現的韓文。可以用中文免費練習自助機,不需要註冊,也不會真的付款。">
+<link rel="canonical" href="https://gusnahs.github.io/kiosk-practice/guide-zh-hant.html">
+<link rel="alternate" hreflang="en" href="https://gusnahs.github.io/kiosk-practice/guide-en.html">
+<link rel="alternate" hreflang="ja" href="https://gusnahs.github.io/kiosk-practice/guide-ja.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://gusnahs.github.io/kiosk-practice/guide-zh-hans.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://gusnahs.github.io/kiosk-practice/guide-zh-hant.html">
+<link rel="alternate" hreflang="x-default" href="https://gusnahs.github.io/kiosk-practice/guide-en.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="韓國自助機使用方法:咖啡店、速食店和醫院">
+<meta property="og:description" content="用簡單的方式說明在韓國自助機點餐和付款的步驟,並整理畫面上會出現的韓文。可以用中文免費練習自助機,不需要註冊,也不會真的付款。">
+<meta name="theme-color" content="#3F3A36">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%86%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    color-scheme: light;
+    --page: #EEE8E1;
+    --paper: #FFFFFF;
+    --ink: #1C1917;
+    --muted: #57534E;
+    --line: #E4DDD4;
+    --soft: #F7F3EE;
+    --accent: #4338CA;
+    --accent-soft: #EEF0FF;
+    --ok: #15803D;
+    --ok-soft: #ECFDF3;
+    --ok-line: #86C99B;
+    --guide: #FFE27A;
+    --guide-line: #E2BC3C;
+    --focus: #2563EB;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+    font-size: 20px;
+    line-height: 1.7;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+  html:lang(ja) body { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Meiryo", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"; line-break: strict; }
+  html:lang(zh-Hans) body { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"; line-break: strict; }
+  html:lang(zh-Hant) body { font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"; line-break: strict; }
+  [lang="ko"] { font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif; word-break: keep-all; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+  h1, h2, h3, p, ul, ol, dl, dd { margin: 0; }
+
+  .wrap { width: min(100%, 820px); margin: 0 auto; padding: 16px 16px 40px; }
+  .back { display: inline-flex; align-items: center; min-height: 52px; padding: 0 18px; background: #fff; border: 2px solid #CFC7BD; border-radius: 14px; color: var(--ink); font-size: 20px; font-weight: 800; text-decoration: none; }
+  .langs { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .langs a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 14px; background: #fff; border: 2px solid #CFC7BD; border-radius: 999px; color: var(--ink); font-size: 20px; font-weight: 800; text-decoration: none; }
+  .langs a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .doc { margin-top: 14px; padding: 28px 28px 32px; background: var(--paper); border-radius: 22px; box-shadow: 0 6px 20px rgba(40, 25, 10, .08); }
+  .hero { text-align: center; }
+  .hero-emoji { font-size: 56px; line-height: 1.1; }
+  h1 { margin-top: 6px; font-size: 32px; line-height: 1.3; font-weight: 900; }
+  .lead { margin-top: 12px; font-size: 22px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 60px; padding: 8px 22px; background: var(--accent); border-radius: 16px; color: #fff; font-size: 21px; font-weight: 900; line-height: 1.3; text-align: center; text-decoration: none; }
+  .btn.big { margin-top: 18px; min-height: 64px; font-size: 23px; }
+  .tries { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .box { margin-top: 24px; padding: 16px 20px; border-radius: 16px; }
+  .box h2 { padding: 0; border: none; font-size: 23px; }
+  .box ul { margin-top: 8px; padding-left: 1.2em; display: flex; flex-direction: column; gap: 8px; }
+  .box.tips { background: var(--ok-soft); border: 3px solid var(--ok-line); }
+  .toc { margin-top: 22px; padding: 16px 20px; background: var(--soft); border-radius: 16px; }
+  .toc p { font-weight: 800; }
+  .toc ol { margin-top: 6px; padding-left: 1.4em; }
+
+  section { margin-top: 36px; scroll-margin-top: 16px; }
+  h2 { padding-bottom: 6px; border-bottom: 2px solid var(--line); font-size: 25px; line-height: 1.4; font-weight: 900; }
+  h3 { margin-top: 20px; font-size: 22px; font-weight: 900; }
+  section > p, section > ul, section > ol, section > dl, section > table { margin-top: 12px; }
+  section ul, section ol { padding-left: 1.3em; display: flex; flex-direction: column; gap: 8px; }
+  .note { margin-top: 12px; color: var(--muted); }
+
+  .steps { list-style: none; padding: 0 !important; counter-reset: step; }
+  .steps li { position: relative; padding: 14px 16px 14px 64px; background: var(--soft); border-radius: 16px; counter-increment: step; }
+  .steps li::before { content: counter(step); position: absolute; left: 14px; top: 14px; width: 38px; height: 38px; display: grid; place-items: center; background: var(--accent); border-radius: 50%; color: #fff; font-weight: 900; }
+  .steps b { display: block; font-size: 22px; }
+  .hint-box { display: inline-block; padding: 0 8px; background: var(--guide); border: 2px solid var(--guide-line); border-radius: 8px; font-weight: 800; }
+
+  table { width: 100%; border-collapse: collapse; }
+  caption { padding: 4px 0 8px; text-align: left; font-size: 22px; font-weight: 900; }
+  th, td { padding: 8px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+  thead th { background: var(--soft); font-weight: 800; }
+  td.ko { font-weight: 900; font-size: 22px; white-space: nowrap; }
+  td.sound { color: var(--muted); }
+  .words table + table { margin-top: 18px; }
+
+  .faq dt { margin-top: 14px; font-weight: 900; }
+  .faq dt:first-child { margin-top: 0; }
+  .faq dt::before { content: 'Q. '; color: var(--accent); }
+  .faq dd { margin-top: 2px; }
+  .practice { padding: 20px; background: var(--accent-soft); border-radius: 18px; text-align: center; }
+  .practice h2 { border: none; padding: 0; }
+  .practice p { margin-top: 10px; }
+
+  .foot { margin-top: 22px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 10px 10px 32px; }
+    .doc { padding: 22px 14px 26px; border-radius: 18px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 23px; }
+    .lead { font-size: 21px; }
+    .steps li { padding: 12px 12px 12px 56px; }
+    .steps li::before { left: 10px; width: 34px; height: 34px; }
+    th, td { padding: 6px 5px; }
+    td.ko { font-size: 20px; white-space: normal; word-break: keep-all; overflow-wrap: normal; }
+    thead th { white-space: nowrap; }
+    .tries .btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="./?lang=zh-Hant">← 韓國自助機練習</a>
+  <nav class="langs" aria-label="語言 · Language">
+    <a href="guide-en.html" lang="en">English</a>
+    <a href="guide-ja.html" lang="ja">日本語</a>
+    <a href="guide-zh-hans.html" lang="zh-Hans">简体中文</a>
+    <a href="guide-zh-hant.html" lang="zh-Hant" aria-current="page">繁體中文</a>
+  </nav>
+
+  <main class="doc">
+    <article>
+      <header class="hero">
+        <div class="hero-emoji" aria-hidden="true">👆</div>
+        <h1>韓國自助機使用方法</h1>
+        <p class="lead">在韓國,咖啡店、漢堡店甚至醫院都在用觸控式自助機。這份指南會說明操作步驟和畫面上的韓文,讓您安心點餐。</p>
+        <a class="btn big" href="./?lang=zh-Hant">去練習一下</a>
+      </header>
+
+      <div class="box tips">
+        <h2>先了解這5件事</h2>
+        <ul>
+        <li><b>找找語言按鈕。</b>很多自助機(尤其是大型連鎖店)的開始畫面有語言按鈕。請在畫面角落找「English」「Language」「<span lang="ko">언어</span>」或地球圖示🌐。也有沒有語言按鈕的自助機,這時下面的單字表就很好用。</li>
+        <li><b>刷卡付款最方便。</b>很多自助機只能刷卡。想付現金的話,請到櫃檯詢問。</li>
+        <li><b>海外信用卡通常能用,但不一定。</b>Visa和Mastercard普遍可用。如果卡片被拒絕,可以換一張卡,或到櫃檯點餐。</li>
+        <li><b>畫面提示前不要拔卡。</b>依照插卡口旁的圖示插卡,等到出現「<span lang="ko">카드를 빼 주세요</span>」(請拔卡)再拔出。</li>
+        <li><b>隨時可以返回。</b>大多數畫面都有「<span lang="ko">이전</span>」(返回)和「<span lang="ko">처음으로</span>」(回到開頭)。遇到困難時,可以對附近的店員說「<span lang="ko">도와주세요</span>」(dowajuseyo,請幫幫我)。</li>
+        </ul>
+      </div>
+
+      <nav class="toc" aria-label="目錄">
+        <p>目錄</p>
+        <ol>
+        <li><a href="#cafe">在咖啡店點餐</a></li>
+        <li><a href="#burger">在漢堡店點餐</a></li>
+        <li><a href="#hospital">醫院的自助機</a></li>
+        <li><a href="#words">自助機上的韓文</a></li>
+        <li><a href="#phrases">實用短句</a></li>
+        <li><a href="#trouble">遇到問題時</a></li>
+        </ol>
+      </nav>
+
+      <section id="cafe">
+        <h2>1. 在咖啡店點餐</h2>
+        <p>咖啡店的自助機大多照相同的順序操作。按鈕上的韓文寫在括號裡。</p>
+        <ol class="steps">
+        <li><b>點螢幕開始</b>點開始畫面的任何地方,或點「<span lang="ko">주문하기</span>」(點餐)按鈕。</li>
+        <li><b>選擇內用或外帶</b>「<span lang="ko">매장</span>」是內用,「<span lang="ko">포장</span>」是外帶。有的自助機會在最後才問。</li>
+        <li><b>選擇飲料</b>菜單分成「<span lang="ko">커피</span>」(咖啡)、「<span lang="ko">음료</span>」(飲料)、「<span lang="ko">디저트</span>」(甜點)等分頁。寫著「<span lang="ko">품절</span>」的是已售完。</li>
+        <li><b>選擇選項</b>會跳出選擇HOT(<span lang="ko">따뜻한</span>)或ICE(<span lang="ko">차가운</span>)、大小、加濃縮(<span lang="ko">샷 추가</span>)、糖漿等的視窗。標有「<span lang="ko">필수</span>」(必選)的一定要選。最後點「<span lang="ko">담기</span>」(加入購物車)。</li>
+        <li><b>確認訂單並付款</b>點「<span lang="ko">결제하기</span>」(付款)。如果問到集點(<span lang="ko">적립</span>)或優惠券而您不需要,點「<span lang="ko">건너뛰기</span>」(略過)或「<span lang="ko">안 함</span>」。跳出甜點推薦時,點「<span lang="ko">필요 없어요</span>」或「<span lang="ko">선택 안 함</span>」就能拒絕。</li>
+        <li><b>刷卡付款</b>選擇「<span lang="ko">카드 결제</span>」(刷卡付款),插卡後等待。如果問到分期(<span lang="ko">할부</span>),請選「<span lang="ko">일시불</span>」(一次付清)。</li>
+        <li><b>取得收據和訂單號碼</b>選擇是否列印收據(<span lang="ko">영수증 출력</span>)。記住訂單號碼(<span lang="ko">주문번호</span>),做好後會顯示在螢幕上或叫號。</li>
+        </ol>
+        <div class="tries"><a class="btn" href="./?lang=zh-Hant&amp;practice=cafe">☕ 練習在咖啡店點餐</a></div>
+      </section>
+
+      <section id="burger">
+        <h2>2. 在漢堡店點餐</h2>
+        <p>速食店的自助機主要多了和套餐有關的選擇。</p>
+        <ol class="steps">
+        <li><b>單點還是套餐</b>「<span lang="ko">단품</span>」是只要漢堡,「<span lang="ko">세트</span>」是含附餐(<span lang="ko">사이드</span>)和飲料(<span lang="ko">음료</span>)的套餐。有的店還有大份套餐(<span lang="ko">라지 세트</span>、<span lang="ko">큰 세트</span>)。</li>
+        <li><b>選擇附餐和飲料</b>通常預設是薯條(<span lang="ko">감자튀김</span>)和可樂(<span lang="ko">콜라</span>)。需要加價的選項,按鈕上會寫差價。</li>
+        <li><b>想換配料時</b>找「<span lang="ko">재료 변경</span>」或「<span lang="ko">재료 바꾸기</span>」之類的按鈕。「<span lang="ko">빼기</span>」是不要(例如<span lang="ko">양파 빼기</span>=不要洋蔥),「<span lang="ko">추가</span>」是加。</li>
+        <li><b>拒絕額外推薦</b>加入漢堡後,常會跳出甜點或升級推薦。點「<span lang="ko">선택 안 함</span>」(不選)或「<span lang="ko">아니요</span>」(不要)就能略過。</li>
+        <li><b>付款後等號碼</b>和咖啡店一樣刷卡付款。外帶的話看取餐螢幕,號碼從「<span lang="ko">준비 중</span>」(製作中)移到「<span lang="ko">완료</span>」或「<span lang="ko">준비 완료</span>」(完成)時去取。有的店會給呼叫器(<span lang="ko">진동벨</span>),可能要在自助機輸入呼叫器號碼,呼叫器震動時到櫃檯取餐。</li>
+        </ol>
+        <div class="tries"><a class="btn" href="./?lang=zh-Hant&amp;practice=burger">🍔 練習在漢堡店點餐</a></div>
+      </section>
+
+      <section id="hospital">
+        <h2>3. 醫院的自助機</h2>
+        <p>韓國的醫院和診所常有掛號(<span lang="ko">접수</span>)、繳費(<span lang="ko">수납</span>)和列印文件(<span lang="ko">증명서 발급</span>)的自助機。從國外來的朋友請注意以下幾點:</p>
+        <ul>
+        <li><b>請帶好證件。</b>韓國醫院會確認身分,請帶護照或外國人登錄證(<span lang="ko">외국인등록증</span>)。</li>
+        <li><b>第一次去的醫院請到櫃檯。</b>自助機常要求輸入韓國的登記號碼,或出生日期和手機號碼。第一次去的醫院,在掛號櫃檯(<span lang="ko">원무과</span>、<span lang="ko">접수</span>)登記會比較簡單。</li>
+        <li><b>複診和繳費用自助機很方便。</b>登記之後,就能在自助機上掛號、付款和列印文件。</li>
+        <li><b>處方箋要拿到藥局。</b>處方箋(<span lang="ko">처방전</span>)在藥局(<span lang="ko">약국</span>)使用。在韓國通常從開立日起3天內有效,請確認上面印的日期。</li>
+        <li><b>緊急情況請撥119。</b>旅客可以撥打韓國旅遊諮詢熱線1330,取得中文諮詢和翻譯協助。</li>
+        </ul>
+        <h3>掛號自助機的一般流程</h3>
+        <ol class="steps">
+        <li>在開始畫面選擇「<span lang="ko">접수</span>」(掛號)。</li>
+        <li>選擇初診(<span lang="ko">처음 방문</span>、<span lang="ko">초진</span>)或複診(<span lang="ko">재진</span>)。</li>
+        <li>輸入號碼或掃描證件,進行身分確認(<span lang="ko">본인 확인</span>)。</li>
+        <li>選擇症狀或科別(<span lang="ko">진료과</span>),例如<span lang="ko">내과</span>(內科)。</li>
+        <li>確認資料後領取號碼牌(<span lang="ko">번호표</span>),等待叫號。</li>
+        </ol>
+        <div class="tries">
+          <a class="btn" href="./?lang=zh-Hant&amp;practice=reception">🏥 練習掛號</a>
+          <a class="btn" href="./?lang=zh-Hant&amp;practice=payment">🧾 練習繳費</a>
+          <a class="btn" href="./?lang=zh-Hant&amp;practice=certificate">📄 練習列印文件</a>
+        </div>
+      </section>
+
+      <section id="words" class="words">
+        <h2>4. 自助機上的韓文</h2>
+        <p>不會讀韓文也能用自助機,只要認得幾個字就好。「讀音」欄是大概的發音(羅馬拼音)。</p>
+      <table>
+        <caption>基本按鈕</caption>
+        <thead><tr><th scope="col">韓文</th><th scope="col">讀音</th><th scope="col">意思</th></tr></thead>
+        <tbody>
+          <tr><td class="ko" lang="ko">처음으로</td><td class="sound">cheoeumeuro</td><td>回到開頭(第一個畫面)</td></tr>
+          <tr><td class="ko" lang="ko">이전</td><td class="sound">ijeon</td><td>返回</td></tr>
+          <tr><td class="ko" lang="ko">다음</td><td class="sound">daeum</td><td>下一步</td></tr>
+          <tr><td class="ko" lang="ko">확인</td><td class="sound">hwagin</td><td>確認</td></tr>
+          <tr><td class="ko" lang="ko">취소</td><td class="sound">chwiso</td><td>取消</td></tr>
+          <tr><td class="ko" lang="ko">선택</td><td class="sound">seontaek</td><td>選擇·可選</td></tr>
+          <tr><td class="ko" lang="ko">필수</td><td class="sound">pilsu</td><td>必選</td></tr>
+          <tr><td class="ko" lang="ko">언어</td><td class="sound">eoneo</td><td>語言</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>點餐</caption>
+        <thead><tr><th scope="col">韓文</th><th scope="col">讀音</th><th scope="col">意思</th></tr></thead>
+        <tbody>
+          <tr><td class="ko" lang="ko">주문하기</td><td class="sound">jumunhagi</td><td>點餐</td></tr>
+          <tr><td class="ko" lang="ko">매장</td><td class="sound">maejang</td><td>內用</td></tr>
+          <tr><td class="ko" lang="ko">포장</td><td class="sound">pojang</td><td>外帶</td></tr>
+          <tr><td class="ko" lang="ko">담기</td><td class="sound">damgi</td><td>加入購物車</td></tr>
+          <tr><td class="ko" lang="ko">장바구니</td><td class="sound">jangbaguni</td><td>購物車</td></tr>
+          <tr><td class="ko" lang="ko">수량</td><td class="sound">suryang</td><td>數量</td></tr>
+          <tr><td class="ko" lang="ko">품절</td><td class="sound">pumjeol</td><td>售完</td></tr>
+          <tr><td class="ko" lang="ko">단품</td><td class="sound">danpum</td><td>單點</td></tr>
+          <tr><td class="ko" lang="ko">세트</td><td class="sound">seteu</td><td>套餐(含附餐和飲料)</td></tr>
+          <tr><td class="ko" lang="ko">사이드</td><td class="sound">saideu</td><td>附餐</td></tr>
+          <tr><td class="ko" lang="ko">음료</td><td class="sound">eumnyo</td><td>飲料</td></tr>
+          <tr><td class="ko" lang="ko">따뜻한</td><td class="sound">ttatteutan</td><td>熱</td></tr>
+          <tr><td class="ko" lang="ko">차가운</td><td class="sound">chagaun</td><td>冰·冷</td></tr>
+          <tr><td class="ko" lang="ko">얼음</td><td class="sound">eoreum</td><td>冰塊</td></tr>
+          <tr><td class="ko" lang="ko">추가</td><td class="sound">chuga</td><td>加·添加</td></tr>
+          <tr><td class="ko" lang="ko">빼기</td><td class="sound">ppaegi</td><td>不要·去掉</td></tr>
+          <tr><td class="ko" lang="ko">주문번호</td><td class="sound">jumun beonho</td><td>訂單號碼</td></tr>
+          <tr><td class="ko" lang="ko">진동벨</td><td class="sound">jindongbel</td><td>呼叫器</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>付款</caption>
+        <thead><tr><th scope="col">韓文</th><th scope="col">讀音</th><th scope="col">意思</th></tr></thead>
+        <tbody>
+          <tr><td class="ko" lang="ko">결제하기</td><td class="sound">gyeoljehagi</td><td>付款</td></tr>
+          <tr><td class="ko" lang="ko">카드 결제</td><td class="sound">kadeu gyeolje</td><td>刷卡付款</td></tr>
+          <tr><td class="ko" lang="ko">간편결제</td><td class="sound">ganpyeon gyeolje</td><td>行動支付(掃碼·App)</td></tr>
+          <tr><td class="ko" lang="ko">현금</td><td class="sound">hyeongeum</td><td>現金</td></tr>
+          <tr><td class="ko" lang="ko">일시불</td><td class="sound">ilsibul</td><td>一次付清</td></tr>
+          <tr><td class="ko" lang="ko">할부</td><td class="sound">halbu</td><td>分期</td></tr>
+          <tr><td class="ko" lang="ko">적립</td><td class="sound">jeongnip</td><td>集點</td></tr>
+          <tr><td class="ko" lang="ko">건너뛰기</td><td class="sound">geonneottwigi</td><td>略過</td></tr>
+          <tr><td class="ko" lang="ko">쿠폰</td><td class="sound">kupon</td><td>優惠券</td></tr>
+          <tr><td class="ko" lang="ko">영수증 출력</td><td class="sound">yeongsujeung chullyeok</td><td>列印收據</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>醫院</caption>
+        <thead><tr><th scope="col">韓文</th><th scope="col">讀音</th><th scope="col">意思</th></tr></thead>
+        <tbody>
+          <tr><td class="ko" lang="ko">접수</td><td class="sound">jeopsu</td><td>掛號</td></tr>
+          <tr><td class="ko" lang="ko">수납</td><td class="sound">sunap</td><td>繳費</td></tr>
+          <tr><td class="ko" lang="ko">진료과</td><td class="sound">jillyogwa</td><td>科別</td></tr>
+          <tr><td class="ko" lang="ko">처방전</td><td class="sound">cheobangjeon</td><td>處方箋</td></tr>
+          <tr><td class="ko" lang="ko">약국</td><td class="sound">yakguk</td><td>藥局</td></tr>
+          <tr><td class="ko" lang="ko">증명서 발급</td><td class="sound">jeungmyeongseo balgeup</td><td>列印證明</td></tr>
+          <tr><td class="ko" lang="ko">번호표</td><td class="sound">beonhopyo</td><td>號碼牌</td></tr>
+          <tr><td class="ko" lang="ko">본인 확인</td><td class="sound">bonin hwagin</td><td>身分確認</td></tr>
+          <tr><td class="ko" lang="ko">신분증</td><td class="sound">sinbunjeung</td><td>身分證件</td></tr>
+          <tr><td class="ko" lang="ko">외국인등록증</td><td class="sound">oegugin deungnokjeung</td><td>外國人登錄證</td></tr>
+        </tbody>
+      </table>
+      </section>
+
+      <section id="phrases">
+        <h2>5. 實用短句</h2>
+        <p>需要幫忙時,這些簡短的話在哪家店都能用。</p>
+        <table>
+          <thead><tr><th scope="col">韓文</th><th scope="col">讀音</th><th scope="col">意思</th></tr></thead>
+          <tbody>
+          <tr><td class="ko" lang="ko">도와주세요.</td><td class="sound">dowajuseyo</td><td>請幫幫我。</td></tr>
+          <tr><td class="ko" lang="ko">카드 돼요?</td><td class="sound">kadeu dwaeyo?</td><td>可以刷卡嗎?</td></tr>
+          <tr><td class="ko" lang="ko">현금 돼요?</td><td class="sound">hyeongeum dwaeyo?</td><td>可以付現金嗎?</td></tr>
+          <tr><td class="ko" lang="ko">포장이요.</td><td class="sound">pojang-iyo</td><td>我要外帶。</td></tr>
+          <tr><td class="ko" lang="ko">중국어 메뉴 있어요?</td><td class="sound">junggugeo menyu isseoyo?</td><td>有中文菜單嗎?</td></tr>
+          <tr><td class="ko" lang="ko">카드가 안 돼요.</td><td class="sound">kadeuga an dwaeyo</td><td>我的卡不能用。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="trouble">
+        <h2>6. 遇到問題時</h2>
+        <dl class="faq">
+        <dt>卡片被拒絕了。</dt>
+        <dd>有的自助機只能用韓國的卡。請換一張卡,或到櫃檯點餐付款。</dd>
+        <dt>找不到中文。</dt>
+        <dd>有的自助機沒有語言按鈕。請參考上面的單字表,或請店員幫忙。</dd>
+        <dt>要我輸入電話號碼。</dt>
+        <dd>這通常是用來集點(<span lang="ko">적립</span>)的。點「<span lang="ko">건너뛰기</span>」或「<span lang="ko">안 함</span>」就能略過。</dd>
+        <dt>選錯了。</dt>
+        <dd>用「<span lang="ko">이전</span>」(返回)或「<span lang="ko">처음으로</span>」(回到開頭)。在購物車裡可以用「<span lang="ko">삭제</span>」或「<span lang="ko">빼기</span>」刪除。</dd>
+        <dt>畫面回到了開頭。</dt>
+        <dd>一段時間沒有操作,自助機就會回到開頭。重新開始就好。</dd>
+        </dl>
+      </section>
+
+      <section class="practice" aria-labelledby="practice-title">
+        <h2 id="practice-title">出發前先練習</h2>
+        <p>用我們的免費自助機練習,可以用中文一步一步體驗咖啡店、漢堡店和醫院的自助機。不需要註冊,也不會真的點餐或付款。黃色的「現在要做」框會告訴您下一步要點哪裡。</p>
+        <a class="btn big" href="./?lang=zh-Hant">開始練習</a>
+        <p class="note">練習中的店家和醫院名稱都是虛構的。真實的自助機樣子略有不同,但步驟大多相同。</p>
+      </section>
+    </article>
+  </main>
+
+  <p class="foot">
+    <a class="back" href="./?lang=zh-Hant">← 韓國自助機練習</a>
+    <a class="back" href="about.html?lang=zh-Hant">網站介紹</a>
+    <a class="back" href="privacy.html?lang=zh-Hant">隱私權政策</a>
+  </p>
+</div>
+</body>
+</html>
