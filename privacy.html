@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>개인정보처리방침 · 키오스크 연습</title>
+<meta name="description" content="키오스크 연습 사이트의 개인정보처리방침입니다. 회원가입이 없고 개인정보를 받지 않으며, 미션 기록은 이용자 기기의 브라우저에만 저장됩니다.">
+<meta name="theme-color" content="#3F3A36">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%86%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    color-scheme: light;
+    --page: #EEE8E1;
+    --paper: #FFFFFF;
+    --ink: #1C1917;
+    --muted: #57534E;
+    --line: #E4DDD4;
+    --soft: #F7F3EE;
+    --accent: #4338CA;
+    --accent-soft: #EEF0FF;
+    --ok-soft: #ECFDF3;
+    --ok-line: #86C99B;
+    --focus: #2563EB;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", "Noto Sans KR", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+    font-size: 20px;
+    line-height: 1.7;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+  h1, h2, h3, p, ul, ol { margin: 0; }
+
+  .wrap { width: min(100%, 780px); margin: 0 auto; padding: 16px 16px 40px; }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 52px;
+    padding: 0 18px;
+    background: #fff;
+    border: 2px solid #CFC7BD;
+    border-radius: 14px;
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .doc { margin-top: 14px; padding: 28px 28px 32px; background: var(--paper); border-radius: 22px; box-shadow: 0 6px 20px rgba(40, 25, 10, .08); }
+  h1 { font-size: 32px; line-height: 1.3; font-weight: 900; }
+  .date { margin-top: 6px; color: var(--muted); }
+  .lead { margin-top: 18px; }
+
+  .summary { margin-top: 22px; padding: 18px 20px; background: var(--ok-soft); border: 3px solid var(--ok-line); border-radius: 18px; }
+  .summary h2 { margin: 0 0 8px; padding: 0; border: none; font-size: 23px; }
+  .summary ul { padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; }
+  .summary li::marker { content: '✓  '; color: #15803D; font-weight: 900; }
+
+  .toc { margin-top: 22px; padding: 16px 20px; background: var(--soft); border-radius: 16px; }
+  .toc p { font-weight: 800; }
+  .toc ol { margin-top: 6px; padding-left: 1.4em; }
+
+  section { margin-top: 30px; scroll-margin-top: 16px; }
+  h2 { padding-bottom: 6px; border-bottom: 2px solid var(--line); font-size: 24px; line-height: 1.4; font-weight: 900; }
+  section > p, section > ul, section > ol, section > .box, section > table { margin-top: 10px; }
+  section ul, section ol { padding-left: 1.3em; display: flex; flex-direction: column; gap: 4px; }
+  .box { padding: 14px 18px; background: var(--soft); border-radius: 14px; }
+  .box.ad { background: var(--accent-soft); }
+  .note { color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+  th { width: 34%; background: var(--soft); font-weight: 800; }
+
+  .foot { margin-top: 22px; text-align: center; }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 10px 10px 32px; }
+    .doc { padding: 20px 16px 24px; border-radius: 18px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 22px; }
+    th, td { padding: 8px; }
+    th { width: 38%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="./">← 키오스크 연습으로</a>
+
+  <main class="doc">
+    <h1>개인정보처리방침</h1>
+    <p class="date">시행일: 2026년 11월 19일</p>
+
+    <p class="lead">
+      키오스크 연습(<a href="https://gusnahs.github.io/kiosk-practice/">https://gusnahs.github.io/kiosk-practice/</a>, 이하 ‘이 사이트’)은
+      「개인정보 보호법」을 지키며, 이용자가 안심하고 연습할 수 있도록 다음과 같이 개인정보처리방침을 둡니다.
+    </p>
+
+    <div class="summary">
+      <h2>쉽게 요약하면</h2>
+      <ul>
+        <li>회원가입이나 로그인이 없어요.</li>
+        <li>이름, 전화번호, 카드 번호 같은 정보를 받지 않아요. 연습 화면의 번호는 모두 연습용이에요.</li>
+        <li>미션 성공 기록은 이 기기의 브라우저에만 저장되고, 어디로도 보내지 않아요.</li>
+        <li>광고를 넣게 되면 Google이 쿠키를 쓸 수 있어요. 끄는 방법은 아래 4번에 있어요.</li>
+      </ul>
+    </div>
+
+    <nav class="toc" aria-label="목차">
+      <p>목차</p>
+      <ol>
+        <li><a href="#s1">받는 개인정보와 이용 목적</a></li>
+        <li><a href="#s2">이용자 기기에 저장하는 정보</a></li>
+        <li><a href="#s3">사이트 운영에 쓰는 외부 서비스</a></li>
+        <li><a href="#s4">광고와 쿠키</a></li>
+        <li><a href="#s5">제3자 제공과 처리 위탁</a></li>
+        <li><a href="#s6">보유 기간과 파기</a></li>
+        <li><a href="#s7">이용자의 권리와 행사 방법</a></li>
+        <li><a href="#s8">안전성 확보 조치</a></li>
+        <li><a href="#s9">개인정보 보호책임자와 문의</a></li>
+        <li><a href="#s10">권익 침해 구제 방법</a></li>
+        <li><a href="#s11">처리방침의 변경</a></li>
+      </ol>
+    </nav>
+
+    <section id="s1" aria-labelledby="h1-1">
+      <h2 id="h1-1">1. 받는 개인정보와 이용 목적</h2>
+      <p>이 사이트는 회원가입·로그인 기능이 없으며, 이용자에게 개인정보를 직접 받거나 서버에 저장하지 않습니다.</p>
+      <ul>
+        <li>연습 중 누르는 생년월일, 휴대폰 번호 뒷자리, 진동벨 번호는 화면에 보여 주는 <b>연습용 번호</b>입니다. 연습용 번호와 다른 숫자는 입력되지 않으며, 누른 번호는 저장하거나 보내지 않습니다.</li>
+        <li>카드, 신분증, 모바일 건강보험증은 그림을 누르는 흉내일 뿐이며 실제 정보를 읽지 않습니다.</li>
+        <li>연습 화면에 나오는 이름, 진료 기록, 처방전, 영수증은 모두 꾸며 낸 예시입니다.</li>
+      </ul>
+    </section>
+
+    <section id="s2" aria-labelledby="h1-2">
+      <h2 id="h1-2">2. 이용자 기기에 저장하는 정보</h2>
+      <table>
+        <tbody>
+          <tr><th scope="row">저장하는 것</th><td>성공한 미션 목록 (예: ‘아이스 아메리카노 1잔 포장 주문하기’를 성공했다는 표시)</td></tr>
+          <tr><th scope="row">저장하는 곳</th><td>이용자 기기의 브라우저 저장 공간(localStorage). 이 사이트나 다른 곳으로 보내지 않습니다.</td></tr>
+          <tr><th scope="row">이유</th><td>미션 목록에 ‘✓ 성공’ 표시를 보여 주기 위해서</td></tr>
+          <tr><th scope="row">보관 기간</th><td>이용자가 지울 때까지</td></tr>
+          <tr><th scope="row">지우는 방법</th><td>브라우저 설정에서 ‘인터넷 사용 기록 삭제’ 또는 ‘사이트 데이터 삭제’를 하면 지워집니다.</td></tr>
+        </tbody>
+      </table>
+      <p class="note">이 정보만으로는 누구인지 알 수 없습니다. ‘소리 켜기’ 설정은 저장하지 않습니다.</p>
+    </section>
+
+    <section id="s3" aria-labelledby="h1-3">
+      <h2 id="h1-3">3. 사이트 운영에 쓰는 외부 서비스</h2>
+      <ul>
+        <li>
+          <b>GitHub Pages (GitHub, Inc.) — 사이트 호스팅</b><br>
+          이 사이트는 GitHub Pages에 올려 두었습니다. 방문하면 GitHub가 보안을 위해 방문자의 IP 주소를 기록하고 보관할 수 있습니다.
+          자세한 내용은 <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub 개인정보 처리방침</a>을 참고해 주세요.
+        </li>
+        <li>
+          <b>브라우저의 음성 읽기 기능 — ‘소리로 읽어 주기’</b><br>
+          이용자가 소리를 켜면 브라우저에 들어 있는 음성 기능이 화면의 안내 문장을 읽습니다. 이 사이트는 따로 정보를 보내지 않지만,
+          브라우저나 기기에 따라 안내 문장을 음성 서비스로 보내 소리로 바꿀 수 있습니다. 이때 보내지는 것은 화면의 안내 문장뿐입니다.
+        </li>
+      </ul>
+    </section>
+
+    <section id="s4" aria-labelledby="h1-4">
+      <h2 id="h1-4">4. 광고와 쿠키</h2>
+      <p>이 사이트는 운영비를 마련하기 위해 Google AdSense 광고를 게재할 수 있습니다. <span class="note">(시행일 현재는 광고를 게재하지 않습니다.)</span> 광고를 게재하면 다음과 같이 쿠키가 쓰입니다.</p>
+      <div class="box ad">
+        <ul>
+          <li>Google을 비롯한 제3자 공급업체는 쿠키를 사용해, 이용자가 이 사이트나 다른 웹사이트를 방문한 기록을 바탕으로 광고를 게재합니다.</li>
+          <li>Google은 광고 쿠키를 사용해, Google과 파트너가 이 사이트와 다른 사이트 방문 기록을 바탕으로 이용자에게 광고를 보여 줄 수 있게 합니다.</li>
+          <li>맞춤 광고를 원하지 않으면 <a href="https://adssettings.google.com/" target="_blank" rel="noopener">Google 광고 설정</a>에서 끌 수 있습니다.</li>
+          <li><a href="https://www.aboutads.info/" target="_blank" rel="noopener">www.aboutads.info</a>에서 제3자 공급업체의 맞춤 광고용 쿠키를 거부할 수도 있습니다.</li>
+          <li>Google이 정보를 쓰는 방법은 <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Google 파트너 사이트 정보 이용 안내</a>에서 볼 수 있습니다.</li>
+        </ul>
+      </div>
+      <p><b>쿠키 거부 방법:</b> 브라우저 설정에서 쿠키 저장을 막을 수 있습니다. 이 사이트의 연습 기능은 쿠키가 없어도 그대로 쓸 수 있습니다.</p>
+      <p class="note">광고를 실제로 게재하기 시작하면 이 방침의 시행일과 내용을 고쳐 이 페이지에 알립니다.</p>
+    </section>
+
+    <section id="s5" aria-labelledby="h1-5">
+      <h2 id="h1-5">5. 제3자 제공과 처리 위탁</h2>
+      <p>이 사이트는 개인정보를 받지 않으므로, 개인정보를 제3자에게 제공하거나 처리를 위탁하지 않습니다. 사이트 운영에 쓰는 외부 서비스는 3번과 4번에 적었습니다.</p>
+    </section>
+
+    <section id="s6" aria-labelledby="h1-6">
+      <h2 id="h1-6">6. 보유 기간과 파기</h2>
+      <p>이 사이트가 보관하는 개인정보는 없습니다. 이용자 기기에 저장된 미션 기록은 2번의 방법으로 이용자가 직접 지울 수 있습니다.</p>
+    </section>
+
+    <section id="s7" aria-labelledby="h1-7">
+      <h2 id="h1-7">7. 이용자의 권리와 행사 방법</h2>
+      <p>이용자는 언제든지 개인정보 열람, 정정, 삭제, 처리 정지를 요구할 수 있습니다. 이 사이트는 개인정보를 보관하지 않지만, 궁금한 점이나 요청은 9번의 문의처로 알려 주시면 성실히 답하겠습니다.</p>
+    </section>
+
+    <section id="s8" aria-labelledby="h1-8">
+      <h2 id="h1-8">8. 안전성 확보 조치</h2>
+      <ul>
+        <li>처음부터 개인정보를 받거나 저장하지 않도록 만들었습니다.</li>
+        <li>사이트는 암호화된 연결(HTTPS)로만 제공합니다.</li>
+      </ul>
+    </section>
+
+    <section id="s9" aria-labelledby="h1-9">
+      <h2 id="h1-9">9. 개인정보 보호책임자와 문의</h2>
+      <table>
+        <tbody>
+          <tr><th scope="row">보호책임자</th><td>키오스크 연습 운영자</td></tr>
+          <tr><th scope="row">문의처</th><td><a href="https://github.com/gusnahs/kiosk-practice/issues" target="_blank" rel="noopener">GitHub 문의 게시판</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="s10" aria-labelledby="h1-10">
+      <h2 id="h1-10">10. 권익 침해 구제 방법</h2>
+      <p>개인정보 침해로 상담이나 도움이 필요하면 아래 기관에 문의할 수 있습니다.</p>
+      <ul>
+        <li>개인정보분쟁조정위원회: 1833-6972 (<a href="https://www.kopico.go.kr" target="_blank" rel="noopener">www.kopico.go.kr</a>)</li>
+        <li>개인정보침해신고센터: 국번 없이 118 (<a href="https://privacy.kisa.or.kr" target="_blank" rel="noopener">privacy.kisa.or.kr</a>)</li>
+        <li>대검찰청: 국번 없이 1301 (<a href="https://www.spo.go.kr" target="_blank" rel="noopener">www.spo.go.kr</a>)</li>
+        <li>경찰청: 국번 없이 182 (<a href="https://ecrm.police.go.kr" target="_blank" rel="noopener">ecrm.police.go.kr</a>)</li>
+      </ul>
+    </section>
+
+    <section id="s11" aria-labelledby="h1-11">
+      <h2 id="h1-11">11. 처리방침의 변경</h2>
+      <p>이 방침은 2026년 11월 19일부터 적용합니다. 내용이 바뀌면 이 페이지에 시행일과 함께 알립니다.</p>
+    </section>
+  </main>
+
+  <p class="foot"><a class="back" href="./">← 키오스크 연습으로</a></p>
+</div>
+</body>
+</html>

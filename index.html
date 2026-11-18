@@ -122,6 +122,9 @@
   .sound-toggle[aria-pressed="true"] { background: #ECFDF3; border-color: var(--ok); color: #14532D; }
   .sound-toggle:disabled { opacity: .5; cursor: default; }
   .page-note { font-size: 20px; color: var(--muted); text-align: center; }
+  .page-links { margin-top: 4px; padding-top: 12px; border-top: 2px solid var(--line); text-align: center; }
+  .page-links a { display: inline-block; min-height: 48px; padding: 10px 14px; color: var(--muted); font-size: 20px; text-underline-offset: 4px; }
+  .page-links a:focus-visible { outline: 4px solid var(--focus); outline-offset: 2px; border-radius: 8px; }
 
   .page-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .mission-progress { font-size: 22px; font-weight: 800; color: var(--mission); }
@@ -662,6 +665,7 @@
     </button>
     <button class="sound-toggle" id="homeSound" data-app="sound" aria-pressed="false"></button>
     <p class="page-note" id="soundNote"></p>
+    <p class="page-links"><a href="privacy.html">개인정보처리방침</a></p>
   </section>
 
   <!-- ===== 미션 목록 ===== -->
@@ -673,6 +677,7 @@
     <h1 id="missionTitle" tabindex="-1">🎯 미션 모드</h1>
     <p class="page-sub">미션을 골라 그대로 해 보세요. 막히면 '💡 도움말'을 누르면 다음에 누를 곳이 반짝여요.</p>
     <div id="missionList" class="mission-group-list"></div>
+    <p class="page-links"><a href="privacy.html">개인정보처리방침</a></p>
   </section>
 
   <!-- ===== 연습 화면 ===== -->
