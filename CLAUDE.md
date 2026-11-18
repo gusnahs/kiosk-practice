@@ -143,7 +143,7 @@ settings.json에 hooks를 등록한다. "매번 X 할 때마다 Y 해줘" 같은
 - **외국인용 키오스크 안내(`guide-en.html`·`guide-ja.html`·`guide-zh-hans.html`·`guide-zh-hant.html`):** 한국 키오스크 사용 순서(카페·햄버거·병원), 화면에 나오는 한국어 단어표(46개, 읽는 법 포함), 쓸모 있는 한마디, 문제 해결을 언어별로 정적 HTML 글로 둔 페이지다(검색·애드센스 심사용 읽을거리, 스크립트 없음). 한국어판은 없고, 한국어 첫 화면에서는 영어판으로 연결한다.
   - 각 절의 "직접 해 보기" 버튼은 `./?lang=en&practice=cafe`처럼 연습을 바로 연다(`practice`는 `PRACTICES`의 id: cafe·burger·reception·payment·certificate). 연습에서 나가면 주소의 `practice`는 지운다.
   - 4개 파일은 같은 틀이라, 고칠 때는 4개를 함께 고친다. 연습 화면의 단계·버튼 이름이 바뀌면 안내 글도 맞춘다.
-  - `<link rel="canonical">`과 `hreflang` 주소가 `https://gusnahs.github.io/kiosk-practice/`로 적혀 있다. 내 도메인을 연결하면 이 주소도 새 도메인으로 바꾼다.
+  - `<link rel="canonical">`과 `hreflang` 주소는 `https://kioskpractice.kr/`로 적혀 있다. 도메인이 바뀌면 이 주소도 바꾼다.
 - **개발 서버 실행:** 필요 없음. `index.html`을 브라우저로 연다. (미리보기 서버가 필요하면 `python -m http.server 8123`)
 - **빌드:** 없음
 - **테스트:** 자동 테스트 없음. 수정 후 브라우저에서 확인한다.
@@ -158,10 +158,12 @@ settings.json에 hooks를 등록한다. "매번 X 할 때마다 Y 해줘" 같은
   - 5개 언어 모두에서: 미션 13개가 도움말만으로 성공하는지, 화면·팝업·알림·aria-label에 한글이 남지 않는지(언어 이름 '한국어'는 예외), 번역이 빠진 문장 목록 `MISSING`이 비어 있는지, 375 폭에서 글자가 버튼 밖으로 넘치거나 단어 중간에서 줄이 바뀌지 않는지 본다. 영어·일본어는 글자가 길어서 버튼·탭이 좁으면 먼저 넘친다.
 - **배포:** `git push origin main` → GitHub Pages가 자동으로 다시 올린다(1분 안팎).
   - 저장소: https://github.com/gusnahs/kiosk-practice (공개, `main` 브랜치의 루트를 그대로 서비스)
-  - 사이트 주소: https://gusnahs.github.io/kiosk-practice/
+  - 사이트 주소: https://kioskpractice.kr/ (예전 주소 https://gusnahs.github.io/kiosk-practice/ 로 들어와도 새 주소로 넘어간다)
+  - 도메인: `kioskpractice.kr`(가비아에서 구입·DNS 관리). 가비아 DNS에 A 레코드 4개(`@` → 185.199.108.153·109.153·110.153·111.153)와 CNAME(`www` → `gusnahs.github.io.`)를 넣어 두었다. 저장소 루트의 `CNAME` 파일(내용 `kioskpractice.kr`)이 GitHub Pages에 도메인을 알려 주므로 지우지 않는다.
+  - 사이트 안에 주소를 적는 곳: `about.html`("자녀분께" 주소), `privacy.html`(맨 위 사이트 주소), `guide-*.html`(canonical·hreflang). 도메인을 바꾸면 이 세 곳을 함께 고친다.
   - 커밋 작성자 이메일은 GitHub 비공개 주소(`358472646+gusnahs@users.noreply.github.com`)를 이 저장소에만 설정해 두었다. 개인 이메일을 쓰지 않는다.
   - 저장소가 공개라서 이 CLAUDE.md도 누구나 볼 수 있다. 비밀번호·키·개인정보를 적지 않는다.
-  - 앞으로: 구글 애드센스를 넣으려면 내 도메인을 사서 연결해야 한다(github.io 주소는 보통 승인 안 됨). 신청 전에 읽을거리 페이지를 더하고(소개·개인정보처리방침은 만들어 둠), 광고는 키오스크 연습 화면 밖(첫 화면·미션 목록)에만 둔다.
+  - 앞으로: 구글 애드센스는 `kioskpractice.kr`로 신청한다. 읽을거리(소개·개인정보처리방침·외국인용 안내)는 만들어 두었다. 광고는 키오스크 연습 화면 밖(첫 화면·미션 목록·소개·안내 페이지)에만 두고, 자동 광고는 연습 화면에 끼어들 수 있으니 쓰지 않는다. 광고를 실제로 넣을 때는 `privacy.html` 4번과 시행일을 고친다.
 - **코드 구조 (`<script>` 위쪽 데이터만 고치면 됨):**
   - `PRACTICES` — 연습 목록과 `flow`(화면 순서). 다음 화면은 이 순서로 정해진다. `{ screen, when }`은 조건이 맞을 때만 거치는 화면(예: 매장일 때 진동벨, 처음 방문일 때 동의, 수수료가 있을 때 결제).
   - `STORES` — 가게(카페·햄버거)의 메뉴·옵션·세트·재료·할인 배너·진동벨·팝업 문구·색. `HOSPITAL` — 병원 메뉴·연습용 환자 번호·동의 문구·본인 확인 방법·증상·진료과·진료비·서류·할부·증명서·지난 진료 기록(처방 약).
