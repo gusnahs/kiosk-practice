@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>개인정보처리방침 · 키오스크 연습</title>
-<meta name="description" content="키오스크 연습 사이트의 개인정보처리방침입니다. 회원가입이 없고 개인정보를 받지 않으며, 미션 기록은 이용자 기기의 브라우저에만 저장됩니다.">
+<title>개인정보처리방침 · 한국 키오스크 연습</title>
+<meta name="description" content="한국 키오스크 연습 사이트의 개인정보처리방침입니다. 회원가입이 없고 개인정보를 받지 않으며, 미션 기록은 이용자 기기의 브라우저에만 저장됩니다.">
 <meta name="theme-color" content="#3F3A36">
 <meta name="format-detection" content="telephone=no">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%86%3C/text%3E%3C/svg%3E">
@@ -35,6 +35,11 @@
     word-break: keep-all;
     overflow-wrap: anywhere;
   }
+  html:lang(en) body { word-break: normal; }
+  html:lang(ja) body { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Meiryo", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"; }
+  html:lang(zh-Hans) body { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"; }
+  html:lang(zh-Hant) body { font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"; }
+  html:lang(ja) body, html:lang(zh-Hans) body, html:lang(zh-Hant) body { word-break: normal; line-break: strict; }
   a { color: var(--accent); text-underline-offset: 3px; }
   a:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
   h1, h2, h3, p, ul, ol { margin: 0; }
@@ -53,10 +58,14 @@
     font-weight: 800;
     text-decoration: none;
   }
+  .langs { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .langs a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 14px; background: #fff; border: 2px solid #CFC7BD; border-radius: 999px; color: var(--ink); font-size: 20px; font-weight: 800; text-decoration: none; }
+  .langs a[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
   .doc { margin-top: 14px; padding: 28px 28px 32px; background: var(--paper); border-radius: 22px; box-shadow: 0 6px 20px rgba(40, 25, 10, .08); }
   h1 { font-size: 32px; line-height: 1.3; font-weight: 900; }
   .date { margin-top: 6px; color: var(--muted); }
   .lead { margin-top: 18px; }
+  .notice { margin-top: 14px; padding: 12px 16px; background: #FFF7E6; border: 2px solid #E2BC3C; border-radius: 14px; }
 
   .summary { margin-top: 22px; padding: 18px 20px; background: var(--ok-soft); border: 3px solid var(--ok-line); border-radius: 18px; }
   .summary h2 { margin: 0 0 8px; padding: 0; border: none; font-size: 23px; }
@@ -78,7 +87,7 @@
   th, td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
   th { width: 34%; background: var(--soft); font-weight: 800; }
 
-  .foot { margin-top: 22px; text-align: center; }
+  .foot { margin-top: 22px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 
   @media (max-width: 520px) {
     .wrap { padding: 10px 10px 32px; }
@@ -92,18 +101,27 @@
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="./">← 키오스크 연습으로</a>
+  <a class="back" href="./" data-keep data-i="back">← 한국 키오스크 연습으로</a>
+  <nav class="langs" aria-label="언어 선택 · Language">
+    <a href="?lang=ko" data-lang="ko" lang="ko">한국어</a>
+    <a href="?lang=en" data-lang="en" lang="en">English</a>
+    <a href="?lang=ja" data-lang="ja" lang="ja">日本語</a>
+    <a href="?lang=zh-Hans" data-lang="zh-Hans" lang="zh-Hans">简体中文</a>
+    <a href="?lang=zh-Hant" data-lang="zh-Hant" lang="zh-Hant">繁體中文</a>
+  </nav>
 
   <main class="doc">
-    <h1>개인정보처리방침</h1>
-    <p class="date">시행일: 2026년 11월 19일</p>
+    <div data-i="head">
+      <h1>개인정보처리방침</h1>
+      <p class="date">시행일: 2026년 11월 19일</p>
+      <p class="lead">
+        한국 키오스크 연습(<a href="https://gusnahs.github.io/kiosk-practice/">https://gusnahs.github.io/kiosk-practice/</a>, 이하 ‘이 사이트’)은
+        「개인정보 보호법」을 지키며, 이용자가 안심하고 연습할 수 있도록 다음과 같이 개인정보처리방침을 둡니다.
+      </p>
+    </div>
+    <p class="notice" data-i="notice" hidden></p>
 
-    <p class="lead">
-      키오스크 연습(<a href="https://gusnahs.github.io/kiosk-practice/">https://gusnahs.github.io/kiosk-practice/</a>, 이하 ‘이 사이트’)은
-      「개인정보 보호법」을 지키며, 이용자가 안심하고 연습할 수 있도록 다음과 같이 개인정보처리방침을 둡니다.
-    </p>
-
-    <div class="summary">
+    <div class="summary" data-i="summary">
       <h2>쉽게 요약하면</h2>
       <ul>
         <li>회원가입이나 로그인이 없어요.</li>
@@ -113,7 +131,7 @@
       </ul>
     </div>
 
-    <nav class="toc" aria-label="목차">
+    <nav class="toc" aria-label="목차" data-i="toc">
       <p>목차</p>
       <ol>
         <li><a href="#s1">받는 개인정보와 이용 목적</a></li>
@@ -130,7 +148,7 @@
       </ol>
     </nav>
 
-    <section id="s1" aria-labelledby="h1-1">
+    <section id="s1" aria-labelledby="h1-1" data-i="s1">
       <h2 id="h1-1">1. 받는 개인정보와 이용 목적</h2>
       <p>이 사이트는 회원가입·로그인 기능이 없으며, 이용자에게 개인정보를 직접 받거나 서버에 저장하지 않습니다.</p>
       <ul>
@@ -140,7 +158,7 @@
       </ul>
     </section>
 
-    <section id="s2" aria-labelledby="h1-2">
+    <section id="s2" aria-labelledby="h1-2" data-i="s2">
       <h2 id="h1-2">2. 이용자 기기에 저장하는 정보</h2>
       <table>
         <tbody>
@@ -151,10 +169,10 @@
           <tr><th scope="row">지우는 방법</th><td>브라우저 설정에서 ‘인터넷 사용 기록 삭제’ 또는 ‘사이트 데이터 삭제’를 하면 지워집니다.</td></tr>
         </tbody>
       </table>
-      <p class="note">이 정보만으로는 누구인지 알 수 없습니다. ‘소리 켜기’ 설정은 저장하지 않습니다.</p>
+      <p class="note">이 정보만으로는 누구인지 알 수 없습니다. ‘소리 켜기’ 설정은 저장하지 않습니다. 고른 언어도 저장하지 않고, 주소 끝(예: ?lang=en)에만 표시합니다.</p>
     </section>
 
-    <section id="s3" aria-labelledby="h1-3">
+    <section id="s3" aria-labelledby="h1-3" data-i="s3">
       <h2 id="h1-3">3. 사이트 운영에 쓰는 외부 서비스</h2>
       <ul>
         <li>
@@ -170,7 +188,7 @@
       </ul>
     </section>
 
-    <section id="s4" aria-labelledby="h1-4">
+    <section id="s4" aria-labelledby="h1-4" data-i="s4">
       <h2 id="h1-4">4. 광고와 쿠키</h2>
       <p>이 사이트는 운영비를 마련하기 위해 Google AdSense 광고를 게재할 수 있습니다. <span class="note">(시행일 현재는 광고를 게재하지 않습니다.)</span> 광고를 게재하면 다음과 같이 쿠키가 쓰입니다.</p>
       <div class="box ad">
@@ -186,22 +204,22 @@
       <p class="note">광고를 실제로 게재하기 시작하면 이 방침의 시행일과 내용을 고쳐 이 페이지에 알립니다.</p>
     </section>
 
-    <section id="s5" aria-labelledby="h1-5">
+    <section id="s5" aria-labelledby="h1-5" data-i="s5">
       <h2 id="h1-5">5. 제3자 제공과 처리 위탁</h2>
       <p>이 사이트는 개인정보를 받지 않으므로, 개인정보를 제3자에게 제공하거나 처리를 위탁하지 않습니다. 사이트 운영에 쓰는 외부 서비스는 3번과 4번에 적었습니다.</p>
     </section>
 
-    <section id="s6" aria-labelledby="h1-6">
+    <section id="s6" aria-labelledby="h1-6" data-i="s6">
       <h2 id="h1-6">6. 보유 기간과 파기</h2>
       <p>이 사이트가 보관하는 개인정보는 없습니다. 이용자 기기에 저장된 미션 기록은 2번의 방법으로 이용자가 직접 지울 수 있습니다.</p>
     </section>
 
-    <section id="s7" aria-labelledby="h1-7">
+    <section id="s7" aria-labelledby="h1-7" data-i="s7">
       <h2 id="h1-7">7. 이용자의 권리와 행사 방법</h2>
       <p>이용자는 언제든지 개인정보 열람, 정정, 삭제, 처리 정지를 요구할 수 있습니다. 이 사이트는 개인정보를 보관하지 않지만, 궁금한 점이나 요청은 9번의 문의처로 알려 주시면 성실히 답하겠습니다.</p>
     </section>
 
-    <section id="s8" aria-labelledby="h1-8">
+    <section id="s8" aria-labelledby="h1-8" data-i="s8">
       <h2 id="h1-8">8. 안전성 확보 조치</h2>
       <ul>
         <li>처음부터 개인정보를 받거나 저장하지 않도록 만들었습니다.</li>
@@ -209,17 +227,17 @@
       </ul>
     </section>
 
-    <section id="s9" aria-labelledby="h1-9">
+    <section id="s9" aria-labelledby="h1-9" data-i="s9">
       <h2 id="h1-9">9. 개인정보 보호책임자와 문의</h2>
       <table>
         <tbody>
-          <tr><th scope="row">보호책임자</th><td>키오스크 연습 운영자</td></tr>
+          <tr><th scope="row">보호책임자</th><td>한국 키오스크 연습 운영자</td></tr>
           <tr><th scope="row">문의처</th><td><a href="https://github.com/gusnahs/kiosk-practice/issues" target="_blank" rel="noopener">GitHub 문의 게시판</a></td></tr>
         </tbody>
       </table>
     </section>
 
-    <section id="s10" aria-labelledby="h1-10">
+    <section id="s10" aria-labelledby="h1-10" data-i="s10">
       <h2 id="h1-10">10. 권익 침해 구제 방법</h2>
       <p>개인정보 침해로 상담이나 도움이 필요하면 아래 기관에 문의할 수 있습니다.</p>
       <ul>
@@ -230,13 +248,336 @@
       </ul>
     </section>
 
-    <section id="s11" aria-labelledby="h1-11">
+    <section id="s11" aria-labelledby="h1-11" data-i="s11">
       <h2 id="h1-11">11. 처리방침의 변경</h2>
       <p>이 방침은 2026년 11월 19일부터 적용합니다. 내용이 바뀌면 이 페이지에 시행일과 함께 알립니다.</p>
     </section>
   </main>
 
-  <p class="foot"><a class="back" href="./">← 키오스크 연습으로</a></p>
+  <p class="foot">
+    <a class="back" href="./" data-keep data-i="back">← 한국 키오스크 연습으로</a>
+    <a class="back" href="about.html" data-keep data-i="aboutLink">사이트 소개</a>
+  </p>
 </div>
+<script>
+'use strict';
+/* 언어: 주소 끝 ?lang= 또는 브라우저 언어로 고름. 한국어 원문이 기준이고, 번역은 참고용. 저장하지 않음. */
+const SITE_LINK = '<a href="https://gusnahs.github.io/kiosk-practice/">https://gusnahs.github.io/kiosk-practice/</a>';
+const ext = (href, text) => `<a href="${href}" target="_blank" rel="noopener">${text}</a>`;
+const GH_PRIVACY = 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement';
+const GH_ISSUES = 'https://github.com/gusnahs/kiosk-practice/issues';
+const AGENCIES = names => `<ul>
+        <li>${names[0]}: 1833-6972 (${ext('https://www.kopico.go.kr', 'www.kopico.go.kr')})</li>
+        <li>${names[1]}: 118 (${ext('https://privacy.kisa.or.kr', 'privacy.kisa.or.kr')})</li>
+        <li>${names[2]}: 1301 (${ext('https://www.spo.go.kr', 'www.spo.go.kr')})</li>
+        <li>${names[3]}: 182 (${ext('https://ecrm.police.go.kr', 'ecrm.police.go.kr')})</li>
+      </ul>`;
+const toc = (title, items) => `<p>${title}</p><ol>${items.map((t, i) => `<li><a href="#s${i + 1}">${t}</a></li>`).join('')}</ol>`;
+const rows = list => `<table><tbody>${list.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('')}</tbody></table>`;
+
+const I18N = {
+  en: {
+    title: 'Privacy Policy · Korea Kiosk Practice',
+    back: '← Back to Korea Kiosk Practice',
+    aboutLink: 'About',
+    tocLabel: 'Contents',
+    notice: 'This English text is a translation for your convenience. If it differs from the Korean original, the Korean version applies.',
+    head: `<h1>Privacy Policy</h1>
+      <p class="date">Effective date: November 19, 2026</p>
+      <p class="lead">Korea Kiosk Practice (${SITE_LINK}, “this site”) complies with Korea's Personal Information Protection Act and sets out the following privacy policy so that you can practice with peace of mind.</p>`,
+    summary: `<h2>In short</h2>
+      <ul>
+        <li>There is no sign-up or login.</li>
+        <li>We never take information such as your name, phone number or card number. All numbers on the practice screens are practice numbers.</li>
+        <li>Your mission results are saved only in this device's browser and are never sent anywhere.</li>
+        <li>If we add ads, Google may use cookies. How to turn them off is in section 4 below.</li>
+      </ul>`,
+    toc: toc('Contents', ['Personal information we collect and why', 'Information stored on your device', 'Outside services used to run this site', 'Ads and cookies', 'Sharing with third parties and outsourcing', 'Retention and deletion', 'Your rights and how to use them', 'Security measures', 'Privacy officer and contact', 'Help with privacy violations', 'Changes to this policy']),
+    s1: `<h2 id="h1-1">1. Personal information we collect and why</h2>
+      <p>This site has no sign-up or login. It does not take personal information from you or store it on a server.</p>
+      <ul>
+        <li>The birth date, last digits of a phone number and buzzer number you tap during practice are <b>practice numbers</b> shown on the screen. Other digits cannot be entered, and the numbers you tap are not stored or sent.</li>
+        <li>The card, ID card and mobile health insurance card are only pictures you tap. No real information is read.</li>
+        <li>Names, medical records, prescriptions and receipts on the practice screens are all made-up examples.</li>
+      </ul>`,
+    s2: `<h2 id="h1-2">2. Information stored on your device</h2>
+      ${rows([
+        ['What', 'A list of missions you completed (for example, a mark that you completed ‘Order 1 iced Americano to go’)'],
+        ['Where', 'Your browser storage on your device (localStorage). It is not sent to this site or anywhere else.'],
+        ['Why', 'To show the ‘✓ Done’ mark on the mission list'],
+        ['How long', 'Until you delete it'],
+        ['How to delete', 'Clear your browsing history or site data in your browser settings.'],
+      ])}
+      <p class="note">This information alone cannot identify you. The sound setting is not stored. Your language choice is not stored either; it appears only at the end of the address (for example, ?lang=en).</p>`,
+    s3: `<h2 id="h1-3">3. Outside services used to run this site</h2>
+      <ul>
+        <li><b>GitHub Pages (GitHub, Inc.) — site hosting</b><br>This site is hosted on GitHub Pages. When you visit, GitHub may log and keep visitors' IP addresses for security. For details, see the ${ext(GH_PRIVACY, 'GitHub General Privacy Statement')}.</li>
+        <li><b>Your browser's speech feature — ‘read aloud’</b><br>When you turn sound on, the speech feature built into your browser reads the on-screen instructions. This site sends no information itself, but depending on your browser or device, the instruction text may be sent to a speech service to be turned into sound. Only the on-screen instruction text is sent.</li>
+      </ul>`,
+    s4: `<h2 id="h1-4">4. Ads and cookies</h2>
+      <p>This site may show Google AdSense ads to cover running costs. <span class="note">(As of the effective date, no ads are shown.)</span> If ads are shown, cookies are used as follows.</p>
+      <div class="box ad"><ul>
+        <li>Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this website or other websites.</li>
+        <li>Google's use of advertising cookies enables it and its partners to serve ads to you based on your visits to this site and/or other sites on the Internet.</li>
+        <li>You can opt out of personalized advertising in ${ext('https://adssettings.google.com/', 'Google Ads Settings')}.</li>
+        <li>You can also opt out of a third-party vendor's use of cookies for personalized advertising at ${ext('https://www.aboutads.info/', 'www.aboutads.info')}.</li>
+        <li>To learn how Google uses information, see ${ext('https://policies.google.com/technologies/partner-sites', 'How Google uses information from sites or apps that use our services')}.</li>
+      </ul></div>
+      <p><b>How to refuse cookies:</b> You can block cookies in your browser settings. The practice features of this site work without cookies.</p>
+      <p class="note">When ads actually start to appear, we will update the effective date and contents of this policy on this page.</p>`,
+    s5: `<h2 id="h1-5">5. Sharing with third parties and outsourcing</h2>
+      <p>Because this site does not collect personal information, it does not provide personal information to third parties or outsource its processing. The outside services used to run this site are listed in sections 3 and 4.</p>`,
+    s6: `<h2 id="h1-6">6. Retention and deletion</h2>
+      <p>This site keeps no personal information. You can delete the mission results stored on your device yourself, as described in section 2.</p>`,
+    s7: `<h2 id="h1-7">7. Your rights and how to use them</h2>
+      <p>You may ask at any time to see, correct, delete or stop the processing of your personal information. This site keeps no personal information, but if you have questions or requests, please contact us as described in section 9 and we will answer sincerely.</p>`,
+    s8: `<h2 id="h1-8">8. Security measures</h2>
+      <ul>
+        <li>The site was designed from the start not to collect or store personal information.</li>
+        <li>The site is served only over an encrypted connection (HTTPS).</li>
+      </ul>`,
+    s9: `<h2 id="h1-9">9. Privacy officer and contact</h2>
+      ${rows([['Privacy officer', 'Operator of Korea Kiosk Practice'], ['Contact', ext(GH_ISSUES, 'GitHub feedback board')]])}`,
+    s10: `<h2 id="h1-10">10. Help with privacy violations</h2>
+      <p>If you need advice or help with a privacy violation, you can contact the following Korean agencies.</p>
+      ${AGENCIES(['Personal Information Dispute Mediation Committee', 'Personal Information Infringement Report Center', "Supreme Prosecutors' Office", 'Korean National Police Agency'])}`,
+    s11: `<h2 id="h1-11">11. Changes to this policy</h2>
+      <p>This policy applies from November 19, 2026. If it changes, we will announce it on this page together with the effective date.</p>`,
+  },
+  ja: {
+    title: 'プライバシーポリシー · 韓国キオスク練習',
+    back: '← 韓国キオスク練習へ',
+    aboutLink: 'サイト紹介',
+    tocLabel: '目次',
+    notice: 'この日本語の文章は参考のための翻訳です。韓国語の原文と違いがある場合は、韓国語版が優先されます。',
+    head: `<h1>プライバシーポリシー</h1>
+      <p class="date">施行日:2026年11月19日</p>
+      <p class="lead">韓国キオスク練習(${SITE_LINK}、以下「本サイト」)は、韓国の「個人情報保護法」を守り、利用者が安心して練習できるよう、次のとおりプライバシーポリシーを定めます。</p>`,
+    summary: `<h2>かんたんにまとめると</h2>
+      <ul>
+        <li>会員登録やログインはありません。</li>
+        <li>名前、電話番号、カード番号などの情報は受け取りません。練習画面の番号はすべて練習用です。</li>
+        <li>ミッションの成功記録はこの端末のブラウザにだけ保存され、どこにも送りません。</li>
+        <li>広告を入れることになった場合、Googleがクッキーを使うことがあります。オフにする方法は下の4番にあります。</li>
+      </ul>`,
+    toc: toc('目次', ['受け取る個人情報と利用目的', '利用者の端末に保存する情報', 'サイト運営に使う外部サービス', '広告とクッキー', '第三者への提供と処理の委託', '保有期間と破棄', '利用者の権利と行使方法', '安全確保のための措置', '個人情報保護責任者とお問い合わせ', '権利侵害の救済方法', 'ポリシーの変更']),
+    s1: `<h2 id="h1-1">1. 受け取る個人情報と利用目的</h2>
+      <p>本サイトには会員登録・ログイン機能がなく、利用者から個人情報を直接受け取ったり、サーバーに保存したりしません。</p>
+      <ul>
+        <li>練習中に押す生年月日、携帯番号の下4桁、呼び出しベルの番号は、画面に表示される<b>練習用の番号</b>です。練習用の番号と違う数字は入力できず、押した番号は保存も送信もしません。</li>
+        <li>カード、身分証、モバイル健康保険証は絵を押すまねだけで、実際の情報は読み取りません。</li>
+        <li>練習画面に出る名前、診療記録、処方せん、領収書はすべて作られた例です。</li>
+      </ul>`,
+    s2: `<h2 id="h1-2">2. 利用者の端末に保存する情報</h2>
+      ${rows([
+        ['保存するもの', '成功したミッションの一覧(例:「アイスアメリカーノ1杯を持ち帰りで注文する」に成功したという印)'],
+        ['保存する場所', '利用者の端末のブラウザの保存領域(localStorage)。本サイトやほかの場所には送りません。'],
+        ['理由', 'ミッション一覧に「✓ 成功」の印を表示するため'],
+        ['保管期間', '利用者が消すまで'],
+        ['消す方法', 'ブラウザの設定で「閲覧履歴の削除」または「サイトデータの削除」をすると消えます。'],
+      ])}
+      <p class="note">この情報だけでは個人を特定できません。音声の設定は保存しません。選んだ言語も保存せず、アドレスの末尾(例:?lang=ja)にだけ表示します。</p>`,
+    s3: `<h2 id="h1-3">3. サイト運営に使う外部サービス</h2>
+      <ul>
+        <li><b>GitHub Pages(GitHub, Inc.)— サイトのホスティング</b><br>本サイトはGitHub Pagesに置いています。訪問すると、GitHubがセキュリティのために訪問者のIPアドレスを記録・保管することがあります。詳しくは${ext(GH_PRIVACY, 'GitHubのプライバシーに関する声明')}をご覧ください。</li>
+        <li><b>ブラウザの音声読み上げ機能 —「読み上げ」</b><br>音声をオンにすると、ブラウザに入っている音声機能が画面の案内文を読み上げます。本サイトが別に情報を送ることはありませんが、ブラウザや端末によっては、案内文を音声サービスに送って音声に変えることがあります。このとき送られるのは画面の案内文だけです。</li>
+      </ul>`,
+    s4: `<h2 id="h1-4">4. 広告とクッキー</h2>
+      <p>本サイトは運営費をまかなうため、Google AdSenseの広告を掲載することがあります。<span class="note">(施行日現在、広告は掲載していません。)</span>広告を掲載する場合、次のようにクッキーが使われます。</p>
+      <div class="box ad"><ul>
+        <li>Googleなどの第三者配信事業者は、クッキーを使用して、利用者が本サイトやほかのウェブサイトを訪問した記録にもとづいて広告を配信します。</li>
+        <li>Googleは広告クッキーを使用することで、Googleとパートナーが、本サイトやほかのサイトへの訪問記録にもとづいて利用者に広告を表示できるようにしています。</li>
+        <li>パーソナライズ広告が不要な場合は、${ext('https://adssettings.google.com/', 'Googleの広告設定')}でオフにできます。</li>
+        <li>${ext('https://www.aboutads.info/', 'www.aboutads.info')}で、第三者配信事業者のパーソナライズ広告用クッキーを無効にすることもできます。</li>
+        <li>Googleによる情報の使い方は、${ext('https://policies.google.com/technologies/partner-sites', 'Googleのパートナーサイトでの情報の使用について')}で確認できます。</li>
+      </ul></div>
+      <p><b>クッキーを拒否する方法:</b>ブラウザの設定でクッキーの保存を止められます。本サイトの練習機能はクッキーがなくてもそのまま使えます。</p>
+      <p class="note">実際に広告の掲載を始めるときは、このポリシーの施行日と内容を改めて、このページでお知らせします。</p>`,
+    s5: `<h2 id="h1-5">5. 第三者への提供と処理の委託</h2>
+      <p>本サイトは個人情報を受け取らないため、個人情報を第三者に提供したり、処理を委託したりしません。サイト運営に使う外部サービスは3番と4番に記載しています。</p>`,
+    s6: `<h2 id="h1-6">6. 保有期間と破棄</h2>
+      <p>本サイトが保管する個人情報はありません。利用者の端末に保存されたミッション記録は、2番の方法で利用者が自分で消すことができます。</p>`,
+    s7: `<h2 id="h1-7">7. 利用者の権利と行使方法</h2>
+      <p>利用者はいつでも、個人情報の閲覧、訂正、削除、処理の停止を求めることができます。本サイトは個人情報を保管していませんが、ご質問やご要望は9番のお問い合わせ先にお知らせいただければ、誠実にお答えします。</p>`,
+    s8: `<h2 id="h1-8">8. 安全確保のための措置</h2>
+      <ul>
+        <li>はじめから個人情報を受け取ったり保存したりしないように作っています。</li>
+        <li>サイトは暗号化された接続(HTTPS)でのみ提供しています。</li>
+      </ul>`,
+    s9: `<h2 id="h1-9">9. 個人情報保護責任者とお問い合わせ</h2>
+      ${rows([['保護責任者', '韓国キオスク練習の運営者'], ['お問い合わせ先', ext(GH_ISSUES, 'GitHubのお問い合わせ掲示板')]])}`,
+    s10: `<h2 id="h1-10">10. 権利侵害の救済方法</h2>
+      <p>個人情報の侵害について相談や助けが必要な場合は、次の韓国の機関に問い合わせることができます。</p>
+      ${AGENCIES(['個人情報紛争調停委員会', '個人情報侵害申告センター', '大検察庁', '警察庁'])}`,
+    s11: `<h2 id="h1-11">11. ポリシーの変更</h2>
+      <p>このポリシーは2026年11月19日から適用します。内容が変わる場合は、施行日とともにこのページでお知らせします。</p>`,
+  },
+  'zh-Hans': {
+    title: '隐私政策 · 韩国自助机练习',
+    back: '← 返回韩国自助机练习',
+    aboutLink: '网站介绍',
+    tocLabel: '目录',
+    notice: '本中文内容是为方便阅读而提供的翻译。如与韩语原文有出入,以韩语版本为准。',
+    head: `<h1>隐私政策</h1>
+      <p class="date">生效日期:2026年11月19日</p>
+      <p class="lead">韩国自助机练习(${SITE_LINK},以下简称“本网站”)遵守韩国《个人信息保护法》,为了让用户安心练习,制定以下隐私政策。</p>`,
+    summary: `<h2>简单来说</h2>
+      <ul>
+        <li>没有注册或登录。</li>
+        <li>不收集姓名、电话号码、银行卡号等信息。练习画面上的号码都是练习用的。</li>
+        <li>任务成功记录只保存在这台设备的浏览器里,不会发送到任何地方。</li>
+        <li>如果以后放广告,Google可能会使用Cookie。关闭方法见下方第4条。</li>
+      </ul>`,
+    toc: toc('目录', ['收集的个人信息和使用目的', '保存在用户设备上的信息', '网站运营使用的外部服务', '广告和Cookie', '向第三方提供和委托处理', '保存期限和销毁', '用户的权利和行使方法', '安全保障措施', '个人信息保护负责人和联系方式', '权益受侵害时的救济方法', '政策的变更']),
+    s1: `<h2 id="h1-1">1. 收集的个人信息和使用目的</h2>
+      <p>本网站没有注册和登录功能,不会直接向用户收集个人信息,也不会保存在服务器上。</p>
+      <ul>
+        <li>练习时输入的出生日期、手机号后几位、取餐器号码,都是画面上显示的<b>练习号码</b>。无法输入与练习号码不同的数字,输入的号码不会保存或发送。</li>
+        <li>银行卡、身份证、电子医保卡只是点图片的模拟,不会读取真实信息。</li>
+        <li>练习画面上出现的姓名、病历、处方、收据都是虚构的示例。</li>
+      </ul>`,
+    s2: `<h2 id="h1-2">2. 保存在用户设备上的信息</h2>
+      ${rows([
+        ['保存什么', '已成功的任务列表(例如:成功完成“外带1杯冰美式咖啡”的标记)'],
+        ['保存在哪里', '用户设备的浏览器存储空间(localStorage)。不会发送到本网站或其他地方。'],
+        ['原因', '为了在任务列表上显示“✓ 成功”标记'],
+        ['保存期限', '直到用户删除为止'],
+        ['删除方法', '在浏览器设置中“清除浏览记录”或“清除网站数据”即可删除。'],
+      ])}
+      <p class="note">仅凭这些信息无法识别个人身份。声音设置不会保存。所选语言也不保存,只显示在网址末尾(例如:?lang=zh-Hans)。</p>`,
+    s3: `<h2 id="h1-3">3. 网站运营使用的外部服务</h2>
+      <ul>
+        <li><b>GitHub Pages(GitHub, Inc.)— 网站托管</b><br>本网站放在GitHub Pages上。访问时,GitHub可能出于安全目的记录并保存访问者的IP地址。详情请参阅${ext(GH_PRIVACY, 'GitHub 隐私声明')}。</li>
+        <li><b>浏览器的语音朗读功能 —“语音朗读”</b><br>用户打开声音后,浏览器自带的语音功能会朗读画面上的提示文字。本网站不会另外发送信息,但根据浏览器或设备的不同,提示文字可能会被发送到语音服务转换成声音。此时发送的只有画面上的提示文字。</li>
+      </ul>`,
+    s4: `<h2 id="h1-4">4. 广告和Cookie</h2>
+      <p>为了筹集运营费用,本网站可能会投放Google AdSense广告。<span class="note">(截至生效日期,尚未投放广告。)</span>投放广告时,会按以下方式使用Cookie。</p>
+      <div class="box ad"><ul>
+        <li>包括Google在内的第三方供应商会使用Cookie,根据用户以往访问本网站或其他网站的记录投放广告。</li>
+        <li>Google通过使用广告Cookie,使Google及其合作伙伴能够根据用户访问本网站和其他网站的记录向用户展示广告。</li>
+        <li>如果不想看到个性化广告,可以在${ext('https://adssettings.google.com/', 'Google 广告设置')}中关闭。</li>
+        <li>也可以在${ext('https://www.aboutads.info/', 'www.aboutads.info')}拒绝第三方供应商用于个性化广告的Cookie。</li>
+        <li>Google如何使用信息,请参阅${ext('https://policies.google.com/technologies/partner-sites', 'Google 如何使用来自合作伙伴网站的信息')}。</li>
+      </ul></div>
+      <p><b>拒绝Cookie的方法:</b>可以在浏览器设置中阻止保存Cookie。即使没有Cookie,本网站的练习功能也能照常使用。</p>
+      <p class="note">实际开始投放广告时,会修改本政策的生效日期和内容,并在本页面公布。</p>`,
+    s5: `<h2 id="h1-5">5. 向第三方提供和委托处理</h2>
+      <p>本网站不收集个人信息,因此不会向第三方提供个人信息,也不会委托他人处理。网站运营使用的外部服务已写在第3条和第4条。</p>`,
+    s6: `<h2 id="h1-6">6. 保存期限和销毁</h2>
+      <p>本网站不保存任何个人信息。保存在用户设备上的任务记录,用户可以按第2条的方法自行删除。</p>`,
+    s7: `<h2 id="h1-7">7. 用户的权利和行使方法</h2>
+      <p>用户可以随时要求查阅、更正、删除个人信息或停止处理。本网站虽然不保存个人信息,但如有疑问或要求,请通过第9条的联系方式告诉我们,我们会认真答复。</p>`,
+    s8: `<h2 id="h1-8">8. 安全保障措施</h2>
+      <ul>
+        <li>从一开始就设计为不收集、不保存个人信息。</li>
+        <li>网站只通过加密连接(HTTPS)提供。</li>
+      </ul>`,
+    s9: `<h2 id="h1-9">9. 个人信息保护负责人和联系方式</h2>
+      ${rows([['保护负责人', '韩国自助机练习运营者'], ['联系方式', ext(GH_ISSUES, 'GitHub 留言板')]])}`,
+    s10: `<h2 id="h1-10">10. 权益受侵害时的救济方法</h2>
+      <p>如因个人信息受到侵害需要咨询或帮助,可以联系以下韩国机构。</p>
+      ${AGENCIES(['个人信息纠纷调解委员会', '个人信息侵害举报中心', '大检察厅', '警察厅'])}`,
+    s11: `<h2 id="h1-11">11. 政策的变更</h2>
+      <p>本政策自2026年11月19日起适用。内容如有变更,将连同生效日期在本页面公布。</p>`,
+  },
+  'zh-Hant': {
+    title: '隱私權政策 · 韓國自助機練習',
+    back: '← 回到韓國自助機練習',
+    aboutLink: '網站介紹',
+    tocLabel: '目錄',
+    notice: '本中文內容是為方便閱讀而提供的翻譯。如與韓文原文有出入,以韓文版本為準。',
+    head: `<h1>隱私權政策</h1>
+      <p class="date">生效日期:2026年11月19日</p>
+      <p class="lead">韓國自助機練習(${SITE_LINK},以下簡稱「本網站」)遵守韓國《個人資料保護法》,為了讓使用者安心練習,訂定以下隱私權政策。</p>`,
+    summary: `<h2>簡單來說</h2>
+      <ul>
+        <li>沒有註冊或登入。</li>
+        <li>不蒐集姓名、電話號碼、卡號等資料。練習畫面上的號碼都是練習用的。</li>
+        <li>任務成功紀錄只儲存在這台裝置的瀏覽器裡,不會傳送到任何地方。</li>
+        <li>如果以後放廣告,Google可能會使用Cookie。關閉方法見下方第4條。</li>
+      </ul>`,
+    toc: toc('目錄', ['蒐集的個人資料與使用目的', '儲存在使用者裝置上的資料', '網站營運使用的外部服務', '廣告與Cookie', '提供給第三方與委託處理', '保存期限與銷毀', '使用者的權利與行使方法', '安全維護措施', '個人資料保護負責人與聯絡方式', '權益受侵害時的救濟方法', '政策的變更']),
+    s1: `<h2 id="h1-1">1. 蒐集的個人資料與使用目的</h2>
+      <p>本網站沒有註冊和登入功能,不會直接向使用者蒐集個人資料,也不會儲存在伺服器上。</p>
+      <ul>
+        <li>練習時輸入的出生日期、手機末幾碼、呼叫器號碼,都是畫面上顯示的<b>練習號碼</b>。無法輸入和練習號碼不同的數字,輸入的號碼不會儲存或傳送。</li>
+        <li>卡片、身分證、行動健保卡只是點圖片的模擬,不會讀取真實資料。</li>
+        <li>練習畫面上出現的姓名、病歷、處方箋、收據都是虛構的範例。</li>
+      </ul>`,
+    s2: `<h2 id="h1-2">2. 儲存在使用者裝置上的資料</h2>
+      ${rows([
+        ['儲存什麼', '已成功的任務清單(例如:成功完成「外帶1杯冰美式咖啡」的標記)'],
+        ['儲存在哪裡', '使用者裝置的瀏覽器儲存空間(localStorage)。不會傳送到本網站或其他地方。'],
+        ['原因', '為了在任務清單上顯示「✓ 成功」標記'],
+        ['保存期限', '直到使用者刪除為止'],
+        ['刪除方法', '在瀏覽器設定中「清除瀏覽紀錄」或「清除網站資料」即可刪除。'],
+      ])}
+      <p class="note">僅憑這些資料無法識別個人身分。聲音設定不會儲存。所選語言也不儲存,只顯示在網址末尾(例如:?lang=zh-Hant)。</p>`,
+    s3: `<h2 id="h1-3">3. 網站營運使用的外部服務</h2>
+      <ul>
+        <li><b>GitHub Pages(GitHub, Inc.)— 網站託管</b><br>本網站放在GitHub Pages上。造訪時,GitHub可能為了安全而記錄並保存訪客的IP位址。詳情請參閱${ext(GH_PRIVACY, 'GitHub 隱私權聲明')}。</li>
+        <li><b>瀏覽器的語音朗讀功能 —「語音朗讀」</b><br>使用者開啟聲音後,瀏覽器內建的語音功能會朗讀畫面上的提示文字。本網站不會另外傳送資料,但依瀏覽器或裝置不同,提示文字可能會被傳送到語音服務轉換成聲音。此時傳送的只有畫面上的提示文字。</li>
+      </ul>`,
+    s4: `<h2 id="h1-4">4. 廣告與Cookie</h2>
+      <p>為了籌措營運費用,本網站可能會刊登Google AdSense廣告。<span class="note">(截至生效日期,尚未刊登廣告。)</span>刊登廣告時,會以下列方式使用Cookie。</p>
+      <div class="box ad"><ul>
+        <li>包括Google在內的第三方供應商會使用Cookie,根據使用者過去造訪本網站或其他網站的紀錄刊登廣告。</li>
+        <li>Google透過使用廣告Cookie,讓Google及其合作夥伴能根據使用者造訪本網站和其他網站的紀錄,向使用者顯示廣告。</li>
+        <li>如果不想看到個人化廣告,可以在${ext('https://adssettings.google.com/', 'Google 廣告設定')}中關閉。</li>
+        <li>也可以在${ext('https://www.aboutads.info/', 'www.aboutads.info')}拒絕第三方供應商用於個人化廣告的Cookie。</li>
+        <li>Google如何使用資料,請參閱${ext('https://policies.google.com/technologies/partner-sites', 'Google 如何使用合作夥伴網站的資料')}。</li>
+      </ul></div>
+      <p><b>拒絕Cookie的方法:</b>可以在瀏覽器設定中封鎖Cookie。即使沒有Cookie,本網站的練習功能也能照常使用。</p>
+      <p class="note">實際開始刊登廣告時,會修改本政策的生效日期與內容,並在本頁面公告。</p>`,
+    s5: `<h2 id="h1-5">5. 提供給第三方與委託處理</h2>
+      <p>本網站不蒐集個人資料,因此不會將個人資料提供給第三方,也不會委託他人處理。網站營運使用的外部服務已寫在第3條和第4條。</p>`,
+    s6: `<h2 id="h1-6">6. 保存期限與銷毀</h2>
+      <p>本網站不保存任何個人資料。儲存在使用者裝置上的任務紀錄,使用者可以依第2條的方法自行刪除。</p>`,
+    s7: `<h2 id="h1-7">7. 使用者的權利與行使方法</h2>
+      <p>使用者可以隨時要求查閱、更正、刪除個人資料或停止處理。本網站雖然不保存個人資料,但如有疑問或要求,請透過第9條的聯絡方式告訴我們,我們會認真回覆。</p>`,
+    s8: `<h2 id="h1-8">8. 安全維護措施</h2>
+      <ul>
+        <li>從一開始就設計成不蒐集、不儲存個人資料。</li>
+        <li>網站只透過加密連線(HTTPS)提供。</li>
+      </ul>`,
+    s9: `<h2 id="h1-9">9. 個人資料保護負責人與聯絡方式</h2>
+      ${rows([['保護負責人', '韓國自助機練習經營者'], ['聯絡方式', ext(GH_ISSUES, 'GitHub 留言板')]])}`,
+    s10: `<h2 id="h1-10">10. 權益受侵害時的救濟方法</h2>
+      <p>如因個人資料受到侵害需要諮詢或協助,可以聯絡以下韓國機關。</p>
+      ${AGENCIES(['個人資料糾紛調解委員會', '個人資料侵害申報中心', '大檢察廳', '警察廳'])}`,
+    s11: `<h2 id="h1-11">11. 政策的變更</h2>
+      <p>本政策自2026年11月19日起適用。內容如有變更,將連同生效日期在本頁面公告。</p>`,
+  },
+};
+
+(function applyLang() {
+  const LANGS = ['ko', 'en', 'ja', 'zh-Hans', 'zh-Hant'];
+  const asked = new URLSearchParams(location.search).get('lang');
+  let lang = LANGS.includes(asked) ? asked : null;
+  if (!lang) {
+    lang = 'ko';
+    for (const raw of navigator.languages || [navigator.language || 'ko']) {
+      const l = String(raw).toLowerCase();
+      if (l.startsWith('ko')) { lang = 'ko'; break; }
+      if (l.startsWith('en')) { lang = 'en'; break; }
+      if (l.startsWith('ja')) { lang = 'ja'; break; }
+      if (/^zh-(tw|hk|mo|hant)/.test(l)) { lang = 'zh-Hant'; break; }
+      if (l.startsWith('zh')) { lang = 'zh-Hans'; break; }
+    }
+  }
+  const t = I18N[lang];
+  if (t) {
+    document.documentElement.lang = lang;
+    document.title = t.title;
+    document.querySelectorAll('[data-i]').forEach(el => { if (t[el.dataset.i] != null) el.innerHTML = t[el.dataset.i]; });
+    document.querySelector('.notice').hidden = false;
+    document.querySelector('.toc').setAttribute('aria-label', t.tocLabel);
+  }
+  document.querySelectorAll('.langs a').forEach(a => { if (a.dataset.lang === lang) a.setAttribute('aria-current', 'true'); });
+  if (asked || lang !== 'ko') {
+    document.querySelectorAll('a[data-keep]').forEach(a => { a.href = a.getAttribute('href').split('?')[0] + '?lang=' + lang; });
+  }
+})();
+</script>
 </body>
 </html>

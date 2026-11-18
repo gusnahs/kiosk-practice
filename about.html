@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>사이트 소개 · 한국 키오스크 연습</title>
+<meta name="description" content="키오스크 앞에서 당황해 본 분들이 집에서 미리 눌러 보며 익히는 연습 사이트예요. 카페·햄버거 주문, 병원 접수·수납·증명서 발급을 실제와 비슷한 화면으로 연습할 수 있어요. English · 日本語 · 中文도 지원해요.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="한국 키오스크 연습 · 사이트 소개">
+<meta property="og:description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급 키오스크를 집에서 미리 연습해 보세요. 회원가입 없이 무료, 실제로 결제되지 않아요.">
+<meta name="theme-color" content="#3F3A36">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%86%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    color-scheme: light;
+    --page: #EEE8E1;
+    --paper: #FFFFFF;
+    --ink: #1C1917;
+    --muted: #57534E;
+    --line: #E4DDD4;
+    --soft: #F7F3EE;
+    --accent: #4338CA;
+    --accent-soft: #EEF0FF;
+    --ok: #15803D;
+    --ok-soft: #ECFDF3;
+    --ok-line: #86C99B;
+    --guide: #FFE27A;
+    --guide-line: #E2BC3C;
+    --focus: #2563EB;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", "Noto Sans KR", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+    font-size: 20px;
+    line-height: 1.7;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  html:lang(en) body { word-break: normal; }
+  html:lang(ja) body { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Meiryo", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"; }
+  html:lang(zh-Hans) body { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"; }
+  html:lang(zh-Hant) body { font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"; }
+  html:lang(ja) body, html:lang(zh-Hans) body, html:lang(zh-Hant) body { word-break: normal; line-break: strict; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+  h1, h2, h3, p, ul, ol, dl, dd { margin: 0; }
+
+  .wrap { width: min(100%, 780px); margin: 0 auto; padding: 16px 16px 40px; }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 52px;
+    padding: 0 18px;
+    background: #fff;
+    border: 2px solid #CFC7BD;
+    border-radius: 14px;
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .langs { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .langs a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 14px; background: #fff; border: 2px solid #CFC7BD; border-radius: 999px; color: var(--ink); font-size: 20px; font-weight: 800; text-decoration: none; }
+  .langs a[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .doc { margin-top: 14px; padding: 28px 28px 32px; background: var(--paper); border-radius: 22px; box-shadow: 0 6px 20px rgba(40, 25, 10, .08); }
+  .hero { text-align: center; }
+  .hero-emoji { font-size: 56px; line-height: 1.1; }
+  h1 { margin-top: 6px; font-size: 32px; line-height: 1.3; font-weight: 900; }
+  .lead { margin-top: 12px; font-size: 22px; }
+  .start {
+    margin-top: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 64px;
+    padding: 0 26px;
+    background: var(--accent);
+    border-radius: 16px;
+    color: #fff;
+    font-size: 23px;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  section { margin-top: 34px; }
+  h2 { padding-bottom: 6px; border-bottom: 2px solid var(--line); font-size: 25px; line-height: 1.4; font-weight: 900; }
+  section > p, section > ul, section > ol, section > .cards, section > .box, section > dl { margin-top: 12px; }
+  section ul, section ol { padding-left: 1.3em; display: flex; flex-direction: column; gap: 6px; }
+  .note { color: var(--muted); }
+
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { padding: 16px 16px 14px; background: var(--soft); border: 2px solid var(--line); border-radius: 16px; }
+  .card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .card-emoji { font-size: 40px; line-height: 1.1; }
+  .card h3 { margin-top: 4px; font-size: 23px; font-weight: 900; }
+  .card .place { color: var(--muted); }
+  .card p:last-child { margin-top: 6px; }
+
+  .steps { list-style: none; padding: 0 !important; counter-reset: step; }
+  .steps li { position: relative; padding: 14px 16px 14px 64px; background: var(--soft); border-radius: 16px; counter-increment: step; }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    background: var(--accent);
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 900;
+  }
+  .steps b { display: block; font-size: 22px; }
+  .guide-sample { display: inline-block; padding: 0 10px; background: var(--guide); border: 2px solid var(--guide-line); border-radius: 8px; font-weight: 800; }
+
+  .box { padding: 16px 20px; border-radius: 16px; }
+  .box.safe { background: var(--ok-soft); border: 3px solid var(--ok-line); }
+  .box.safe li::marker { content: '✓  '; color: var(--ok); font-weight: 900; }
+  .box.family { background: var(--accent-soft); }
+
+  .faq dt { margin-top: 14px; font-weight: 900; }
+  .faq dt:first-child { margin-top: 0; }
+  .faq dt::before { content: 'Q. '; color: var(--accent); }
+  .faq dd { margin-top: 2px; }
+
+  .foot { margin-top: 22px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+
+  @media (max-width: 520px) {
+    .wrap { padding: 10px 10px 32px; }
+    .doc { padding: 22px 16px 26px; border-radius: 18px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 23px; }
+    .lead { font-size: 21px; }
+    .cards { grid-template-columns: 1fr; }
+    .steps li { padding: 12px 14px 12px 58px; }
+    .steps li::before { left: 12px; width: 34px; height: 34px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="./" data-keep data-i="back">← 한국 키오스크 연습으로</a>
+  <nav class="langs" aria-label="언어 선택 · Language">
+    <a href="?lang=ko" data-lang="ko" lang="ko">한국어</a>
+    <a href="?lang=en" data-lang="en" lang="en">English</a>
+    <a href="?lang=ja" data-lang="ja" lang="ja">日本語</a>
+    <a href="?lang=zh-Hans" data-lang="zh-Hans" lang="zh-Hans">简体中文</a>
+    <a href="?lang=zh-Hant" data-lang="zh-Hant" lang="zh-Hant">繁體中文</a>
+  </nav>
+
+  <main class="doc">
+    <div class="hero">
+      <div class="hero-emoji" aria-hidden="true">👆</div>
+      <h1 data-i="h1">한국 키오스크 연습을 소개해요</h1>
+      <p class="lead" data-i="lead">뒷사람 눈치 보지 않고, 집에서 천천히 눌러 보며 익히는 키오스크 연습장이에요.</p>
+      <a class="start" href="./" data-keep data-i="start">지금 연습하러 가기</a>
+    </div>
+
+    <section aria-labelledby="why" data-i="why">
+      <h2 id="why">왜 만들었나요</h2>
+      <p>요즘은 카페, 햄버거 가게, 병원까지 키오스크로 주문하고 접수하는 곳이 많아졌어요. 처음 보는 화면 앞에서 무엇을 눌러야 할지 몰라 당황하거나, 뒤에 줄 선 사람 때문에 마음이 급해진 적이 있으실 거예요.</p>
+      <p>이 사이트는 그런 분들이 휴대폰이나 컴퓨터로 실제와 비슷한 화면을 <b>틀려도 괜찮은 곳에서</b> 미리 눌러 보도록 만들었어요. 몇 번 해 보면 어느 가게에 가도 순서가 눈에 들어와요.</p>
+    </section>
+
+    <section aria-labelledby="what" data-i="what">
+      <h2 id="what">무엇을 연습할 수 있나요</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="card-emoji" aria-hidden="true">☕</div>
+          <h3>카페 주문</h3>
+          <p class="place">가상 가게 ‘하루카페’</p>
+          <p>매장/포장 고르기, 따뜻한 것·차가운 것과 크기 고르기, 장바구니, 카드 결제와 영수증까지 해 봐요.</p>
+        </div>
+        <div class="card">
+          <div class="card-emoji" aria-hidden="true">🍔</div>
+          <h3>햄버거 주문</h3>
+          <p class="place">가상 가게 ‘든든버거’</p>
+          <p>단품과 세트, 사이드·음료 고르기, 재료 빼기, 디저트 권유 거절, 진동벨 번호 누르기를 해 봐요.</p>
+        </div>
+        <div class="card">
+          <div class="card-emoji" aria-hidden="true">🏥</div>
+          <h3>병원 접수</h3>
+          <p class="place">가상 병원 ‘하늘숲병원’</p>
+          <p>처음 방문 동의, 번호로 본인 확인, 신분증 보여 주기, 증상과 진료과 고르기, 번호표 받기를 해 봐요.</p>
+        </div>
+        <div class="card">
+          <div class="card-emoji" aria-hidden="true">🧾</div>
+          <h3>병원 수납</h3>
+          <p class="place">가상 병원 ‘하늘숲병원’</p>
+          <p>진료비 확인, 처방전·영수증 받을지 고르기, 카드 넣고 ‘일시불’ 고르기를 해 봐요.</p>
+        </div>
+        <div class="card">
+          <div class="card-emoji" aria-hidden="true">📄</div>
+          <h3>증명서 발급</h3>
+          <p class="place">가상 병원 ‘하늘숲병원’</p>
+          <p>잃어버린 처방전 다시 뽑기, 진료확인서처럼 보험 청구에 쓰는 서류를 뽑아 봐요.</p>
+        </div>
+      </div>
+      <p class="note">가게와 병원 이름은 모두 지어낸 것이에요. 실제 키오스크는 가게마다 모양이 조금씩 다르지만, 고르는 순서는 대부분 비슷해요.</p>
+    </section>
+
+    <section aria-labelledby="how" data-i="how">
+      <h2 id="how">이렇게 쓰시면 돼요</h2>
+      <ol class="steps">
+        <li><b>연습할 것을 골라요</b>첫 화면에서 카페, 햄버거, 병원 중 하나를 누르면 바로 시작해요. 회원가입이나 로그인은 없어요.</li>
+        <li><b>노란 칸의 ‘지금 할 일’을 따라 눌러요</b>화면 위에 <span class="guide-sample">지금 할 일</span>이 늘 나와요. 다음에 누를 버튼이 은은하게 깜빡이기도 해요.</li>
+        <li><b>틀려도 괜찮아요</b>모든 화면에 ‘이전’과 ‘처음으로’ 버튼이 있어요. 끝까지 하면 ‘잘하셨어요!’와 ‘다시 하기’가 나와요.</li>
+        <li><b>익숙해지면 미션에 도전해요</b>‘아이스 아메리카노 1잔 포장 주문하기’처럼 정해진 주문을 그대로 해 보는 연습이에요. 막히면 ‘💡 도움말’을 누르면 누를 곳이 반짝이고, 끝나면 맞았는지 알려 줘요.</li>
+      </ol>
+      <p>안내를 귀로 듣고 싶으시면 첫 화면에서 <b>소리 켜기</b>를 누르세요. 화면이 바뀔 때마다 안내를 읽어 드려요.</p>
+      <p>외국인 가족이나 친구도 함께 쓸 수 있게 <b>English · 日本語 · 简体中文 · 繁體中文</b>으로도 볼 수 있어요. 첫 화면 오른쪽 위의 국기 버튼을 누르면 언어를 바꿀 수 있어요.</p>
+    </section>
+
+    <section aria-labelledby="safe" data-i="safe">
+      <h2 id="safe">안심하고 쓰세요</h2>
+      <div class="box safe">
+        <ul>
+          <li>실제로 주문되거나 돈이 나가지 않아요. 카드도 그림을 누르는 흉내예요.</li>
+          <li>이름, 전화번호, 주민등록번호, 카드 번호를 받지 않아요. 화면에 나오는 번호는 모두 연습용이에요.</li>
+          <li>무료이고, 회원가입이 없어요.</li>
+          <li>미션 성공 기록만 이 기기에 저장돼요. 자세한 내용은 <a href="privacy.html" data-keep>개인정보처리방침</a>에 있어요.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="family" data-i="family">
+      <h2 id="family">자녀분께: 부모님께 보내 드리는 법</h2>
+      <div class="box family">
+        <ol>
+          <li>이 사이트 주소 <b>https://gusnahs.github.io/kiosk-practice/</b>를 카카오톡이나 문자로 보내 드려요.</li>
+          <li>부모님 휴대폰에서 링크를 눌러 열어 드려요.</li>
+          <li>자주 쓰시도록 홈 화면에 아이콘을 만들어 드리면 좋아요.
+            <ul>
+              <li>안드로이드(크롬): 오른쪽 위 ⋮ 메뉴 → ‘홈 화면에 추가’</li>
+              <li>아이폰(사파리): 아래쪽 공유 버튼 → ‘홈 화면에 추가’</li>
+            </ul>
+          </li>
+          <li>처음 한 번은 옆에서 같이 ‘카페 주문’을 끝까지 해 보시면, 다음부터는 혼자서도 하시기 쉬워요.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section aria-labelledby="faq" data-i="faq">
+      <h2 id="faq">자주 묻는 질문</h2>
+      <dl class="faq">
+        <dt>정말 돈이 안 나가요?</dt>
+        <dd>네. 결제는 화면으로만 흉내 내고, 카드 정보를 받지 않아요.</dd>
+        <dt>글씨가 작아요.</dt>
+        <dd>휴대폰 설정에서 글자 크기를 키우거나, 화면을 두 손가락으로 벌려 크게 볼 수 있어요.</dd>
+        <dt>소리가 안 나요.</dt>
+        <dd>휴대폰이 무음인지, 소리 크기가 작은지 확인해 주세요. 일부 브라우저는 소리로 읽어 주기를 지원하지 않아요.</dd>
+        <dt>미션 성공 표시가 사라졌어요.</dt>
+        <dd>성공 기록은 쓰고 있는 휴대폰(또는 컴퓨터)의 브라우저에만 저장돼요. 다른 기기에서 열거나 인터넷 사용 기록을 지우면 보이지 않아요.</dd>
+        <dt>다른 나라 말로도 볼 수 있나요?</dt>
+        <dd>네. 영어, 일본어, 중국어(간체·번체)를 고를 수 있어요. 첫 화면이나 키오스크 시작 화면의 언어 버튼을 누르세요.</dd>
+      </dl>
+    </section>
+
+    <section aria-labelledby="contact" data-i="contact">
+      <h2 id="contact">만든 사람과 문의</h2>
+      <p>키오스크가 낯선 분들과 그 가족을 위해 개인이 만들어 무료로 운영하는 사이트예요. 연습해 보고 싶은 가게나 고쳐야 할 점이 있으면 <a href="https://github.com/gusnahs/kiosk-practice/issues" target="_blank" rel="noopener">GitHub 문의 게시판</a>에 남겨 주세요.</p>
+    </section>
+  </main>
+
+  <p class="foot">
+    <a class="back" href="./" data-keep data-i="back">← 한국 키오스크 연습으로</a>
+    <a class="back" href="privacy.html" data-keep data-i="privacyLink">개인정보처리방침</a>
+  </p>
+</div>
+<script>
+'use strict';
+/* 언어: 주소 끝 ?lang= 또는 브라우저 언어로 고름. 한국어는 위 HTML이 원본이고, 다른 언어는 아래 글로 바꿔 끼움. 저장하지 않음. */
+const GH = '<a href="https://github.com/gusnahs/kiosk-practice/issues" target="_blank" rel="noopener">';
+const SITE = '<b>https://gusnahs.github.io/kiosk-practice/</b>';
+const LANG_LIST = '<b>한국어 · English · 日本語 · 简体中文 · 繁體中文</b>';
+const card = (emoji, h, place, p) => `<div class="card"><div class="card-emoji" aria-hidden="true">${emoji}</div><h3>${h}</h3><p class="place">${place}</p><p>${p}</p></div>`;
+const I18N = {
+  en: {
+    title: 'About · Korea Kiosk Practice',
+    back: '← Back to Korea Kiosk Practice',
+    h1: 'About Korea Kiosk Practice',
+    lead: 'A place to practice Korean kiosks slowly at home, without worrying about the line behind you.',
+    start: 'Start practicing now',
+    why: `<h2 id="why">Why we made this</h2>
+      <p>In Korea, more and more cafes, burger shops and even hospitals use kiosks for ordering and check-in. Many people feel lost in front of an unfamiliar screen, or rushed by the line behind them. It is even harder when the screen is in Korean.</p>
+      <p>This site lets you try screens like the real ones on your phone or computer, <b>in a place where mistakes are fine</b>. After a few tries, you will recognize the steps at any shop.</p>`,
+    what: `<h2 id="what">What you can practice</h2>
+      <div class="cards">
+        ${card('☕', 'Cafe order', 'Fictional shop ‘Haru Cafe’', 'Choose eat here or take out, hot or iced and the size, use the cart, pay by card and get a receipt.')}
+        ${card('🍔', 'Burger order', 'Fictional shop ‘Deundeun Burger’', 'Choose burger only or a meal, pick a side and a drink, remove ingredients, say no to dessert, and enter a buzzer number.')}
+        ${card('🏥', 'Hospital check-in', 'Fictional hospital ‘Haneulsup Hospital’', 'Give first-visit consent, confirm your identity with numbers, show an ID, choose symptoms and a department, and get a number ticket.')}
+        ${card('🧾', 'Hospital payment', 'Fictional hospital ‘Haneulsup Hospital’', 'Check the bill, choose whether to get a prescription and a receipt, insert your card and choose ‘Pay in full’.')}
+        ${card('📄', 'Certificates', 'Fictional hospital ‘Haneulsup Hospital’', 'Reprint a lost prescription, or print papers such as a proof of visit for insurance claims.')}
+      </div>
+      <p class="note">All shop and hospital names are made up. Real kiosks look a little different in each shop, but the order of the steps is mostly the same.</p>`,
+    how: `<h2 id="how">How to use it</h2>
+      <ol class="steps">
+        <li><b>Choose what to practice</b>Tap cafe, burger or hospital on the first screen and it starts right away. There is no sign-up or login.</li>
+        <li><b>Follow ‘What to do’ in the yellow box</b>The <span class="guide-sample">What to do</span> box is always at the top of the screen. The next button to tap also gently flashes.</li>
+        <li><b>Mistakes are fine</b>Every screen has ‘Back’ and ‘Start over’ buttons. When you finish, you will see ‘Well done!’ and ‘Try again’.</li>
+        <li><b>Try missions when you are ready</b>A mission asks you to place a given order, such as ‘Order 1 iced Americano to go’. If you get stuck, tap ‘💡 Help’ and the spot to tap will flash. At the end, it tells you whether you got it right.</li>
+      </ol>
+      <p>To hear the instructions, tap the <b>sound button</b> on the first screen. The instructions are read aloud every time the screen changes.</p>
+      <p>The site is available in ${LANG_LIST}. Tap the flag button at the top right of the first screen to change the language.</p>`,
+    safe: `<h2 id="safe">Use it with peace of mind</h2>
+      <div class="box safe"><ul>
+        <li>Nothing is really ordered and no money is charged. The card is just a picture you tap.</li>
+        <li>We never ask for your name, phone number, ID number or card number. All numbers on the screen are practice numbers.</li>
+        <li>It is free, and there is no sign-up.</li>
+        <li>Only your mission results are saved on this device. See the <a href="privacy.html" data-keep>privacy policy</a> for details.</li>
+      </ul></div>`,
+    family: `<h2 id="family">For family: how to share it with your parents</h2>
+      <div class="box family"><ol>
+        <li>Send the address ${SITE} by messenger or text message.</li>
+        <li>Open the link on your parent's phone.</li>
+        <li>Add an icon to the home screen so it is easy to open again.
+          <ul>
+            <li>Android (Chrome): ⋮ menu at the top right → ‘Add to Home screen’</li>
+            <li>iPhone (Safari): Share button at the bottom → ‘Add to Home Screen’</li>
+          </ul>
+        </li>
+        <li>Do ‘Cafe order’ together to the end once. After that, it is easy to do alone.</li>
+      </ol></div>`,
+    faq: `<h2 id="faq">Frequently asked questions</h2>
+      <dl class="faq">
+        <dt>Is it really free of charge?</dt>
+        <dd>Yes. Payment is only acted out on the screen, and no card information is taken.</dd>
+        <dt>The text is too small.</dt>
+        <dd>Make the font bigger in your phone settings, or spread two fingers on the screen to zoom in.</dd>
+        <dt>There is no sound.</dt>
+        <dd>Check that your phone is not on silent and the volume is not too low. Some browsers do not support reading aloud.</dd>
+        <dt>My mission check marks are gone.</dt>
+        <dd>Results are saved only in the browser of the phone (or computer) you are using. They do not show on another device or after you clear your browsing data.</dd>
+        <dt>Can I use it in other languages?</dt>
+        <dd>Yes. You can choose Korean, English, Japanese, or Chinese (Simplified or Traditional) with the language button on the first screen or on the kiosk start screen.</dd>
+      </dl>`,
+    contact: `<h2 id="contact">Who made this, and how to contact us</h2>
+      <p>This site was made and is run for free by an individual, for people who find kiosks unfamiliar and for their families. If there is a shop you would like to practice or something to fix, please leave a note on the ${GH}GitHub feedback board</a>.</p>`,
+    privacyLink: 'Privacy policy',
+  },
+  ja: {
+    title: 'サイト紹介 · 韓国キオスク練習',
+    back: '← 韓国キオスク練習へ',
+    h1: '韓国キオスク練習について',
+    lead: '後ろの人を気にせず、家でゆっくり押しながら覚えるキオスクの練習場です。',
+    start: '今すぐ練習する',
+    why: `<h2 id="why">なぜ作ったのか</h2>
+      <p>韓国では、カフェやハンバーガー店、病院まで、キオスクで注文や受付をする所が増えました。初めて見る画面の前で何を押せばいいか分からず戸惑ったり、後ろに並ぶ人が気になって焦ったりしたことがあるかもしれません。画面が韓国語なら、なおさらです。</p>
+      <p>このサイトでは、実際によく似た画面を、スマホやパソコンで<b>間違えても大丈夫な場所で</b>前もって押してみることができます。何回かやってみると、どの店でも手順が分かるようになります。</p>`,
+    what: `<h2 id="what">何を練習できますか</h2>
+      <div class="cards">
+        ${card('☕', 'カフェの注文', '架空の店「ハルカフェ」', '店内・持ち帰りの選択、ホット・アイスとサイズの選択、カート、カード払いとレシートまでやってみます。')}
+        ${card('🍔', 'ハンバーガーの注文', '架空の店「ドゥンドゥンバーガー」', '単品とセット、サイド・ドリンクの選択、具材を抜く、デザートのおすすめを断る、呼び出しベルの番号を押す練習をします。')}
+        ${card('🏥', '病院の受付', '架空の病院「ハヌルスプ病院」', '初診の同意、番号での本人確認、身分証の提示、症状と診療科の選択、番号札の受け取りをやってみます。')}
+        ${card('🧾', '病院の会計', '架空の病院「ハヌルスプ病院」', '診察代の確認、処方せん・領収書を受け取るかの選択、カードを入れて「一括払い」を選ぶ練習をします。')}
+        ${card('📄', '証明書の発行', '架空の病院「ハヌルスプ病院」', 'なくした処方せんの再発行や、診療確認書のように保険の請求に使う書類の発行をやってみます。')}
+      </div>
+      <p class="note">店や病院の名前はすべて架空のものです。実際のキオスクは店ごとに少しずつ見た目が違いますが、選ぶ順番はほとんど同じです。</p>`,
+    how: `<h2 id="how">使い方</h2>
+      <ol class="steps">
+        <li><b>練習するものを選ぶ</b>最初の画面でカフェ、ハンバーガー、病院のどれかを押すと、すぐに始まります。会員登録やログインはありません。</li>
+        <li><b>黄色い欄の「やること」に従って押す</b>画面の上にいつも<span class="guide-sample">やること</span>が出ます。次に押すボタンがやさしく点滅することもあります。</li>
+        <li><b>間違えても大丈夫</b>すべての画面に「戻る」と「最初へ」のボタンがあります。最後まで進むと「よくできました!」と「もう一度」が出ます。</li>
+        <li><b>慣れたらミッションに挑戦</b>「アイスアメリカーノ1杯を持ち帰りで注文する」のように、決められた注文をそのとおりにする練習です。困ったら「💡 ヘルプ」を押すと押す所が光り、終わると正しくできたか教えてくれます。</li>
+      </ol>
+      <p>案内を耳で聞きたいときは、最初の画面の<b>音声ボタン</b>を押して音声をオンにしてください。画面が変わるたびに案内を読み上げます。</p>
+      <p>${LANG_LIST}で利用できます。最初の画面の右上にある国旗のボタンで言語を切り替えられます。</p>`,
+    safe: `<h2 id="safe">安心してお使いください</h2>
+      <div class="box safe"><ul>
+        <li>実際に注文されたり、お金がかかったりすることはありません。カードも絵を押すまねだけです。</li>
+        <li>名前、電話番号、身分証の番号、カード番号は受け取りません。画面に出る番号はすべて練習用です。</li>
+        <li>無料で、会員登録もありません。</li>
+        <li>この端末に保存されるのは、ミッションの成功記録だけです。詳しくは<a href="privacy.html" data-keep>プライバシーポリシー</a>をご覧ください。</li>
+      </ul></div>`,
+    family: `<h2 id="family">ご家族の方へ:ご両親に送る方法</h2>
+      <div class="box family"><ol>
+        <li>このサイトのアドレス ${SITE} を、メッセージアプリやSMSで送ります。</li>
+        <li>ご両親のスマホでリンクを押して開いてあげます。</li>
+        <li>よく使えるように、ホーム画面にアイコンを作ってあげると便利です。
+          <ul>
+            <li>Android(Chrome):右上の ⋮ メニュー →「ホーム画面に追加」</li>
+            <li>iPhone(Safari):下の共有ボタン →「ホーム画面に追加」</li>
+          </ul>
+        </li>
+        <li>最初の1回は、そばで一緒に「カフェの注文」を最後までやってみると、次からは一人でもやりやすくなります。</li>
+      </ol></div>`,
+    faq: `<h2 id="faq">よくある質問</h2>
+      <dl class="faq">
+        <dt>本当にお金はかかりませんか?</dt>
+        <dd>はい。支払いは画面でまねをするだけで、カード情報は受け取りません。</dd>
+        <dt>文字が小さいです。</dt>
+        <dd>スマホの設定で文字サイズを大きくするか、画面を2本の指で広げて拡大できます。</dd>
+        <dt>音が出ません。</dt>
+        <dd>スマホがマナーモードになっていないか、音量が小さくないか確認してください。一部のブラウザは読み上げに対応していません。</dd>
+        <dt>ミッションの成功マークが消えました。</dt>
+        <dd>成功記録は、使っているスマホ(またはパソコン)のブラウザにだけ保存されます。別の端末で開いたり、閲覧履歴を消したりすると表示されません。</dd>
+        <dt>ほかの言語でも使えますか?</dt>
+        <dd>はい。韓国語、英語、日本語、中国語(簡体字・繁体字)から選べます。最初の画面やキオスクの最初の画面にある言語ボタンを押してください。</dd>
+      </dl>`,
+    contact: `<h2 id="contact">作った人とお問い合わせ</h2>
+      <p>キオスクに慣れていない方とそのご家族のために、個人が作って無料で運営しているサイトです。練習してみたいお店や直してほしい点があれば、${GH}GitHubのお問い合わせ掲示板</a>に書き込んでください。</p>`,
+    privacyLink: 'プライバシーポリシー',
+  },
+  'zh-Hans': {
+    title: '网站介绍 · 韩国自助机练习',
+    back: '← 返回韩国自助机练习',
+    h1: '韩国自助机练习介绍',
+    lead: '不用在意身后排队的人,在家慢慢点、慢慢学的自助机练习场。',
+    start: '马上开始练习',
+    why: `<h2 id="why">为什么做这个网站</h2>
+      <p>在韩国,咖啡店、汉堡店甚至医院,用自助机点餐和挂号的地方越来越多。面对第一次见到的画面,不知道该点什么而慌张,或者因为身后排队的人而着急。如果画面是韩语,就更难了。</p>
+      <p>这个网站让您用手机或电脑,在<b>出错也没关系的地方</b>,提前试点和真实画面相似的界面。练习几次后,去哪家店都能看懂步骤。</p>`,
+    what: `<h2 id="what">可以练习什么</h2>
+      <div class="cards">
+        ${card('☕', '咖啡店点单', '虚构店铺“哈鲁咖啡”', '选择堂食或外带、热饮或冰饮和大小,使用购物车,刷卡付款并领取小票。')}
+        ${card('🍔', '汉堡店点餐', '虚构店铺“饱饱汉堡”', '选择单点或套餐、小食和饮料,去掉配料,拒绝甜点推荐,输入取餐器号码。')}
+        ${card('🏥', '医院挂号', '虚构医院“天林医院”', '初诊同意、用号码验证身份、出示证件、选择症状和科室、领取号码单。')}
+        ${card('🧾', '医院缴费', '虚构医院“天林医院”', '确认诊疗费、选择是否领取处方和收据、插卡并选择“一次付清”。')}
+        ${card('📄', '打印证明', '虚构医院“天林医院”', '重新打印丢失的处方,或打印就诊证明等用于保险理赔的文件。')}
+      </div>
+      <p class="note">店铺和医院的名字都是虚构的。真实的自助机每家店样子略有不同,但操作顺序大多相似。</p>`,
+    how: `<h2 id="how">使用方法</h2>
+      <ol class="steps">
+        <li><b>选择要练习的内容</b>在首页点咖啡店、汉堡店或医院中的一个,就会马上开始。无需注册或登录。</li>
+        <li><b>按照黄色框里的“现在要做”操作</b>画面上方总会显示<span class="guide-sample">现在要做</span>。下一步要点的按钮也会轻轻闪烁。</li>
+        <li><b>出错也没关系</b>每个画面都有“返回”和“回到开头”按钮。做到最后会显示“做得很好!”和“再来一次”。</li>
+        <li><b>熟悉后挑战任务</b>例如“外带1杯冰美式咖啡”,按照指定内容点单的练习。遇到困难时点“💡 帮助”,要点的地方就会闪烁,完成后会告诉您是否正确。</li>
+      </ol>
+      <p>想听语音提示的话,请在首页点<b>声音按钮</b>打开声音。每次切换画面都会朗读提示。</p>
+      <p>可以使用${LANG_LIST}。点首页右上角的国旗按钮就能切换语言。</p>`,
+    safe: `<h2 id="safe">请放心使用</h2>
+      <div class="box safe"><ul>
+        <li>不会真的下单,也不会扣钱。银行卡也只是点图片的模拟。</li>
+        <li>不收集姓名、电话号码、身份证号或银行卡号。画面上的号码都是练习用的。</li>
+        <li>免费使用,无需注册。</li>
+        <li>只有任务成功记录会保存在这台设备上。详情请见<a href="privacy.html" data-keep>隐私政策</a>。</li>
+      </ul></div>`,
+    family: `<h2 id="family">给家人:怎么发给父母</h2>
+      <div class="box family"><ol>
+        <li>把网址 ${SITE} 通过聊天软件或短信发过去。</li>
+        <li>在父母的手机上点开链接。</li>
+        <li>在主屏幕上添加图标,方便经常使用。
+          <ul>
+            <li>安卓(Chrome):右上角 ⋮ 菜单 → “添加到主屏幕”</li>
+            <li>iPhone(Safari):下方分享按钮 → “添加到主屏幕”</li>
+          </ul>
+        </li>
+        <li>第一次在旁边陪着一起把“咖啡店点单”做到最后,之后一个人也能轻松完成。</li>
+      </ol></div>`,
+    faq: `<h2 id="faq">常见问题</h2>
+      <dl class="faq">
+        <dt>真的不会扣钱吗?</dt>
+        <dd>是的。付款只是在画面上模拟,不收集银行卡信息。</dd>
+        <dt>字太小了。</dt>
+        <dd>可以在手机设置里调大字体,或用两根手指在屏幕上放大。</dd>
+        <dt>没有声音。</dt>
+        <dd>请确认手机没有静音、音量不太小。部分浏览器不支持语音朗读。</dd>
+        <dt>任务成功标记不见了。</dt>
+        <dd>成功记录只保存在您正在使用的手机(或电脑)的浏览器里。换设备打开或清除浏览记录后就看不到了。</dd>
+        <dt>可以用其他语言吗?</dt>
+        <dd>可以。可以选择韩语、英语、日语、中文(简体·繁体)。请点首页或自助机开始画面上的语言按钮。</dd>
+      </dl>`,
+    contact: `<h2 id="contact">制作者与联系方式</h2>
+      <p>这是个人为不熟悉自助机的人和他们的家人制作并免费运营的网站。如果有想练习的店铺或需要修改的地方,请在${GH}GitHub 留言板</a>留言。</p>`,
+    privacyLink: '隐私政策',
+  },
+  'zh-Hant': {
+    title: '網站介紹 · 韓國自助機練習',
+    back: '← 回到韓國自助機練習',
+    h1: '韓國自助機練習介紹',
+    lead: '不用在意後面排隊的人,在家慢慢點、慢慢學的自助機練習場。',
+    start: '馬上開始練習',
+    why: `<h2 id="why">為什麼做這個網站</h2>
+      <p>在韓國,咖啡店、漢堡店甚至醫院,用自助機點餐和掛號的地方越來越多。面對第一次看到的畫面,不知道該點什麼而慌張,或是因為後面排隊的人而著急。如果畫面是韓文,就更難了。</p>
+      <p>這個網站讓您用手機或電腦,在<b>出錯也沒關係的地方</b>,事先試點和真實畫面相似的介面。練習幾次後,去哪家店都看得懂步驟。</p>`,
+    what: `<h2 id="what">可以練習什麼</h2>
+      <div class="cards">
+        ${card('☕', '咖啡店點餐', '虛構店家「哈魯咖啡」', '選擇內用或外帶、熱飲或冰飲和大小,使用購物車,刷卡付款並取得收據。')}
+        ${card('🍔', '漢堡店點餐', '虛構店家「飽飽漢堡」', '選擇單點或套餐、附餐和飲料,去掉配料,拒絕甜點推薦,輸入呼叫器號碼。')}
+        ${card('🏥', '醫院掛號', '虛構醫院「天林醫院」', '初診同意、用號碼確認身分、出示證件、選擇症狀和科別、領取號碼牌。')}
+        ${card('🧾', '醫院繳費', '虛構醫院「天林醫院」', '確認醫療費、選擇是否領取處方箋和收據、插卡並選擇「一次付清」。')}
+        ${card('📄', '列印證明', '虛構醫院「天林醫院」', '重新列印遺失的處方箋,或列印就診證明等保險理賠用的文件。')}
+      </div>
+      <p class="note">店家和醫院的名稱都是虛構的。真實的自助機每家店樣子略有不同,但操作順序大多相似。</p>`,
+    how: `<h2 id="how">使用方法</h2>
+      <ol class="steps">
+        <li><b>選擇要練習的內容</b>在首頁點咖啡店、漢堡店或醫院其中一個,就會馬上開始。不需要註冊或登入。</li>
+        <li><b>照著黃色框裡的「現在要做」操作</b>畫面上方會一直顯示<span class="guide-sample">現在要做</span>。下一步要點的按鈕也會輕輕閃爍。</li>
+        <li><b>出錯也沒關係</b>每個畫面都有「返回」和「回到開頭」按鈕。做到最後會顯示「做得很好!」和「再來一次」。</li>
+        <li><b>熟悉後挑戰任務</b>例如「外帶1杯冰美式咖啡」,照著指定內容點餐的練習。遇到困難時點「💡 幫助」,要點的地方就會閃爍,完成後會告訴您是否正確。</li>
+      </ol>
+      <p>想聽語音提示的話,請在首頁點<b>聲音按鈕</b>開啟聲音。每次切換畫面都會朗讀提示。</p>
+      <p>可以使用${LANG_LIST}。點首頁右上角的國旗按鈕就能切換語言。</p>`,
+    safe: `<h2 id="safe">請安心使用</h2>
+      <div class="box safe"><ul>
+        <li>不會真的點餐,也不會扣款。卡片也只是點圖片的模擬。</li>
+        <li>不蒐集姓名、電話號碼、身分證字號或卡號。畫面上的號碼都是練習用的。</li>
+        <li>免費使用,不需要註冊。</li>
+        <li>只有任務成功紀錄會儲存在這台裝置上。詳情請見<a href="privacy.html" data-keep>隱私權政策</a>。</li>
+      </ul></div>`,
+    family: `<h2 id="family">給家人:怎麼傳給父母</h2>
+      <div class="box family"><ol>
+        <li>把網址 ${SITE} 用通訊軟體或簡訊傳過去。</li>
+        <li>在父母的手機上點開連結。</li>
+        <li>在主畫面加上圖示,方便常常使用。
+          <ul>
+            <li>Android(Chrome):右上角 ⋮ 選單 → 「加到主畫面」</li>
+            <li>iPhone(Safari):下方分享按鈕 → 「加入主畫面」</li>
+          </ul>
+        </li>
+        <li>第一次在旁邊陪著一起把「咖啡店點餐」做到最後,之後一個人也能輕鬆完成。</li>
+      </ol></div>`,
+    faq: `<h2 id="faq">常見問題</h2>
+      <dl class="faq">
+        <dt>真的不會扣款嗎?</dt>
+        <dd>是的。付款只是在畫面上模擬,不蒐集卡片資料。</dd>
+        <dt>字太小了。</dt>
+        <dd>可以在手機設定裡調大字體,或用兩根手指在螢幕上放大。</dd>
+        <dt>沒有聲音。</dt>
+        <dd>請確認手機沒有靜音、音量不會太小。部分瀏覽器不支援語音朗讀。</dd>
+        <dt>任務成功標記不見了。</dt>
+        <dd>成功紀錄只儲存在您正在使用的手機(或電腦)的瀏覽器裡。換裝置開啟或清除瀏覽紀錄後就看不到了。</dd>
+        <dt>可以用其他語言嗎?</dt>
+        <dd>可以。可以選擇韓文、英文、日文、中文(簡體·繁體)。請點首頁或自助機開始畫面上的語言按鈕。</dd>
+      </dl>`,
+    contact: `<h2 id="contact">製作者與聯絡方式</h2>
+      <p>這是個人為不熟悉自助機的人和他們的家人製作、免費經營的網站。如果有想練習的店家或需要修正的地方,請在${GH}GitHub 留言板</a>留言。</p>`,
+    privacyLink: '隱私權政策',
+  },
+};
+
+(function applyLang() {
+  const LANGS = ['ko', 'en', 'ja', 'zh-Hans', 'zh-Hant'];
+  const asked = new URLSearchParams(location.search).get('lang');
+  let lang = LANGS.includes(asked) ? asked : null;
+  if (!lang) {
+    lang = 'ko';
+    for (const raw of navigator.languages || [navigator.language || 'ko']) {
+      const l = String(raw).toLowerCase();
+      if (l.startsWith('ko')) { lang = 'ko'; break; }
+      if (l.startsWith('en')) { lang = 'en'; break; }
+      if (l.startsWith('ja')) { lang = 'ja'; break; }
+      if (/^zh-(tw|hk|mo|hant)/.test(l)) { lang = 'zh-Hant'; break; }
+      if (l.startsWith('zh')) { lang = 'zh-Hans'; break; }
+    }
+  }
+  const t = I18N[lang];
+  if (t) {
+    document.documentElement.lang = lang;
+    document.title = t.title;
+    document.querySelectorAll('[data-i]').forEach(el => { if (t[el.dataset.i] != null) el.innerHTML = t[el.dataset.i]; });
+  }
+  document.querySelectorAll('.langs a').forEach(a => { if (a.dataset.lang === lang) a.setAttribute('aria-current', 'true'); });
+  if (asked || lang !== 'ko') {
+    document.querySelectorAll('a[data-keep]').forEach(a => { a.href = a.getAttribute('href').split('?')[0] + '?lang=' + lang; });
+  }
+})();
+</script>
+</body>
+</html>
