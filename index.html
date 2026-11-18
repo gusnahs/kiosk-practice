@@ -1,0 +1,3625 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>키오스크 연습</title>
+<meta name="description" content="카페·햄버거 주문과 병원 접수·수납·증명서 발급 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 회원가입 없이 바로 시작하고, 실제로 결제되지 않아요.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="키오스크 연습">
+<meta property="og:description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급 키오스크를 미리 눌러 보며 연습해 보세요. 실제로 결제되지 않아요.">
+<meta name="theme-color" content="#3F3A36">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%86%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    color-scheme: light;
+    --page: #EEE8E1;
+    --ink: #1C1917;
+    --muted: #57534E;
+    --line: #E4DDD4;
+    --soft: #F7F3EE;
+    --bezel: #2A2725;
+    --guide-bg: #FFE27A;
+    --guide-line: #E2BC3C;
+    --off-bg: #DAD5CF;
+    --off-ink: #57534E;
+    --focus: #2563EB;
+    --mission: #4338CA;
+    --mission-soft: #EEF0FF;
+    --ok: #15803D;
+    /* 가게·병원마다 바뀌는 색 (연습을 시작할 때 덮어씀) */
+    --brand: #6F4E37;
+    --action: #C2410C;
+    --action-press: #9A3412;
+    --action-soft: #FFF1E6;
+    --pulse: 194, 65, 12;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; touch-action: manipulation; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", "Noto Sans KR", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+    font-size: 20px;
+    line-height: 1.4;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; -webkit-user-select: none; user-select: none; }
+  button:focus-visible, [tabindex]:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; }
+  #screen:focus, h1:focus { outline: none; }
+  h1, h2, h3, h4, p, dl, dd { margin: 0; }
+  svg { display: block; width: 100%; height: 100%; }
+  [hidden] { display: none !important; }
+
+  .app {
+    height: 100vh;
+    height: 100dvh;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    container-type: size;
+  }
+
+  /* ================= 첫 화면 · 미션 목록 ================= */
+  .page {
+    width: min(100%, 720px);
+    height: 100%;
+    overflow-y: auto;
+    padding: 4px 4px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .page > * { flex-shrink: 0; }
+  .page-head { text-align: center; padding: 10px 0 2px; }
+  .page-emoji { font-size: 48px; line-height: 1; }
+  .page h1 { font-size: 34px; font-weight: 900; line-height: 1.25; }
+  .page-head p, .page-sub { font-size: 21px; color: var(--muted); }
+  .page-h2 { font-size: 24px; font-weight: 800; }
+  .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .home-card {
+    min-height: 176px;
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #fff;
+    border: 3px solid var(--line);
+    border-radius: 22px;
+    text-align: center;
+  }
+  .home-card:last-child:nth-child(odd) { grid-column: 1 / -1; min-height: 150px; }
+  .home-card:active { border-color: var(--ink); }
+  .home-emoji { font-size: 60px; line-height: 1; }
+  .home-card b { font-size: 26px; font-weight: 900; }
+  .home-card span:last-child { font-size: 20px; color: var(--muted); }
+  .mission-entry {
+    min-height: 96px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--mission);
+    border: none;
+    border-radius: 22px;
+    color: #fff;
+    text-align: left;
+  }
+  .me-emoji { font-size: 44px; line-height: 1; }
+  .me-text { flex: 1; display: flex; flex-direction: column; }
+  .me-text b { font-size: 27px; font-weight: 900; }
+  .me-text span { font-size: 20px; opacity: .92; }
+  .me-count { flex: none; padding: 4px 12px; border-radius: 999px; background: rgba(255, 255, 255, .2); font-size: 20px; font-weight: 800; }
+  .sound-toggle { min-height: 72px; padding: 10px 18px; background: #fff; border: 3px solid var(--line); border-radius: 18px; font-size: 23px; font-weight: 800; }
+  .sound-toggle[aria-pressed="true"] { background: #ECFDF3; border-color: var(--ok); color: #14532D; }
+  .sound-toggle:disabled { opacity: .5; cursor: default; }
+  .page-note { font-size: 20px; color: var(--muted); text-align: center; }
+
+  .page-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .mission-progress { font-size: 22px; font-weight: 800; color: var(--mission); }
+  .mission-group { display: flex; flex-direction: column; gap: 10px; }
+  .mission-group h2 { font-size: 25px; font-weight: 900; padding-top: 6px; }
+  .mission-cards { display: flex; flex-direction: column; gap: 10px; }
+  .mission-card { min-height: 84px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; background: #fff; border: 3px solid var(--line); border-radius: 18px; text-align: left; }
+  .mission-card:active { border-color: var(--mission); }
+  .mission-card-text { flex: 1; font-size: 22px; font-weight: 700; }
+  .mission-card-state { flex: none; padding: 6px 12px; border-radius: 12px; background: var(--mission-soft); color: var(--mission); font-size: 20px; font-weight: 800; white-space: nowrap; }
+  .mission-card.done { border-color: #86C99B; background: #F3FBF5; }
+  .mission-card.done .mission-card-state { background: var(--ok); color: #fff; }
+
+  .top-btn { flex: none; min-height: 50px; padding: 0 16px; background: #fff; border: 2px solid #CFC7BD; border-radius: 14px; font-size: 20px; font-weight: 800; white-space: nowrap; }
+  .sound-mini[aria-pressed="true"] { background: #ECFDF3; border-color: var(--ok); color: #14532D; }
+
+  /* ================= 연습 화면 ================= */
+  .stage { width: min(100%, 680px); height: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  /* 가운데 정렬하되, 화면이 작아 넘치면 위에서부터 보이게 */
+  .stage > :first-child { margin-top: auto; }
+  .stage > :last-child { margin-bottom: auto; }
+  .topbar { flex: none; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .top-title { flex: 1; min-width: 0; text-align: center; font-size: 22px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .guide {
+    flex: none;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 12px 12px 18px;
+    background: var(--guide-bg);
+    border: 3px solid var(--guide-line);
+    border-radius: 18px;
+  }
+  .guide-label {
+    display: inline-block;
+    margin-right: 8px;
+    padding: 0 10px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.6;
+    vertical-align: 3px;
+    white-space: nowrap;
+  }
+  .guide-text { font-size: clamp(21px, 5.4vw, 28px); font-weight: 800; line-height: 1.3; }
+  .guide.flash { animation: flash .7s ease-out; }
+  @keyframes flash { 0% { transform: scale(1.03); background: #FFF5C7; } 100% { transform: none; } }
+  .speak-btn { min-width: 64px; min-height: 60px; padding: 4px 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fff; border: 2px solid var(--guide-line); border-radius: 14px; font-size: 20px; font-weight: 800; line-height: 1.1; }
+  .speak-btn span { font-size: 24px; }
+
+  .mission-bar { flex: none; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 10px 10px 10px 16px; background: var(--mission-soft); border: 3px solid #A5B0F5; border-radius: 18px; }
+  .mission-info { font-size: 21px; font-weight: 800; line-height: 1.35; }
+  .mission-label { display: inline-block; margin-right: 4px; padding: 0 10px; border-radius: 8px; background: var(--mission); color: #fff; font-size: 20px; font-weight: 800; }
+  .help-btn { min-height: 60px; padding: 0 16px; display: flex; align-items: center; gap: 4px; background: var(--mission); border: none; border-radius: 14px; color: #fff; font-size: 21px; font-weight: 800; white-space: nowrap; }
+
+  .kiosk {
+    flex: 1 0 auto;
+    height: 0;
+    min-height: 470px;
+    max-height: 1000px;
+    width: 100%;
+    width: min(100%, max(380px, calc((100cqh - 190px) * 0.62)), 560px);
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 12px solid var(--bezel);
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 14px 34px rgba(40, 25, 10, .22);
+  }
+  .has-mission .kiosk { width: min(100%, max(380px, calc((100cqh - 280px) * 0.66)), 560px); }
+  .kiosk-top { flex: none; min-height: 54px; padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--brand); color: #fff; }
+  .store { display: flex; align-items: center; gap: 8px; font-size: 22px; font-weight: 800; }
+  .logo { flex: none; width: 34px; height: 34px; padding: 2px; display: grid; place-items: center; background: #fff; border-radius: 50%; font-size: 20px; }
+  .badge { padding: 3px 14px; border-radius: 999px; background: #fff; color: var(--brand); font-size: 20px; font-weight: 800; }
+  .screen-area { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+  #screen { position: absolute; inset: 0; display: flex; flex-direction: column; }
+  .screen { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .screen.center { overflow-y: auto; padding: 20px 18px; }
+  .center-inner { margin: auto 0; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+  .scroll-body { flex: 1; min-height: 0; overflow-y: auto; padding: 4px 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .title { font-size: 28px; font-weight: 800; line-height: 1.3; }
+  .title.pad { flex: none; padding: 16px 16px 8px; }
+  .sub { font-size: 21px; color: var(--muted); }
+  .sub.left { text-align: left; }
+  .note { font-size: 20px; color: var(--muted); }
+  .enter { animation: enter .28s ease-out; }
+  .enter-back { animation: enterBack .28s ease-out; }
+  @keyframes enter { from { opacity: 0; transform: translateX(28px); } }
+  @keyframes enterBack { from { opacity: 0; transform: translateX(-28px); } }
+  .kiosk-nav { flex: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px 12px; background: #F1EBE4; border-top: 2px solid var(--line); }
+
+  /* ---------- 버튼 ---------- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 60px; padding: 0 20px; border: none; border-radius: 14px; font-size: 22px; font-weight: 800; }
+  .btn-primary { background: var(--action); color: #fff; }
+  .btn-primary:active { background: var(--action-press); }
+  .btn-secondary { background: #fff; border: 2px solid #CFC7BD; }
+  .btn.is-off { background: var(--off-bg); color: var(--off-ink); }
+  .btn.big { width: 100%; min-height: 70px; font-size: 24px; }
+  .btn-nav { width: 100%; min-height: 58px; background: #fff; border: 2px solid #CFC7BD; font-size: 21px; white-space: nowrap; }
+  .btn-nav:disabled { opacity: .4; cursor: default; }
+  .hint { animation: pulse 1.6s ease-out infinite; }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(var(--pulse), .6); }
+    70% { box-shadow: 0 0 0 12px rgba(var(--pulse), 0); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--pulse), 0); }
+  }
+  .help-glow { position: relative; z-index: 4; outline: 5px solid #FACC15 !important; outline-offset: 3px; animation: helpGlow 1s ease-in-out infinite !important; }
+  .card.help-glow, .scan-item.help-glow { z-index: 1; }
+  @keyframes helpGlow { 50% { box-shadow: 0 0 0 12px rgba(250, 204, 21, .55); } }
+
+  /* ---------- 주문: 시작·매장/포장 ---------- */
+  .start-screen { flex: 1; width: 100%; border: none; background: #FBF6F0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px; text-align: center; }
+  .start-art { width: 128px; height: 128px; }
+  .start-name { font-size: 40px; font-weight: 900; color: var(--brand); }
+  .start-msg { font-size: 30px; font-weight: 800; line-height: 1.35; }
+  .start-finger { font-size: 56px; line-height: 1; animation: tap 1.4s ease-in-out infinite; }
+  @keyframes tap { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  .start-note { padding: 8px 14px; border: 2px solid var(--line); border-radius: 12px; background: #fff; font-size: 20px; color: var(--muted); }
+  .where-grid { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .where-btn { min-height: 200px; padding: 16px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: #fff; border: 3px solid var(--line); border-radius: 20px; font-size: 24px; font-weight: 800; }
+  .where-btn:active { background: var(--action-soft); border-color: var(--action); }
+  .where-emoji { font-size: 64px; line-height: 1; }
+
+  /* ---------- 주문: 메뉴 ---------- */
+  .promo { flex: none; margin: 10px 12px 0; min-height: 56px; padding: 8px 14px; display: flex; align-items: center; gap: 10px; background: linear-gradient(90deg, #FFF4E5, #FFE6D5); border: 2px solid #F3A97A; border-radius: 14px; font-size: 20px; font-weight: 800; text-align: left; }
+  .promo-badge { flex: none; padding: 0 8px; border-radius: 8px; background: var(--action); color: #fff; }
+  .promo-arrow { margin-left: auto; color: var(--action); }
+  .tabs { flex: none; display: grid; grid-auto-columns: 1fr; grid-auto-flow: column; gap: 8px; padding: 12px 12px 10px; border-bottom: 2px solid var(--line); }
+  .tab { min-height: 58px; padding: 0 4px; border-radius: 14px; background: var(--soft); border: 2px solid var(--line); font-size: 22px; font-weight: 800; white-space: nowrap; }
+  .tab[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .menu-grid { flex: 1; min-height: 0; overflow-y: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: 12px; padding: 14px 12px; }
+  .menu-card { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 8px 14px; background: #fff; border: 2px solid var(--line); border-radius: 18px; }
+  .menu-card:active { background: var(--action-soft); border-color: var(--action); }
+  .menu-art { width: 96px; height: 96px; padding: 6px; background: var(--soft); border-radius: 50%; }
+  .menu-name { font-size: 21px; font-weight: 800; line-height: 1.25; text-align: center; }
+  .menu-price { font-size: 20px; font-weight: 600; color: var(--muted); }
+  .tag, .in-cart { position: absolute; top: 8px; padding: 1px 10px; border-radius: 999px; color: #fff; font-size: 18px; font-weight: 800; }
+  .tag { left: 8px; }
+  .in-cart { right: 8px; background: var(--action); }
+  .menu-card.sold .menu-art, .menu-card.sold .menu-name, .menu-card.sold .menu-price, .menu-card.sold .tag { opacity: .4; }
+  .menu-card.sold .menu-price { text-decoration: line-through; }
+  .sold-label { position: absolute; top: 52px; left: 50%; transform: translateX(-50%); padding: 4px 18px; border-radius: 10px; background: rgba(28, 25, 23, .88); color: #fff; font-size: 21px; font-weight: 900; }
+  .art-emoji { display: grid; place-items: center; width: 100%; height: 100%; font-size: 48px; line-height: 1; }
+  .summary, .cart-foot { flex: none; display: flex; align-items: center; gap: 12px; padding: 12px; background: #FBF8F4; border-top: 2px solid var(--line); }
+  .summary.bump { animation: bump .7s ease-out; }
+  @keyframes bump { 0% { background: var(--action-soft); } 100% { background: #FBF8F4; } }
+  .summary-text { flex: 1; min-width: 0; }
+  .summary-items { font-size: 20px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .summary-total { font-size: 23px; font-weight: 900; }
+  .pay-btn { flex: none; min-width: 136px; min-height: 66px; font-size: 23px; }
+  .fly { position: fixed; z-index: 50; pointer-events: none; }
+
+  /* ---------- 팝업 창 ---------- */
+  .sheet-backdrop { position: absolute; inset: 0; z-index: 5; display: flex; align-items: flex-end; background: rgba(28, 25, 23, .55); }
+  .sheet { width: 100%; max-height: 100%; display: flex; flex-direction: column; background: #fff; border-radius: 24px 24px 0 0; overflow: hidden; }
+  .sheet-backdrop.opening { animation: fade .2s ease-out; }
+  .sheet-backdrop.opening .sheet { animation: rise .25s ease-out; }
+  @keyframes fade { from { opacity: 0; } }
+  @keyframes rise { from { transform: translateY(40px); } }
+  .sheet-body { overflow-y: auto; padding: 18px 16px 12px; display: flex; flex-direction: column; gap: 16px; }
+  .sheet-body.center-text { align-items: center; text-align: center; }
+  .sheet-head { display: flex; align-items: center; gap: 14px; }
+  .sheet-head-text { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+  .art-lg { flex: none; width: 96px; height: 96px; padding: 6px; background: var(--soft); border-radius: 50%; }
+  .art-lg.small { width: 60px; height: 60px; padding: 4px; }
+  .art-lg svg { transform: scale(var(--s, 1)); transition: transform .25s ease-out; }
+  .art-lg.pop svg { animation: pop .35s ease-out; }
+  @keyframes pop { from { transform: scale(calc(var(--s, 1) * .8)); } }
+  .sheet-title { font-size: 26px; font-weight: 900; line-height: 1.25; }
+  .sheet-price { font-size: 20px; color: var(--muted); }
+  .sheet-sub { font-size: 21px; color: var(--muted); }
+  .sheet-text { font-size: 22px; }
+  .sheet-help { font-size: 20px; color: var(--muted); }
+  .item-desc { font-size: 20px; color: var(--action); font-weight: 700; }
+  .info-emoji { font-size: 60px; line-height: 1; }
+  .info-btn { margin-top: 4px; min-height: 44px; padding: 0 12px; background: #fff; border: 2px solid #CFC7BD; border-radius: 12px; font-size: 20px; font-weight: 700; }
+  .info-btn[aria-expanded="true"] { background: var(--soft); }
+  .info-box { padding: 12px 14px; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; background: var(--soft); border-radius: 14px; font-size: 20px; }
+  .info-box dt { font-weight: 800; }
+  .info-box .info-note { grid-column: 1 / -1; color: var(--muted); }
+  .sheet-foot { flex: none; display: grid; grid-template-columns: 1fr 2fr; gap: 10px; padding: 12px 16px 16px; border-top: 2px solid var(--line); }
+  .sheet-foot.one { grid-template-columns: 1fr; }
+  .sheet-foot.two { grid-template-columns: 1fr 1fr; }
+  .sheet-foot .btn { min-height: 66px; padding: 0 12px; white-space: nowrap; }
+
+  .req, .opt-tag { display: inline-block; padding: 0 9px; border-radius: 8px; font-size: 18px; font-weight: 800; line-height: 1.5; }
+  .req { background: var(--action); color: #fff; }
+  .opt-tag { background: #E7E1DA; color: var(--muted); }
+  .opt-group { min-width: 0; margin: 0; padding: 12px; border: none; border-radius: 16px; background: var(--soft); scroll-margin: 12px; }
+  .opt-group legend { float: left; width: 100%; padding: 0; margin-bottom: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; }
+  .opt-title { font-size: 22px; font-weight: 800; }
+  .opt-hint { width: 100%; font-size: 20px; color: var(--muted); }
+  .opt-group.next { box-shadow: inset 0 0 0 3px var(--action); }
+  .warn { animation: shake .4s; }
+  @keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+  .opt-choices { clear: both; display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 10px; }
+  .opt { position: relative; min-height: 64px; padding: 8px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: #fff; border: 3px solid var(--line); border-radius: 14px; }
+  .opt-icon { width: 54px; height: 54px; }
+  .opt-icon svg { transform: scale(var(--s, 1)); }
+  .opt-emoji { font-size: 30px; line-height: 1.1; }
+  .opt-label { font-size: 21px; font-weight: 800; white-space: nowrap; }
+  .opt-price { font-size: 20px; font-weight: 700; color: var(--action); }
+  .opt.selected { background: var(--action-soft); border-color: var(--action); }
+  .opt-check { position: absolute; top: -10px; right: -6px; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: var(--action); color: #fff; font-size: 18px; font-weight: 900; }
+  .no-option { padding: 14px; border-radius: 14px; background: var(--soft); font-size: 21px; color: var(--muted); }
+  .qty-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 8px 8px 14px; border-radius: 16px; background: var(--soft); }
+  .qty-label { font-size: 22px; font-weight: 800; }
+
+  .upsell-list, .pick-list { display: flex; flex-direction: column; gap: 10px; }
+  .upsell-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: #fff; border: 2px solid var(--line); border-radius: 16px; text-align: left; }
+  .upsell-row.added { background: var(--action-soft); border-color: var(--action); }
+  .upsell-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .upsell-price { font-size: 20px; color: var(--muted); }
+  .upsell-add { flex: none; padding: 8px 14px; border: 2px solid var(--action); border-radius: 12px; background: var(--action); color: #fff; font-size: 20px; font-weight: 800; white-space: nowrap; }
+  .upsell-row.added .upsell-add { background: #fff; color: var(--action); }
+
+  .choice-list { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+  .choice-card { min-height: 84px; padding: 10px 16px; display: flex; align-items: center; gap: 14px; background: #fff; border: 3px solid var(--line); border-radius: 18px; text-align: left; }
+  .choice-card:active { background: var(--action-soft); border-color: var(--action); }
+  .choice-card.counter-only { background: var(--soft); }
+  .choice-card.counter-only .choice-text { opacity: .7; }
+  .choice-emoji { font-size: 40px; line-height: 1; }
+  .size-emoji { flex: none; width: 48px; text-align: center; }
+  .choice-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .choice-text b { font-size: 24px; }
+  .choice-text span { font-size: 20px; color: var(--muted); }
+  .choice-text .fee { font-style: normal; font-weight: 800; color: var(--action); }
+  .counter-only .choice-text .fee { color: var(--muted); }
+  .fee-tag { flex: none; padding: 4px 10px; border-radius: 10px; background: var(--soft); font-size: 20px; font-weight: 800; white-space: nowrap; }
+
+  /* 버거 세트·재료 */
+  .set-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .set-card { min-height: 200px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: #fff; border: 3px solid var(--line); border-radius: 18px; }
+  .set-card:active { background: var(--action-soft); border-color: var(--action); }
+  .set-card b { font-size: 27px; font-weight: 900; }
+  .set-card span { font-size: 20px; color: var(--muted); }
+  .set-card .set-price { color: var(--ink); font-weight: 800; }
+  .set-card s { color: var(--muted); font-weight: 400; }
+  .set-art { width: 76px; height: 76px; }
+  .set-art.combo { width: auto; display: flex; }
+  .set-art.combo span { width: 56px; height: 76px; margin: 0 -6px; }
+  .step-label { font-size: 20px; font-weight: 800; color: var(--action); }
+  .set-summary { padding: 14px; border-radius: 16px; background: var(--soft); text-align: center; display: flex; flex-direction: column; }
+  .set-summary b { font-size: 24px; }
+  .set-summary span { font-size: 21px; color: var(--muted); }
+  .custom-btn { min-height: 60px; background: #fff; border: 2px dashed var(--action); border-radius: 14px; color: var(--action); font-size: 21px; font-weight: 800; }
+
+  /* 영수증·번호표·서류 */
+  .printer { width: min(100%, 300px); }
+  .printer.wide { width: min(100%, 380px); }
+  .printer-slot { height: 18px; border-radius: 9px; background: var(--bezel); box-shadow: inset 0 -5px 0 #000; }
+  .paper-clip { margin: -6px 14px 0; padding-bottom: 10px; overflow: hidden; }
+  .paper { padding: 14px 14px 16px; background: #fff; border: 1px solid var(--line); border-top: none; box-shadow: 0 6px 10px rgba(0, 0, 0, .08); text-align: left; font-size: 18px; line-height: 1.5; }
+  .paper.copies { box-shadow: 5px 5px 0 -1px #fff, 5px 5px 0 0 var(--line), 0 6px 10px rgba(0, 0, 0, .08); }
+  .paper.printing { animation: print 1.6s cubic-bezier(.3, .7, .4, 1); }
+  @keyframes print { from { transform: translateY(-100%); } }
+  .r-store { font-size: 22px; font-weight: 900; text-align: center; }
+  .r-line { text-align: center; color: var(--muted); }
+  .r-sep { margin: 8px 0; border-top: 2px dashed #CFC7BD; }
+  .r-row { display: flex; justify-content: space-between; gap: 10px; }
+  .r-total { font-size: 20px; font-weight: 900; }
+  .r-note { margin-top: 8px; text-align: center; color: var(--muted); }
+  .r-big { font-size: 54px; font-weight: 900; line-height: 1.1; text-align: center; letter-spacing: 2px; color: var(--brand); }
+  .r-stamp { margin-top: 8px; text-align: right; font-weight: 800; }
+  .r-stamp span { display: inline-block; margin-left: 6px; padding: 0 6px; border: 2px solid #C2410C; border-radius: 6px; color: #C2410C; transform: rotate(-8deg); }
+  .slips { width: 100%; display: flex; justify-content: center; gap: 10px; }
+  .slip-col { flex: 1; max-width: 190px; }
+  .slip-col .paper-clip { margin: -6px 8px 0; }
+  .slip-col .paper { padding: 10px; }
+  .copies-note { font-size: 20px; font-weight: 800; color: var(--brand); }
+
+  /* 처방전 */
+  .rx-title { font-size: 26px; font-weight: 900; letter-spacing: 10px; text-align: center; }
+  .rx-sub { text-align: center; color: var(--muted); }
+  .rx table { width: 100%; margin-top: 6px; border-collapse: collapse; }
+  .rx th, .rx td { padding: 4px 6px; border: 1px solid #CFC7BD; text-align: left; vertical-align: top; }
+  .rx th { background: var(--soft); font-weight: 800; white-space: nowrap; }
+  .rx-h { margin-top: 10px; font-weight: 900; }
+  .rx-drugs th:not(:first-child), .rx-drugs td:not(:first-child) { text-align: center; white-space: nowrap; }
+  .rx-note { margin-top: 6px; color: var(--muted); }
+  .open-paper { min-height: 56px; padding: 0 16px; background: #fff; border: 2px solid var(--brand); border-radius: 14px; color: var(--brand); font-size: 21px; font-weight: 800; }
+
+  /* 결과 */
+  .mission-quote { width: 100%; padding: 10px 14px; border-radius: 14px; background: var(--mission-soft); color: var(--mission); font-size: 21px; font-weight: 800; }
+  .diff-list { width: 100%; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+  .diff-list li { position: relative; padding: 10px 14px 10px 44px; border-radius: 14px; background: #FEF3F2; font-size: 21px; }
+  .diff-list li::before { content: '✗'; position: absolute; left: 14px; top: 9px; color: #B42318; font-weight: 900; }
+
+  /* ---------- 장바구니 ---------- */
+  .cart-list { flex: 1; min-height: 0; overflow-y: auto; margin: 0; padding: 8px 12px 14px; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .cart-row { padding: 12px; background: #fff; border: 2px solid var(--line); border-radius: 18px; }
+  .row-head { display: flex; align-items: center; gap: 12px; }
+  .row-art { flex: none; width: 60px; height: 60px; padding: 4px; background: var(--soft); border-radius: 50%; }
+  .row-info { flex: 1; min-width: 0; }
+  .row-name { font-size: 22px; font-weight: 800; line-height: 1.25; }
+  .row-opt { font-size: 20px; color: var(--muted); }
+  .btn-remove { flex: none; min-height: 50px; padding: 0 14px; border: 2px solid #E8C4BF; border-radius: 12px; background: #fff; color: #B42318; font-size: 20px; font-weight: 800; }
+  .row-foot { margin-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .qty { display: flex; align-items: center; gap: 6px; padding: 4px; border-radius: 14px; background: var(--soft); }
+  .qty-row .qty { background: #fff; }
+  .qty-btn { width: 54px; height: 54px; border: 2px solid #CFC7BD; border-radius: 12px; background: #fff; font-size: 30px; font-weight: 800; line-height: 1; }
+  .qty-btn:disabled { opacity: .35; cursor: default; }
+  .qty-num { min-width: 44px; text-align: center; font-size: 24px; font-weight: 900; }
+  .qty.big { padding: 8px; gap: 12px; }
+  .qty.big .qty-btn { width: 76px; height: 76px; font-size: 40px; }
+  .qty.big .qty-num { min-width: 90px; font-size: 40px; }
+  .row-price { font-size: 23px; font-weight: 900; }
+  .empty-emoji { font-size: 72px; line-height: 1; }
+
+  /* ---------- 결제 ---------- */
+  .amount-box { width: 100%; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--soft); border-radius: 16px; font-size: 21px; }
+  .amount-box b { font-size: 30px; font-weight: 900; }
+  .pay-list { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+  .pay-option { min-height: 88px; padding: 0 20px; display: flex; align-items: center; gap: 16px; background: #fff; border: 3px solid var(--line); border-radius: 18px; font-size: 25px; font-weight: 800; text-align: left; }
+  .pay-option:active { background: var(--action-soft); border-color: var(--action); }
+  .pay-emoji { font-size: 44px; line-height: 1; }
+  .insert-stage { --ins: 120px; --card-h: 126px; position: relative; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .reader, .scanner { position: relative; z-index: 2; width: 250px; padding: 16px 0 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; background: var(--bezel); border-radius: 16px; color: #fff; font-size: 20px; font-weight: 700; }
+  .slot { width: 190px; height: 12px; border-radius: 6px; background: #000; box-shadow: inset 0 2px 4px rgba(255, 255, 255, .18); }
+  .arrow { font-size: 40px; line-height: 1; color: var(--action); animation: up 1.2s ease-in-out infinite; }
+  @keyframes up { 0%, 100% { transform: translateY(4px); } 50% { transform: translateY(-6px); } }
+  .insert-stage:not(.step-ready) .arrow { visibility: hidden; }
+  .arrow-down { position: absolute; left: 50%; top: calc(100% - var(--ins) + 6px); display: none; font-size: 36px; line-height: 1; color: var(--action); animation: down 1.2s ease-in-out infinite; }
+  .step-remove .arrow-down { display: block; }
+  @keyframes down { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
+  .card { position: relative; z-index: 1; width: 200px; height: var(--card-h); padding: 14px 16px; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; border: none; border-radius: 14px; background: linear-gradient(135deg, #2F6FDB, #1E3A8A); color: #fff; box-shadow: 0 6px 14px rgba(0, 0, 0, .2); }
+  .card:disabled { cursor: default; }
+  .card-chip { width: 40px; height: 30px; border-radius: 6px; background: linear-gradient(135deg, #F6D776, #C9A23A); }
+  .card-name { font-size: 20px; font-weight: 800; }
+  .card.inserting { animation: insert 1s ease-in forwards; }
+  .card.inserted { transform: translateY(calc(-1 * var(--ins))); }
+  .card.removing { animation: pull .7s ease-out; }
+  @keyframes insert { to { transform: translateY(calc(-1 * var(--ins))); } }
+  @keyframes pull { from { transform: translateY(calc(-1 * var(--ins))); } }
+  .spinner { display: inline-block; vertical-align: -4px; width: 26px; height: 26px; border: 4px solid var(--line); border-top-color: var(--action); border-radius: 50%; animation: spin .9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- 완료 ---------- */
+  .done-emoji { font-size: 34px; line-height: 1; vertical-align: -4px; }
+  .done-msg { font-size: 24px; font-weight: 700; color: var(--muted); }
+  .order-no { width: 100%; max-width: 320px; padding: 14px 10px 8px; display: flex; flex-direction: column; align-items: center; background: var(--action-soft); border: 4px solid var(--action); border-radius: 22px; }
+  .order-no span { font-size: 22px; font-weight: 800; }
+  .order-no b { font-size: 96px; font-weight: 900; line-height: 1.05; letter-spacing: 2px; color: var(--action); }
+  .praise { font-size: 34px; font-weight: 900; color: var(--brand); }
+  .steps { width: 100%; margin: 0; padding: 14px 16px 14px 46px; background: var(--soft); border-radius: 16px; text-align: left; font-size: 21px; display: flex; flex-direction: column; gap: 6px; }
+  .steps li::marker { font-weight: 900; color: var(--action); }
+  .board { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px; background: #1F2937; border-radius: 14px; }
+  .board-col { padding: 8px; display: flex; flex-direction: column; align-items: center; gap: 4px; background: #111827; border-radius: 10px; }
+  .board-head { font-size: 20px; font-weight: 800; color: #FDE68A; }
+  .board-col.ready .board-head { color: #86EFAC; }
+  .board-no { font-size: 28px; font-weight: 900; color: #fff; letter-spacing: 1px; }
+  .board-no.mine { padding: 0 10px; border-radius: 8px; background: #FACC15; color: #111827; }
+
+  /* 진동벨 */
+  .pager-row { width: 100%; display: flex; align-items: center; gap: 14px; }
+  .pager { position: relative; flex: none; width: 96px; height: 96px; display: grid; place-items: center; border: 6px solid #D6D3D1; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #44403C, #1C1917); }
+  .pager::after { content: ''; position: absolute; inset: 6px; border: 3px solid rgba(248, 113, 113, .25); border-radius: 50%; }
+  .pager-led { padding: 0 8px; border-radius: 6px; background: #0C0A09; color: #F87171; font-family: ui-monospace, Consolas, monospace; font-size: 28px; font-weight: 900; }
+  .pager.buzz { animation: buzz .2s linear infinite; }
+  .pager.buzz::after { border-color: #EF4444; box-shadow: 0 0 16px #EF4444; }
+  @keyframes buzz { 0% { transform: translateX(-3px) rotate(-4deg); } 50% { transform: translateX(3px) rotate(4deg); } 100% { transform: translateX(-3px) rotate(-4deg); } }
+  .pager-wait { width: 100%; padding: 12px; display: flex; align-items: center; gap: 14px; background: var(--soft); border-radius: 16px; text-align: left; }
+  .pager-msg { font-size: 22px; font-weight: 800; }
+  .pager-msg.on { color: #B42318; }
+
+  /* ---------- 병원 ---------- */
+  .hosp-menu { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+  .hosp-btn { min-height: 96px; padding: 12px 18px; display: flex; align-items: center; gap: 16px; background: #fff; border: 3px solid var(--line); border-radius: 20px; text-align: left; }
+  .hosp-btn:active { background: var(--action-soft); border-color: var(--action); }
+  .hosp-emoji { font-size: 44px; line-height: 1; }
+  .hosp-text { display: flex; flex-direction: column; }
+  .hosp-text b { font-size: 28px; font-weight: 900; }
+  .hosp-text span { font-size: 20px; color: var(--muted); }
+  .verify { gap: 12px; }
+  .fields { width: 100%; display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 10px; }
+  .fields.one { max-width: 260px; }
+  .field { padding: 10px; display: flex; flex-direction: column; gap: 4px; background: #fff; border: 3px solid var(--line); border-radius: 16px; text-align: left; }
+  .field.active { border-color: var(--action); background: var(--action-soft); }
+  .field-label { font-size: 20px; font-weight: 800; line-height: 1.25; white-space: nowrap; }
+  .slots { display: flex; gap: 3px; }
+  .slot-digit { flex: 1; height: 40px; display: grid; place-items: center; border-bottom: 3px solid #CFC7BD; font-size: 25px; font-weight: 900; }
+  .slot-digit.cursor { border-bottom-color: var(--action); }
+  .field-ref { font-size: 20px; color: var(--muted); }
+  .field-ref b { color: var(--ink); letter-spacing: 1px; }
+  .field-ref b i { font-style: normal; color: var(--action); text-decoration: underline; text-underline-offset: 3px; }
+  .keypad { width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .key { min-height: 58px; background: #fff; border: 2px solid #CFC7BD; border-radius: 14px; font-size: 28px; font-weight: 800; }
+  .key:active { background: var(--action-soft); }
+  .key.fn { background: var(--soft); font-size: 22px; }
+  .key.ok { background: var(--action); border-color: var(--action); color: #fff; font-size: 22px; }
+  .key.ok.is-off { background: var(--off-bg); border-color: var(--off-bg); color: var(--off-ink); }
+
+  .terms { padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; background: var(--soft); border: 2px solid var(--line); border-radius: 14px; font-size: 20px; }
+  .terms b { display: inline-block; min-width: 88px; }
+  .check-row { min-height: 66px; padding: 10px 14px; display: flex; align-items: center; gap: 12px; background: #fff; border: 3px solid var(--line); border-radius: 16px; text-align: left; font-size: 21px; font-weight: 700; }
+  .check-row.all { font-size: 23px; font-weight: 900; }
+  .check-row[aria-pressed="true"] { border-color: var(--action); background: var(--action-soft); }
+  .check-row.next { box-shadow: 0 0 0 3px var(--action); }
+  .check-box { flex: none; width: 36px; height: 36px; display: grid; place-items: center; border: 3px solid #A8A29E; border-radius: 8px; color: transparent; font-weight: 900; }
+  .check-row[aria-pressed="true"] .check-box { background: var(--action); border-color: var(--action); color: #fff; }
+
+  .scan-stage { --lift: 54px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .scan-glass { width: 200px; height: 16px; border-radius: 6px; background: #0B3B36; box-shadow: inset 0 0 8px #34D399; }
+  .step-scanning .scan-glass { animation: scanBlink .5s ease-in-out infinite alternate; }
+  @keyframes scanBlink { to { background: #34D399; box-shadow: 0 0 18px #34D399; } }
+  .scan-item { position: relative; z-index: 1; padding: 0; border: none; background: none; }
+  .scan-item.placing { animation: lift .8s ease-out forwards; }
+  .scan-item.placed { transform: translateY(calc(-1 * var(--lift))); }
+  @keyframes lift { to { transform: translateY(calc(-1 * var(--lift))); } }
+  .idcard { width: 210px; height: 126px; padding: 12px; display: flex; align-items: center; gap: 12px; background: linear-gradient(135deg, #E0F2FE, #BAE6FD); border: 2px solid #7DD3FC; border-radius: 14px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15); text-align: left; }
+  .idcard-photo { width: 64px; height: 84px; display: grid; place-items: center; background: #fff; border-radius: 8px; font-size: 42px; }
+  .idcard-text { display: flex; flex-direction: column; font-size: 20px; }
+  .phone { width: 128px; padding: 14px 12px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; background: #1C1917; border-radius: 22px; box-shadow: 0 6px 12px rgba(0, 0, 0, .2); color: #fff; font-size: 18px; font-weight: 700; }
+  .qr { width: 100px; height: 100px; padding: 6px; display: grid; grid-template-columns: repeat(9, 1fr); background: #fff; border-radius: 6px; }
+  .qr i { background: #111; }
+  .qr i.w { background: #fff; }
+  .ok-mark { font-size: 26px; font-weight: 900; color: var(--ok); }
+
+  .symptom-grid { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .symptom-btn { min-height: 100px; padding: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: #fff; border: 3px solid var(--line); border-radius: 18px; font-size: 21px; font-weight: 800; line-height: 1.25; }
+  .symptom-btn:last-child:nth-child(odd) { grid-column: 1 / -1; min-height: 72px; flex-direction: row; gap: 10px; }
+  .symptom-btn:active { background: var(--action-soft); border-color: var(--action); }
+  .symptom-emoji { font-size: 34px; line-height: 1; }
+  .dept-grid { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .dept-btn { position: relative; min-height: 104px; padding: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: #fff; border: 3px solid var(--line); border-radius: 18px; }
+  .dept-btn.rec { border-color: var(--ok); background: #F0FAF3; }
+  .dept-btn:active { background: var(--action-soft); border-color: var(--action); }
+  .rec-badge { position: absolute; top: 6px; right: 6px; padding: 0 8px; border-radius: 8px; background: var(--ok); color: #fff; font-size: 18px; font-weight: 800; }
+  .dept-emoji { font-size: 34px; line-height: 1; }
+  .dept-btn b { font-size: 23px; font-weight: 900; }
+  .dept-wait { font-size: 20px; color: var(--muted); }
+  .info-table { width: 100%; border: 2px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .info-row { padding: 12px 14px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 21px; }
+  .info-row + .info-row { border-top: 2px solid var(--line); }
+  .info-row span { color: var(--muted); }
+  .info-row b { font-weight: 800; text-align: right; }
+  .info-row.total { background: var(--action-soft); }
+  .info-row.total b { font-size: 28px; color: var(--action); }
+  .doc-group { margin: 0; padding: 12px; border: none; border-radius: 16px; background: var(--soft); }
+  .doc-group legend { float: left; width: 100%; padding: 0; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .doc-emoji { font-size: 36px; line-height: 1; }
+  .doc-title { display: flex; flex-direction: column; }
+  .doc-title b { font-size: 23px; }
+  .doc-title span { font-size: 20px; color: var(--muted); }
+  .doc-group.next { box-shadow: inset 0 0 0 3px var(--action); }
+  .call-board { width: 100%; padding: 12px; display: flex; flex-direction: column; gap: 6px; background: #0F172A; border-radius: 16px; color: #fff; text-align: center; }
+  .call-head { font-size: 20px; font-weight: 800; color: #A7F3D0; }
+  .call-row { padding: 6px 10px; display: flex; justify-content: space-between; background: #1E293B; border-radius: 10px; font-size: 21px; }
+  .call-row b { color: #FDE68A; }
+  .call-alert { padding: 12px; border-radius: 12px; background: #FACC15; color: #111827; font-size: 22px; font-weight: 900; animation: callBlink 1s ease-in-out infinite; }
+  @keyframes callBlink { 50% { background: #FDE68A; } }
+
+  /* ---------- 알림(토스트) ---------- */
+  .toast { position: absolute; top: 12px; left: 12px; right: 12px; z-index: 20; padding: 14px 16px; border-radius: 14px; background: rgba(28, 25, 23, .92); color: #fff; font-size: 20px; font-weight: 700; text-align: center; opacity: 0; transform: translateY(-8px); transition: opacity .2s, transform .2s; pointer-events: none; }
+  .toast.show { opacity: 1; transform: none; }
+
+  /* ================= 휴대폰 ================= */
+  @media (max-width: 520px) {
+    .app { padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); }
+    .stage { gap: 8px; }
+    .top-title { display: none; }
+    .top-btn { min-height: 48px; padding: 0 12px; }
+    .guide { padding: 8px 8px 8px 14px; border-radius: 14px; gap: 10px; }
+    .mission-bar { padding: 8px 8px 8px 12px; gap: 8px; border-radius: 14px; }
+    .mission-info { font-size: 20px; }
+    .help-btn { min-width: 66px; padding: 6px; flex-direction: column; gap: 0; font-size: 20px; line-height: 1.2; }
+    .speak-btn { min-width: 58px; min-height: 56px; }
+    .kiosk, .has-mission .kiosk { border-width: 5px; border-radius: 18px; width: 100%; }
+    .kiosk-top { min-height: 44px; padding: 6px 14px; }
+    .kiosk-nav { padding: 8px 10px; }
+    .btn-nav { min-height: 52px; }
+    .where-btn { min-height: 170px; }
+    .center-inner { gap: 14px; }
+    .sheet-body { padding: 14px 12px 10px; gap: 12px; }
+    .art-lg { width: 80px; height: 80px; }
+    .art-lg.small { width: 52px; height: 52px; }
+    .opt-group { padding: 10px; }
+    .opt-group legend { margin-bottom: 8px; }
+    .opt-icon { width: 46px; height: 46px; }
+    .tab { font-size: 20px; }
+    .home-card { min-height: 160px; }
+    .page h1 { font-size: 30px; }
+    .set-card { min-height: 170px; }
+    .verify .title, .verify-sub { display: none; }
+    .screen.center:has(.verify) { padding: 12px; }
+    .fields { gap: 8px; }
+    .field { padding: 6px 8px; }
+    .slot-digit { height: 34px; font-size: 23px; }
+    .keypad { gap: 6px; }
+    .key { min-height: 50px; }
+    .promo { margin: 8px 10px 0; min-height: 50px; padding: 6px 10px; }
+    .pager { width: 84px; height: 84px; }
+    .rx th, .rx td { padding: 3px 4px; }
+  }
+  @media (max-height: 720px) {
+    .order-no b { font-size: 72px; }
+    .praise { font-size: 30px; }
+    .start-art { width: 96px; height: 96px; }
+    .insert-stage { --ins: 96px; --card-h: 108px; gap: 8px; }
+    .reader, .scanner { padding: 12px 0 8px; }
+    .arrow { font-size: 30px; }
+    .key { min-height: 50px; }
+    .verify .title { display: none; }
+  }
+  @media (max-height: 560px) {
+    .app { height: auto; min-height: 100dvh; container-type: normal; }
+    .stage, .page { height: auto; }
+    .kiosk, .has-mission .kiosk { flex: none; height: 640px; width: min(100%, 480px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    .hint { outline: 4px solid var(--action); outline-offset: 3px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== 첫 화면 ===== -->
+  <section class="page" id="homeView" aria-labelledby="homeTitle">
+    <header class="page-head">
+      <div class="page-emoji" aria-hidden="true">👆</div>
+      <h1 id="homeTitle" tabindex="-1">키오스크 연습</h1>
+      <p>실제와 비슷한 화면을 눌러 보며 연습해요.<br>실제로 주문·결제되지 않아요.</p>
+    </header>
+    <h2 class="page-h2">무엇을 연습할까요?</h2>
+    <div class="home-grid" id="homeGrid"></div>
+    <button class="mission-entry" data-app="missions">
+      <span class="me-emoji" aria-hidden="true">🎯</span>
+      <span class="me-text"><b>미션 모드</b><span>정해진 주문·접수를 그대로 해 봐요</span></span>
+      <span class="me-count" id="homeMissionCount"></span>
+    </button>
+    <button class="sound-toggle" id="homeSound" data-app="sound" aria-pressed="false"></button>
+    <p class="page-note" id="soundNote"></p>
+  </section>
+
+  <!-- ===== 미션 목록 ===== -->
+  <section class="page" id="missionView" aria-labelledby="missionTitle" hidden>
+    <div class="page-top">
+      <button class="top-btn" data-app="home">← 첫 화면</button>
+      <span class="mission-progress" id="missionProgress"></span>
+    </div>
+    <h1 id="missionTitle" tabindex="-1">🎯 미션 모드</h1>
+    <p class="page-sub">미션을 골라 그대로 해 보세요. 막히면 '💡 도움말'을 누르면 다음에 누를 곳이 반짝여요.</p>
+    <div id="missionList" class="mission-group-list"></div>
+  </section>
+
+  <!-- ===== 연습 화면 ===== -->
+  <div class="stage" id="practiceView" hidden>
+    <div class="topbar">
+      <button class="top-btn" id="leaveBtn" data-app="leave">← 첫 화면</button>
+      <span class="top-title" id="practiceTitle"></span>
+      <button class="top-btn sound-mini" id="miniSound" data-app="sound" aria-pressed="false"></button>
+    </div>
+    <section class="guide" id="guide" aria-live="polite">
+      <p class="guide-text"><span class="guide-label">지금 할 일</span><span id="guideText"></span></p>
+      <button class="speak-btn" id="speakBtn" data-app="speak" aria-label="지금 할 일 소리로 듣기"><span aria-hidden="true">🔊</span>듣기</button>
+    </section>
+    <section class="mission-bar" id="missionBar" hidden>
+      <p class="mission-info"><span class="mission-label">🎯 미션</span><span id="missionText"></span></p>
+      <button class="help-btn" data-app="help"><span aria-hidden="true">💡</span>도움말</button>
+    </section>
+    <div class="kiosk" id="kiosk">
+      <header class="kiosk-top">
+        <span class="store" id="storeName"></span>
+        <span class="badge" id="orderBadge" hidden></span>
+      </header>
+      <main class="screen-area">
+        <div id="screen" tabindex="-1"></div>
+        <div class="toast" id="toast" role="status"></div>
+      </main>
+      <nav class="kiosk-nav" aria-label="화면 이동">
+        <button class="btn btn-nav" data-action="back">← 이전</button>
+        <button class="btn btn-nav" data-action="home">🏠 처음으로</button>
+      </nav>
+    </div>
+  </div>
+</div>
+<noscript><p style="padding:16px;font-size:22px">이 연습 화면은 자바스크립트가 켜져 있어야 움직여요.</p></noscript>
+
+<script>
+'use strict';
+
+/* =====================================================================
+   1) 연습 목록과 화면 순서
+   flow: 화면이 넘어가는 순서입니다. { screen, when } 으로 쓰면
+   when(state)가 참일 때만 그 화면을 거칩니다.
+   ===================================================================== */
+const certFeeDue = s => certFee(s) > 0;
+const PRACTICES = {
+  cafe: {
+    title: '카페 주문', emoji: '☕', desc: '커피·디저트 주문하기', store: 'cafe',
+    flow: ['start', 'where', 'menu', 'cart', 'pay', 'insert', 'done'],
+  },
+  burger: {
+    title: '햄버거 주문', emoji: '🍔', desc: '버거 세트 주문하기', store: 'burger',
+    flow: ['start', 'where', 'menu', 'cart', 'pay', 'insert', { screen: 'pager', when: s => s.orderType === 'here' }, 'done'],
+  },
+  reception: {
+    title: '병원 접수', emoji: '🏥', desc: '진료 접수하기', hospital: 'reception',
+    flow: ['hospitalStart', 'visit', { screen: 'consent', when: s => s.visit === 'first' }, 'verify', 'idcheck', 'symptom', 'dept', 'confirm', 'ticket'],
+  },
+  payment: {
+    title: '병원 수납', emoji: '🧾', desc: '진료비 내기', hospital: 'payment',
+    flow: ['hospitalStart', 'verify', 'bill', 'docs', 'pay', 'insert', 'paid'],
+  },
+  certificate: {
+    title: '증명서 발급', emoji: '📄', desc: '처방전·서류 다시 뽑기', hospital: 'certificate',
+    flow: ['hospitalStart', 'verify', 'certType', 'certVisit', 'certCopies', 'certConfirm',
+      { screen: 'pay', when: certFeeDue }, { screen: 'insert', when: certFeeDue }, 'certDone'],
+  },
+};
+
+/* =====================================================================
+   2) 가게 정보 — 메뉴·옵션·팝업 문구
+   ===================================================================== */
+const COFFEE_OPTIONS = ['temp', 'size', 'shot', 'syrup', 'iceAmount'];
+const LATTE_OPTIONS = ['temp', 'size', 'sweet', 'iceAmount'];
+const COLD_OPTIONS = ['size', 'iceAmount'];
+const DEFAULT_PAY_METHODS = [
+  { id: 'card', label: '카드 결제', emoji: '💳' },
+  { id: 'mobile', label: '휴대폰 결제', emoji: '📱' },
+];
+
+const STORES = {
+  cafe: {
+    name: '하루카페',
+    theme: { brand: '#6F4E37', action: '#C2410C', press: '#9A3412', soft: '#FFF1E6', pulse: '194, 65, 12' },
+    logoArt: { kind: 'drink', liquid: '#4A2C1C', foam: '#E9D3AE' },
+    orderTypeQuestion: '어디에서 드시나요?',
+    orderTypeGuide: '먹고 갈지, 포장할지 골라 보세요',
+    orderTypes: [
+      { id: 'here', label: '매장에서 먹기', emoji: '🍽️', badge: '매장' },
+      { id: 'togo', label: '포장하기', emoji: '🛍️', badge: '포장' },
+    ],
+    pickup: { type: 'text', message: '주문번호가 불리면 카운터에서 받아 가세요.' },
+    tags: {
+      best: { label: '인기', color: '#C2410C' },
+      recommend: { label: '추천', color: '#15803D' },
+      new: { label: 'NEW', color: '#1D4ED8' },
+    },
+    upsell: {
+      trigger: 'checkout', category: 'dessert',
+      question: '디저트도 함께 드시겠어요?', sub: '필요 없으면 그냥 넘어가도 돼요.',
+      items: ['cheesecake', 'cookie', 'croissant'],
+      skipLabel: '필요 없어요', doneLabel: '다 골랐어요',
+      guideSkip: "필요 없으면 '필요 없어요'를 눌러 보세요",
+      guideDone: "다 고르셨으면 '다 골랐어요'를 눌러 보세요",
+    },
+    discount: {
+      question: '할인이나 적립을 하시겠어요?', sub: '하지 않아도 주문할 수 있어요.',
+      skipLabel: '안 할게요',
+      guide: "안 하려면 '안 할게요'를 눌러 보세요",
+      guideInfo: "'확인'을 눌러 결제를 이어가 보세요",
+      options: [
+        { id: 'point', label: '포인트 적립', sub: '전화번호로 적립해요', emoji: '🎁',
+          explain: '실제 가게에서는 여기서 전화번호를 눌러 포인트를 적립해요.', note: '연습이라 전화번호는 넣지 않고 넘어갈게요.' },
+        { id: 'coupon', label: '쿠폰 사용', sub: '쿠폰·기프티콘 바코드', emoji: '🎟️',
+          explain: '실제 가게에서는 휴대폰 쿠폰의 바코드를 키오스크 아래 스캐너에 비추면 할인돼요.', note: '연습이라 할인 없이 넘어갈게요.' },
+      ],
+    },
+    receipt: {
+      question: '영수증을 출력할까요?', sub: '필요 없으면 출력하지 않아도 돼요.',
+      printLabel: '출력하기', skipLabel: '출력 안 함', takeMessage: '영수증을 가져가세요',
+      guide: "'출력하기'나 '출력 안 함'을 골라 보세요",
+      guidePrint: "영수증을 받고 '확인'을 눌러 보세요",
+    },
+    optionGroups: {
+      temp: {
+        title: '따뜻한 것 / 차가운 것', required: true, icon: 'temp', guide: '따뜻한 것, 차가운 것 중 골라 보세요',
+        choices: [{ id: 'hot', label: '따뜻한 것', price: 0 }, { id: 'ice', label: '차가운 것', price: 0 }],
+      },
+      size: {
+        title: '크기', required: true, icon: 'size', guide: '크기를 골라 보세요',
+        choices: [
+          { id: 'regular', label: '보통', price: 0, iconScale: 0.74, cartText: '보통 크기' },
+          { id: 'large', label: '큰 것', price: 500, iconScale: 1, cartText: '큰 크기' },
+        ],
+      },
+      shot: {
+        title: '샷 추가', hint: '커피를 더 진하게 해요',
+        choices: [
+          { id: 'none', label: '안 함', price: 0, default: true },
+          { id: 'one', label: '1번', price: 500, cartText: '샷 1번 추가' },
+          { id: 'two', label: '2번', price: 1000, cartText: '샷 2번 추가' },
+        ],
+      },
+      syrup: {
+        title: '시럽 추가', hint: '단맛을 더해요',
+        choices: [
+          { id: 'none', label: '안 함', price: 0, default: true },
+          { id: 'vanilla', label: '바닐라', price: 500, cartText: '바닐라 시럽' },
+          { id: 'hazelnut', label: '헤이즐넛', price: 500, cartText: '헤이즐넛 시럽' },
+        ],
+      },
+      iceAmount: {
+        title: '얼음 양', showIf: { group: 'temp', choice: 'ice' },
+        choices: [
+          { id: 'less', label: '적게', price: 0, cartText: '얼음 적게' },
+          { id: 'normal', label: '보통', price: 0, default: true },
+          { id: 'more', label: '많이', price: 0, cartText: '얼음 많이' },
+        ],
+      },
+      sweet: {
+        title: '단맛',
+        choices: [{ id: 'less', label: '덜 달게', price: 0, cartText: '덜 달게' }, { id: 'normal', label: '보통', price: 0, default: true }],
+      },
+      warm: {
+        title: '데워 드릴까요?',
+        choices: [{ id: 'no', label: '그대로', price: 0, default: true }, { id: 'yes', label: '데워 주세요', price: 0, cartText: '데워서' }],
+      },
+    },
+    categories: [
+      { id: 'coffee', label: '커피', unit: '잔' },
+      { id: 'drink', label: '음료', unit: '잔' },
+      { id: 'dessert', label: '디저트', unit: '개' },
+    ],
+    menu: [
+      { id: 'americano', category: 'coffee', name: '아메리카노', price: 3000, tag: 'best', options: COFFEE_OPTIONS, art: { kind: 'drink', liquid: '#3B2316' } },
+      { id: 'latte', category: 'coffee', name: '카페라테', price: 3500, options: COFFEE_OPTIONS, art: { kind: 'drink', liquid: '#B98E66', foam: true, ice: { liquid: '#EADBC4', layer: '#7A4B2E' } } },
+      { id: 'vanilla', category: 'coffee', name: '바닐라라테', price: 4000, tag: 'recommend', options: COFFEE_OPTIONS, art: { kind: 'drink', liquid: '#C9A57E', foam: '#F7EBCB', ice: { liquid: '#F1E4CB', layer: '#7A4B2E' } } },
+      { id: 'cappuccino', category: 'coffee', name: '카푸치노', price: 3500, options: COFFEE_OPTIONS, art: { kind: 'drink', liquid: '#A97A55', top: 'foamFull', ice: { liquid: '#E3CDAE', layer: '#6E4228' } } },
+      { id: 'mocha', category: 'coffee', name: '카페모카', price: 4000, soldOut: true, options: COFFEE_OPTIONS, art: { kind: 'drink', liquid: '#5B3420', top: 'cream', ice: { liquid: '#6B3E26' } } },
+      { id: 'decaf', category: 'coffee', name: '디카페인 아메리카노', price: 3500, tag: 'new', options: COFFEE_OPTIONS, art: { kind: 'drink', liquid: '#4A2C1C' } },
+      { id: 'greentea', category: 'drink', name: '녹차라테', price: 4000, options: LATTE_OPTIONS, art: { kind: 'drink', liquid: '#8DB255', foam: '#DDEBC0', ice: { liquid: '#B6D17F' } } },
+      { id: 'choco', category: 'drink', name: '초코라테', price: 4000, options: LATTE_OPTIONS, art: { kind: 'drink', liquid: '#5A3A26', top: 'cream', ice: { liquid: '#6D4630' } } },
+      { id: 'yuja', category: 'drink', name: '유자차', price: 4000, tag: 'recommend', options: LATTE_OPTIONS, art: { kind: 'drink', liquid: '#E9A92E', ice: { liquid: '#F4C35A' }, garnish: 'orange' } },
+      { id: 'lemonade', category: 'drink', name: '레몬에이드', price: 4500, tag: 'best', options: COLD_OPTIONS, desc: '차가운 음료만 있어요', art: { kind: 'drink', cold: true, liquid: '#F4E08A', garnish: 'lemon' } },
+      { id: 'strawberry', category: 'drink', name: '딸기 스무디', price: 5000, soldOut: true, options: ['size'], desc: '차가운 음료만 있어요', art: { kind: 'drink', cold: true, noIce: true, liquid: '#E46A7C', top: 'cream', garnish: 'berry' } },
+      { id: 'peachtea', category: 'drink', name: '복숭아 아이스티', price: 3500, options: COLD_OPTIONS, desc: '차가운 음료만 있어요', art: { kind: 'drink', cold: true, liquid: '#EE9F55', garnish: 'peach' } },
+      { id: 'cheesecake', category: 'dessert', name: '치즈케이크', price: 5500, tag: 'best', options: [], art: { kind: 'cheesecake' } },
+      { id: 'cookie', category: 'dessert', name: '초코 쿠키', price: 2500, options: [], art: { kind: 'cookie' } },
+      { id: 'croissant', category: 'dessert', name: '크루아상', price: 3500, tag: 'new', options: ['warm'], art: { kind: 'croissant' } },
+      { id: 'waffle', category: 'dessert', name: '와플', price: 4500, options: ['warm'], art: { kind: 'waffle' } },
+      { id: 'donut', category: 'dessert', name: '도넛', price: 2500, options: [], art: { kind: 'donut' } },
+      { id: 'bagel', category: 'dessert', name: '베이글', price: 3500, soldOut: true, options: ['warm'], art: { kind: 'bagel' } },
+    ],
+  },
+
+  burger: {
+    name: '든든버거',
+    theme: { brand: '#9F1F17', action: '#B42318', press: '#8A1C12', soft: '#FEF1EE', pulse: '180, 35, 24' },
+    logoArt: { kind: 'burger', patty: '#5A2E14', sauce: true },
+    orderTypeQuestion: '어디에서 드시나요?',
+    orderTypeGuide: '먹고 갈지, 포장할지 골라 보세요',
+    orderTypes: [
+      { id: 'here', label: '매장에서 먹기', emoji: '🍽️', badge: '매장' },
+      { id: 'togo', label: '포장하기', emoji: '🛍️', badge: '포장' },
+    ],
+    // 포장: 주문 안내판 / 매장: 진동벨
+    pickup: {
+      type: 'board',
+      steps: ['카운터 위 주문 안내 화면을 봐요', "내 번호가 '받아 가세요' 칸에 뜨면", '카운터에 가서 번호를 말하고 음식을 받아요'],
+    },
+    pager: {
+      number: '27',
+      steps: ['자리에 앉아 진동벨을 테이블에 올려 두어요', '진동벨이 울리고 불이 깜빡이면', '진동벨을 들고 카운터에 가서 음식을 받고, 진동벨은 돌려줘요'],
+    },
+    // 메뉴 화면 맨 위 할인 배너. 누르면 그 메뉴가 열리고, 세트 가격에서 할인됨
+    promo: { itemId: 'chicken', setDiscount: 1000, badge: '할인', text: '이번 주만! 치킨버거 세트 1,000원 할인' },
+    tags: {
+      best: { label: '인기', color: '#B42318' },
+      recommend: { label: '추천', color: '#15803D' },
+      new: { label: 'NEW', color: '#1D4ED8' },
+      sale: { label: '할인', color: '#C2410C' },
+    },
+    // 버거(setable): 단품/세트 → (세트면) 세트 크기 → 사이드 → 음료 → 얼음 → 확인(재료 바꾸기)
+    set: {
+      price: 2000,
+      desc: '버거 + 사이드 + 음료',
+      sizes: [
+        { id: 'regular', label: '보통 세트', sub: '사이드·음료 보통 크기', emoji: '🍟', emojiSize: 30, extra: 0 },
+        { id: 'large', label: '큰 세트', sub: '사이드·음료 큰 크기', emoji: '🍟', emojiSize: 46, extra: 800 },
+      ],
+      sides: [{ id: 'fries', extra: 0 }, { id: 'cheesestick', extra: 500 }, { id: 'coleslaw', extra: 0 }],
+      drinks: [{ id: 'cola', extra: 0 }, { id: 'cider', extra: 0 }, { id: 'oj', extra: 500 }],
+    },
+    ingredients: {
+      add: [
+        { id: 'patty', label: '패티 추가', emoji: '🥩', price: 2000 },
+        { id: 'cheese', label: '치즈 추가', emoji: '🧀', price: 500 },
+        { id: 'bacon', label: '베이컨 추가', emoji: '🥓', price: 1000 },
+      ],
+      remove: [
+        { id: 'onion', label: '양파 빼기', emoji: '🧅' },
+        { id: 'pickle', label: '피클 빼기', emoji: '🥒' },
+        { id: 'lettuce', label: '양상추 빼기', emoji: '🥬' },
+        { id: 'sauce', label: '소스 빼기', emoji: '🥫' },
+      ],
+    },
+    upsell: {
+      trigger: 'afterAdd', afterCategory: 'burger', category: 'dessert',
+      question: '디저트도 함께 드시겠어요?', sub: "필요 없으면 '선택 안 함'을 누르면 돼요.",
+      items: ['cone', 'pie', 'sundae'],
+      skipLabel: '선택 안 함', doneLabel: '다 골랐어요',
+      guideSkip: "필요 없으면 '선택 안 함'을 눌러 보세요",
+      guideDone: "다 고르셨으면 '다 골랐어요'를 눌러 보세요",
+    },
+    discount: {
+      question: '포인트를 적립하시겠어요?', sub: '적립하지 않아도 주문할 수 있어요.',
+      skipLabel: '건너뛰기',
+      guide: "적립하지 않으려면 '건너뛰기'를 눌러 보세요",
+      guideInfo: "'확인'을 눌러 결제를 이어가 보세요",
+      options: [
+        { id: 'point', label: '포인트 적립하기', sub: '전화번호로 적립해요', emoji: '🎁',
+          explain: '실제 가게에서는 여기서 전화번호를 눌러 포인트를 적립해요.', note: '연습이라 전화번호는 넣지 않고 넘어갈게요.' },
+      ],
+    },
+    receipt: null,
+    optionGroups: {
+      dsize: {
+        title: '크기',
+        choices: [{ id: 'regular', label: '보통', price: 0, default: true }, { id: 'large', label: '큰 것', price: 500, cartText: '큰 크기' }],
+      },
+      ice: {
+        title: '얼음 양',
+        choices: [
+          { id: 'less', label: '적게', price: 0, cartText: '얼음 적게' },
+          { id: 'normal', label: '보통', price: 0, default: true },
+          { id: 'more', label: '많이', price: 0, cartText: '얼음 많이' },
+        ],
+      },
+    },
+    categories: [
+      { id: 'burger', label: '버거', unit: '개' },
+      { id: 'side', label: '사이드', unit: '개' },
+      { id: 'drink', label: '음료', unit: '잔' },
+      { id: 'dessert', label: '디저트', unit: '개' },
+    ],
+    // info: 메뉴 창의 '영양·알레르기' 정보 (연습용 예시 값)
+    menu: [
+      { id: 'bulgogi', category: 'burger', name: '불고기버거', price: 5500, tag: 'best', setable: true, options: [],
+        info: { kcal: 520, allergens: ['밀', '대두', '우유', '쇠고기', '토마토'] }, art: { kind: 'burger', patty: '#5A2E14', sauce: true } },
+      { id: 'cheese', category: 'burger', name: '치즈버거', price: 5000, setable: true, options: [],
+        info: { kcal: 480, allergens: ['밀', '대두', '우유', '쇠고기'] }, art: { kind: 'burger', patty: '#6B3A1E', cheese: true } },
+      { id: 'shrimp', category: 'burger', name: '새우버거', price: 5800, tag: 'recommend', setable: true, options: [],
+        info: { kcal: 500, allergens: ['밀', '대두', '달걀', '새우'] }, art: { kind: 'burger', patty: '#EE8A4E' } },
+      { id: 'chicken', category: 'burger', name: '치킨버거', price: 6000, tag: 'sale', setable: true, options: [],
+        info: { kcal: 560, allergens: ['밀', '대두', '달걀', '닭고기'] }, art: { kind: 'burger', patty: '#D99A3D', crispy: true } },
+      { id: 'double', category: 'burger', name: '더블 불고기버거', price: 7500, soldOut: true, setable: true, options: [],
+        info: { kcal: 780, allergens: ['밀', '대두', '우유', '쇠고기'] }, art: { kind: 'burger', patty: '#5A2E14', sauce: true, double: true } },
+      { id: 'fries', category: 'side', name: '감자튀김', price: 2000, tag: 'best', options: [], info: { kcal: 330, allergens: ['없음'] }, art: { kind: 'fries' } },
+      { id: 'cheesestick', category: 'side', name: '치즈스틱', price: 2500, options: [], info: { kcal: 160, allergens: ['밀', '우유'] }, art: { kind: 'cheesestick' } },
+      { id: 'nugget', category: 'side', name: '치킨너겟', price: 3000, options: [], info: { kcal: 280, allergens: ['밀', '대두', '닭고기'] }, art: { kind: 'nugget' } },
+      { id: 'coleslaw', category: 'side', name: '코울슬로', price: 2000, options: [], info: { kcal: 120, allergens: ['달걀', '대두'] }, art: { kind: 'coleslaw' } },
+      { id: 'cola', category: 'drink', name: '콜라', price: 2000, tag: 'best', options: ['dsize', 'ice'], art: { kind: 'cup', band: '#C62828' } },
+      { id: 'cider', category: 'drink', name: '사이다', price: 2000, options: ['dsize', 'ice'], art: { kind: 'cup', band: '#2E9E5B' } },
+      { id: 'oj', category: 'drink', name: '오렌지주스', price: 2500, options: ['dsize', 'ice'], art: { kind: 'cup', band: '#F28C28' } },
+      { id: 'coffee', category: 'drink', name: '아메리카노', price: 2000, options: ['dsize'], art: { kind: 'cup', band: '#6F4E37' } },
+      { id: 'cone', category: 'dessert', name: '아이스크림콘', price: 1500, options: [], info: { kcal: 150, allergens: ['우유'] }, art: { kind: 'cone' } },
+      { id: 'pie', category: 'dessert', name: '애플파이', price: 2000, tag: 'new', options: [], info: { kcal: 260, allergens: ['밀', '대두', '우유'] }, art: { kind: 'pie' } },
+      { id: 'sundae', category: 'dessert', name: '초코 선데', price: 2500, options: [], info: { kcal: 300, allergens: ['우유', '대두'] }, art: { kind: 'sundae' } },
+    ],
+  },
+};
+
+/* =====================================================================
+   3) 병원 정보 — 접수·수납·증명서 발급 공통
+   ===================================================================== */
+const HOSPITAL = {
+  name: '하늘숲병원',
+  emoji: '🏥',
+  theme: { brand: '#115E59', action: '#0F766E', press: '#0B5952', soft: '#E7F5F2', pulse: '15, 118, 110' },
+  menu: [
+    { id: 'reception', label: '접수', emoji: '📋', sub: '진료를 받으러 왔어요' },
+    { id: 'payment', label: '수납', emoji: '💳', sub: '진료비를 내요' },
+    { id: 'certificate', label: '증명서 발급', emoji: '📄', sub: '처방전·서류를 뽑아요' },
+  ],
+  // 연습용 환자 정보 — 화면에 보여 주고 이 번호만 누르게 함 (진짜 정보는 받지 않음)
+  patient: { name: '김하늘', masked: '김*늘', birth: '650315', phone: '1234' },
+  visits: [
+    { id: 'first', label: '처음 왔어요', sub: '이 병원이 처음이에요', emoji: '🙋' },
+    { id: 'return', label: '전에 와 봤어요', sub: '진료 받은 적이 있어요', emoji: '🔁' },
+  ],
+  consentTerms: [['수집 항목', '이름, 생년월일, 휴대폰 번호'], ['이용 목적', '진료 접수와 진료 기록 관리'], ['보관 기간', '의료법에서 정한 기간']],
+  idMethods: [
+    { id: 'card', label: '신분증', sub: '주민등록증·운전면허증', emoji: '🪪',
+      placeTitle: '신분증을 올려 주세요', placeSub: '아래 신분증 그림을 누르면 스캐너에 올라가요', scanner: '신분증 올리는 곳' },
+    { id: 'mobile', label: '모바일 건강보험증', sub: '휴대폰 앱의 QR 코드', emoji: '📱',
+      placeTitle: 'QR 코드를 보여 주세요', placeSub: '아래 휴대폰 그림을 누르면 QR 코드를 비춰요', scanner: 'QR 코드 읽는 곳' },
+  ],
+  symptoms: [
+    { id: 'cough', label: '기침·콧물·목 아픔', emoji: '🤧', dept: 'ent' },
+    { id: 'fever', label: '열·몸살', emoji: '🤒', dept: 'internal' },
+    { id: 'stomach', label: '배가 아파요', emoji: '🤢', dept: 'internal' },
+    { id: 'joint', label: '무릎·허리 통증', emoji: '🦵', dept: 'ortho' },
+    { id: 'eye', label: '눈이 불편해요', emoji: '👁️', dept: 'eye' },
+    { id: 'skin', label: '피부가 가려워요', emoji: '🩹', dept: 'derm' },
+    { id: 'unknown', label: '잘 모르겠어요', emoji: '❓', dept: 'family' },
+  ],
+  depts: [
+    { id: 'internal', label: '내과', code: 'A', waiting: 3, room: '2진료실', emoji: '🩺' },
+    { id: 'ortho', label: '정형외과', code: 'B', waiting: 4, room: '5진료실', emoji: '🦴' },
+    { id: 'ent', label: '이비인후과', code: 'C', waiting: 2, room: '3진료실', emoji: '👂' },
+    { id: 'derm', label: '피부과', code: 'D', waiting: 1, room: '7진료실', emoji: '🧴' },
+    { id: 'eye', label: '안과', code: 'E', waiting: 3, room: '6진료실', emoji: '👁️' },
+    { id: 'family', label: '가정의학과', code: 'F', waiting: 2, room: '1진료실', emoji: '👪' },
+  ],
+  // 오늘 진료비 (병원 수납 연습)
+  bill: {
+    dept: '내과', doctor: '이튼튼',
+    items: [{ label: '진찰료', amount: 5800 }, { label: '혈액 검사', amount: 9400 }, { label: '주사', amount: 3000 }],
+    drugs: [
+      { name: '해열진통제', dose: '1정', times: 3, days: 3 },
+      { name: '기침 시럽', dose: '10mL', times: 3, days: 3 },
+      { name: '위 보호제', dose: '1정', times: 3, days: 3 },
+    ],
+  },
+  docs: [
+    { id: 'prescription', label: '처방전', desc: '약국에서 약을 받을 때 내요', emoji: '💊' },
+    { id: 'receipt', label: '영수증', desc: '낸 돈을 확인하는 종이예요', emoji: '🧾' },
+  ],
+  installments: [
+    { id: 'once', label: '일시불', sub: '한 번에 내요' },
+    { id: '2', label: '2개월', sub: '2번에 나눠 내요' },
+    { id: '3', label: '3개월', sub: '3번에 나눠 내요' },
+    { id: '6', label: '6개월', sub: '6번에 나눠 내요' },
+  ],
+  // 증명서 발급
+  certificates: [
+    { id: 'prescription', label: '처방전', emoji: '💊', desc: '약국에 내는 종이를 다시 뽑아요', fee: 0 },
+    { id: 'receipt', label: '진료비 영수증', emoji: '🧾', desc: '낸 진료비를 확인해요', fee: 0 },
+    { id: 'detail', label: '진료비 세부내역서', emoji: '📋', desc: '검사·주사를 자세히 보여 줘요', fee: 0 },
+    { id: 'confirmation', label: '진료확인서', emoji: '📄', desc: '진료 받은 날을 증명해요', fee: 1000 },
+    { id: 'diagnosis', label: '진단서', emoji: '🩺', desc: '의사 확인이 필요해요', fee: 0, counterOnly: true },
+  ],
+  // 지난 진료 기록 (연습용). daysAgo: 오늘부터 며칠 전
+  history: [
+    { id: 'v1', daysAgo: 1, dept: '내과', doctor: '이튼튼', disease: '감기',
+      items: [{ label: '진찰료', amount: 5800 }, { label: '혈액 검사', amount: 9400 }, { label: '주사', amount: 3000 }],
+      drugs: [{ name: '해열진통제', dose: '1정', times: 3, days: 3 }, { name: '기침 시럽', dose: '10mL', times: 3, days: 3 }, { name: '위 보호제', dose: '1정', times: 3, days: 3 }] },
+    { id: 'v2', daysAgo: 23, dept: '정형외과', doctor: '박바른', disease: '무릎 통증',
+      items: [{ label: '진찰료', amount: 5800 }, { label: '엑스레이', amount: 14800 }, { label: '물리치료', amount: 4000 }],
+      drugs: [{ name: '소염진통제', dose: '1정', times: 2, days: 5 }, { name: '근육 이완제', dose: '1정', times: 2, days: 5 }] },
+    { id: 'v3', daysAgo: 78, dept: '내과', doctor: '이튼튼', disease: '소화불량',
+      items: [{ label: '진찰료', amount: 5800 }, { label: '소화기 검사', amount: 7000 }],
+      drugs: [{ name: '소화제', dose: '1정', times: 3, days: 3 }] },
+  ],
+  maxCopies: 5,
+  ticketSteps: ['번호표를 챙겨요', '{dept} 앞 대기석에 앉아요', '화면에 번호가 뜨거나 이름이 불리면 {room}로 들어가요'],
+  pharmacySteps: ['처방전을 챙겨요', '병원 근처 약국에 가요 (교부일부터 3일 안에)', '약사에게 처방전을 내면 약을 받을 수 있어요'],
+  paperSteps: ['서류를 챙겨요', '보험 회사에 낼 때는 사진을 찍어 보험 회사 앱으로 보내거나 그대로 내요'],
+};
+
+/* =====================================================================
+   4) 미션 — practice: 어느 연습인지, expect: 맞았는지 볼 내용
+   주문: orderType, items[{ id, qty, choices, set:{size,side,drink,ice}|null, custom:{add,remove} }], upsell:'declined'
+   병원: visit, symptom, idMethod, dept, installment, docs{}, cert, certVisit, copies
+   ===================================================================== */
+const MISSIONS = [
+  { id: 'cafe-ice-americano', practice: 'cafe', text: '아이스 아메리카노 1잔을 포장 주문하기',
+    expect: { orderType: 'togo', items: [{ id: 'americano', qty: 1, choices: { temp: 'ice' } }] } },
+  { id: 'cafe-latte-cake', practice: 'cafe', text: '따뜻한 카페라테 2잔과 치즈케이크 1개를 매장에서 먹기로 주문하기',
+    expect: { orderType: 'here', items: [{ id: 'latte', qty: 2, choices: { temp: 'hot' } }, { id: 'cheesecake', qty: 1 }] } },
+  { id: 'burger-bulgogi-set', practice: 'burger', text: '불고기버거 세트(감자튀김, 콜라)를 매장에서 먹기로 주문하고, 디저트 권유는 거절하기',
+    expect: { orderType: 'here', items: [{ id: 'bulgogi', qty: 1, set: { side: 'fries', drink: 'cola' } }], upsell: 'declined' } },
+  { id: 'burger-cheese-single', practice: 'burger', text: '치즈버거 단품 1개와 콜라 1잔을 포장 주문하기',
+    expect: { orderType: 'togo', items: [{ id: 'cheese', qty: 1, set: null }, { id: 'cola', qty: 1 }] } },
+  { id: 'burger-custom', practice: 'burger', text: '치즈버거 단품에 양파는 빼고 패티를 추가해서 포장 주문하기',
+    expect: { orderType: 'togo', items: [{ id: 'cheese', qty: 1, set: null, custom: { add: ['patty'], remove: ['onion'] } }] } },
+  { id: 'burger-large-set', practice: 'burger', text: '치킨버거 큰 세트(감자튀김, 사이다 얼음 적게)를 매장에서 먹기로 주문하기',
+    expect: { orderType: 'here', items: [{ id: 'chicken', qty: 1, set: { size: 'large', side: 'fries', drink: 'cider', ice: 'less' } }] } },
+  { id: 'reception-first-internal', practice: 'reception', text: '처음 방문으로 내과 접수하기',
+    expect: { visit: 'first', dept: 'internal' } },
+  { id: 'reception-return-ortho', practice: 'reception', text: '전에 와 본 적 있는 환자로 정형외과 접수하기',
+    expect: { visit: 'return', dept: 'ortho' } },
+  { id: 'reception-cough-mobile', practice: 'reception', text: "모바일 건강보험증으로 확인하고, '기침·콧물' 증상으로 추천 진료과에 접수하기",
+    expect: { idMethod: 'mobile', symptom: 'cough', dept: 'ent' } },
+  { id: 'payment-once-prescription', practice: 'payment', text: '진료비를 일시불로 내고 처방전 받기',
+    expect: { installment: 'once', docs: { prescription: true } } },
+  { id: 'payment-both-docs', practice: 'payment', text: '처방전과 영수증을 모두 받고 진료비를 일시불로 내기',
+    expect: { installment: 'once', docs: { prescription: true, receipt: true } } },
+  { id: 'cert-prescription', practice: 'certificate', text: '어제 내과 진료의 처방전을 1부 다시 뽑기',
+    expect: { cert: 'prescription', certVisit: 'v1', copies: 1 } },
+  { id: 'cert-confirmation', practice: 'certificate', text: '정형외과 진료확인서 2부를 뽑고 수수료를 카드로 내기',
+    expect: { cert: 'confirmation', certVisit: 'v2', copies: 2 } },
+];
+
+/* =====================================================================
+   5) 메뉴 그림 — 외부 이미지 없이 SVG로 그림
+   ===================================================================== */
+const svg = body => `<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">${body}</svg>`;
+
+const cream = y => `
+  <g fill="#FFFDF7" stroke="#E4D8C8" stroke-width="1.5">
+    <circle cx="38" cy="${y}" r="8"/><circle cx="62" cy="${y}" r="8"/><circle cx="50" cy="${y - 5}" r="10"/>
+  </g>
+  <circle cx="50" cy="${y - 14}" r="3" fill="#7A4B2E"/>`;
+
+const GARNISH = {
+  lemon: `<g transform="translate(25 27)"><circle r="10" fill="#F5CF3A" stroke="#DDB21E" stroke-width="2"/><circle r="6.8" fill="#FCE78C"/><path d="M0-6.8V6.8M-5.9-3.4L5.9 3.4M-5.9 3.4L5.9-3.4" stroke="#F5CF3A" stroke-width="1.6"/></g>`,
+  orange: `<g transform="translate(25 27)"><circle r="10" fill="#F29A2E" stroke="#D97C14" stroke-width="2"/><circle r="6.8" fill="#FBC46E"/><path d="M0-6.8V6.8M-5.9-3.4L5.9 3.4M-5.9 3.4L5.9-3.4" stroke="#F29A2E" stroke-width="1.6"/></g>`,
+  peach: `<g transform="translate(25 28)"><path d="M-11 0A11 11 0 0 1 11 0Z" fill="#F7A35C" stroke="#E07B39" stroke-width="2"/><path d="M-7 0A7 7 0 0 1 7 0Z" fill="#FFD3A5"/></g>`,
+  berry: `<g transform="translate(26 26)"><path d="M0 10C-10 3-9-6 0-5C9-6 10 3 0 10Z" fill="#E5484D"/><path d="M-6-5L0-10L6-5L0-3Z" fill="#3E9B4F"/><g fill="#FFE3A3"><circle cx="-3" cy="0" r="1"/><circle cx="3" cy="1" r="1"/><circle cx="0" cy="5" r="1"/></g></g>`,
+};
+
+function mug(a) {
+  let top = '';
+  if (a.foam) top = `<ellipse cx="50" cy="38.5" rx="15" ry="3" fill="${a.foam === true ? '#F1E0C2' : a.foam}"/>`;
+  if (a.top === 'foamFull') top = `<ellipse cx="50" cy="38.3" rx="26" ry="4.8" fill="#EAD7B7"/><g fill="#9C6B45"><circle cx="44" cy="37.5" r="1.3"/><circle cx="53" cy="39.2" r="1.3"/><circle cx="58" cy="37" r="1.1"/><circle cx="48" cy="40" r="1"/></g>`;
+  if (a.top === 'cream') top = cream(35);
+  const steam = a.top === 'cream' ? '' : `
+    <g fill="none" stroke="#BCAFA2" stroke-width="3" stroke-linecap="round" opacity=".7">
+      <path d="M38 25c-4-5 4-8 0-14"/><path d="M50 23c-4-5 4-8 0-14"/><path d="M62 25c-4-5 4-8 0-14"/>
+    </g>`;
+  return svg(`${steam}
+    <ellipse cx="50" cy="89" rx="38" ry="6.5" fill="#E2DAD1"/>
+    <path d="M79 47c13 0 13 21 0 21" fill="none" stroke="#D3C9BF" stroke-width="10" stroke-linecap="round"/>
+    <path d="M79 47c13 0 13 21 0 21" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+    <path d="M20 37H80V62Q80 86 56 86H44Q20 86 20 62Z" fill="#FFFFFF" stroke="#D3C9BF" stroke-width="2.5"/>
+    <ellipse cx="50" cy="38.5" rx="28" ry="5.5" fill="${a.liquid}"/>
+    <ellipse cx="50" cy="37.5" rx="30" ry="6.5" fill="none" stroke="#D3C9BF" stroke-width="2.5"/>
+    ${top}`);
+}
+
+function glass(a) {
+  const liquid = (a.ice && a.ice.liquid) || a.liquid;
+  const layer = a.ice && a.ice.layer;
+  return svg(`
+    <path d="M60 3L54 62" stroke="#E0603E" stroke-width="5" stroke-linecap="round"/>
+    <path d="M28.5 40H71.5L67.6 86.5Q67 90.5 62.5 90.5H37.5Q33 90.5 32.4 86.5Z" fill="${liquid}"/>
+    ${layer ? `<path d="M28.5 40H71.5L70.4 53H29.6Z" fill="${layer}"/>` : ''}
+    ${a.noIce ? '' : `<g fill="#FFFFFF" fill-opacity=".6" stroke="#FFFFFF" stroke-width="1.5">
+      <rect x="33" y="44" width="14" height="13" rx="3" transform="rotate(-12 40 50)"/>
+      <rect x="51" y="48" width="13" height="12" rx="3" transform="rotate(10 57 54)"/>
+      <rect x="40" y="62" width="13" height="12" rx="3" transform="rotate(4 46 68)"/></g>`}
+    ${a.top === 'cream' ? cream(38) : ''}
+    <path d="M24 26H76L68.6 88Q67.9 93 62.5 93H37.5Q32.1 93 31.4 88Z" fill="#FFFFFF" fill-opacity=".22" stroke="#C3B9AE" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M30 32L35 84" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+    ${a.garnish ? GARNISH[a.garnish] : ''}`);
+}
+
+// 재료 바꾸기를 그림에도 보여 줌 (패티 추가 → 두 장, 치즈 추가 → 치즈, 양상추 빼기 → 양상추 없음 …)
+function applyCustom(a, custom) {
+  if (!custom) return a;
+  const b = { ...a };
+  if (custom.add.includes('patty')) b.double = true;
+  if (custom.add.includes('cheese')) b.cheese = true;
+  if (custom.add.includes('bacon')) b.bacon = true;
+  if (custom.remove.includes('lettuce')) b.noLettuce = true;
+  if (custom.remove.includes('sauce')) b.sauce = false;
+  return b;
+}
+function burgerArt(a) {
+  const d = a.double ? 12 : 0;
+  return svg(`
+    <ellipse cx="50" cy="89" rx="38" ry="5" fill="#E2DAD1"/>
+    <path d="M16 70H84V74Q84 86 72 86H28Q16 86 16 74Z" fill="#E3A24F" stroke="#B9772F" stroke-width="2"/>
+    <rect x="13" y="59" width="74" height="13" rx="6.5" fill="${a.patty}"${a.crispy ? ' stroke="#B87A25" stroke-width="3" stroke-dasharray="2 4" stroke-linecap="round"' : ''}/>
+    ${a.double ? `<rect x="13" y="47" width="74" height="13" rx="6.5" fill="${a.patty}"/>` : ''}
+    ${a.cheese ? `<path d="M15 ${58 - d}H85L77 ${67 - d}L71 ${62 - d}L63 ${69 - d}L55 ${62 - d}L47 ${69 - d}L39 ${62 - d}L31 ${69 - d}L23 ${62 - d}Z" fill="#F6C343"/>` : ''}
+    ${a.sauce ? `<path d="M22 ${61 - d}q7 5 13 0t13 0 13 0 13 0" fill="none" stroke="#3B1E0E" stroke-width="3" stroke-linecap="round"/>` : ''}
+    ${a.bacon ? `<path d="M15 ${56 - d}q6 4 12 0t12 0 12 0 12 0 12 0 12 0" fill="none" stroke="#A0412D" stroke-width="4" stroke-linecap="round"/>` : ''}
+    ${a.noLettuce ? '' : `<path d="M13 ${57 - d}q6-6 12.3 0t12.3 0 12.3 0 12.3 0 12.3 0 12.3 0" fill="none" stroke="#5FB04F" stroke-width="5" stroke-linecap="round"/>`}
+    <path d="M14 ${52 - d}Q14 ${18 - d} 50 ${18 - d}T86 ${52 - d}Z" fill="#E9A955" stroke="#B9772F" stroke-width="2"/>
+    <g fill="#FFF3D6">
+      <ellipse cx="36" cy="${32 - d}" rx="2.4" ry="1.4" transform="rotate(-20 36 ${32 - d})"/>
+      <ellipse cx="50" cy="${26 - d}" rx="2.4" ry="1.4"/>
+      <ellipse cx="64" cy="${32 - d}" rx="2.4" ry="1.4" transform="rotate(20 64 ${32 - d})"/>
+      <ellipse cx="44" cy="${40 - d}" rx="2.4" ry="1.4" transform="rotate(-10 44 ${40 - d})"/>
+      <ellipse cx="57" cy="${40 - d}" rx="2.4" ry="1.4" transform="rotate(10 57 ${40 - d})"/>
+    </g>`);
+}
+
+const ART = {
+  drink: (a, v) => (v.temp === 'ice' ? glass(a) : mug(a)),
+  burger: (a, v) => burgerArt(applyCustom(a, v && v.custom)),
+  cheesecake: () => svg(`
+    <ellipse cx="50" cy="82" rx="40" ry="8" fill="#E2DAD1"/>
+    <path d="M14 62L84 52V72L14 80Z" fill="#F4DFA4"/>
+    <path d="M14 76L84 68V74L14 82Z" fill="#B7834A"/>
+    <path d="M14 62L60 38L84 52Z" fill="#FFF1C9"/>
+    <path d="M54 44q6-4 12 0q4 4-2 7q-7 3-10-7z" fill="#D8434B"/>
+    <path d="M60 41l2-4 2 4" fill="#3E9B4F"/>`),
+  cookie: () => svg(`
+    <circle cx="50" cy="54" r="33" fill="#D9A15F" stroke="#B9813F" stroke-width="3"/>
+    <path d="M30 40q6 2 8 8M64 70q4-4 10-3" fill="none" stroke="#C48E4D" stroke-width="2.5" stroke-linecap="round"/>
+    <g fill="#4B2E1F"><circle cx="40" cy="42" r="4.5"/><circle cx="61" cy="40" r="4"/><circle cx="48" cy="58" r="5"/><circle cx="67" cy="58" r="4"/><circle cx="34" cy="64" r="4"/><circle cx="54" cy="74" r="3.5"/></g>`),
+  croissant: () => svg(`
+    <ellipse cx="50" cy="82" rx="38" ry="6" fill="#E2DAD1"/>
+    <g fill="#E2A04E" stroke="#B9772F" stroke-width="2.5">
+      <ellipse cx="19" cy="66" rx="9" ry="11" transform="rotate(-40 19 66)"/>
+      <ellipse cx="81" cy="66" rx="9" ry="11" transform="rotate(40 81 66)"/>
+      <ellipse cx="32" cy="57" rx="12" ry="15" transform="rotate(-25 32 57)"/>
+      <ellipse cx="68" cy="57" rx="12" ry="15" transform="rotate(25 68 57)"/>
+      <ellipse cx="50" cy="53" rx="15" ry="19"/>
+    </g>
+    <path d="M43 42q7-5 14 0M28 50q4-4 9-3M63 47q5-1 9 3" fill="none" stroke="#F6CB86" stroke-width="3" stroke-linecap="round"/>`),
+  waffle: () => svg(`
+    <rect x="16" y="22" width="68" height="62" rx="12" fill="#E7B25E" stroke="#BF8838" stroke-width="3"/>
+    <path d="M33 24V82M50 24V82M67 24V82M18 38H82M18 53H82M18 68H82" stroke="#BF8838" stroke-width="3"/>
+    <rect x="42" y="45" width="16" height="12" rx="3" fill="#FFF0A6" stroke="#E8D06A" stroke-width="2"/>`),
+  donut: () => svg(`
+    <path fill-rule="evenodd" d="M50 20a34 34 0 1 1 0 68a34 34 0 1 1 0-68zM50 43a11 11 0 1 0 0 22a11 11 0 1 0 0-22z" fill="#D49A57"/>
+    <path fill-rule="evenodd" d="M50 25a29 29 0 1 1 0 58a29 29 0 1 1 0-58zM50 41a13 13 0 1 0 0 26a13 13 0 1 0 0-26z" fill="#F08DB0"/>
+    <g stroke-width="3" stroke-linecap="round">
+      <path d="M36 36l4 2" stroke="#FFFFFF"/><path d="M60 32l-3 3" stroke="#6BC5E8"/><path d="M70 50l1 4" stroke="#F6D14B"/>
+      <path d="M64 70l-4 1" stroke="#FFFFFF"/><path d="M38 72l3-3" stroke="#6BC5E8"/><path d="M29 52l1-4" stroke="#F6D14B"/>
+    </g>`),
+  bagel: () => svg(`
+    <path fill-rule="evenodd" d="M50 24a36 30 0 1 1 0 60a36 30 0 1 1 0-60zM50 46a12 8 0 1 0 0 16a12 8 0 1 0 0-16z" fill="#C98A45" stroke="#A86E30" stroke-width="2.5"/>
+    <path d="M24 46q26-22 52 0" fill="none" stroke="#DDA25E" stroke-width="5" stroke-linecap="round"/>
+    <g fill="#FFF6E0"><ellipse cx="34" cy="40" rx="2" ry="1.2"/><ellipse cx="50" cy="33" rx="2" ry="1.2"/><ellipse cx="66" cy="40" rx="2" ry="1.2"/><ellipse cx="42" cy="72" rx="2" ry="1.2"/><ellipse cx="62" cy="71" rx="2" ry="1.2"/></g>`),
+  fries: () => svg(`
+    <g fill="#F6C343" stroke="#E0A82E" stroke-width="1.5">
+      <rect x="30" y="16" width="7" height="40" rx="2" transform="rotate(-10 33 36)"/>
+      <rect x="40" y="10" width="7" height="44" rx="2" transform="rotate(-4 43 32)"/>
+      <rect x="50" y="12" width="7" height="44" rx="2" transform="rotate(5 53 34)"/>
+      <rect x="60" y="16" width="7" height="40" rx="2" transform="rotate(12 63 36)"/>
+      <rect x="45" y="18" width="7" height="40" rx="2"/>
+    </g>
+    <path d="M24 42H76L69 90H31Z" fill="#D93A2B"/>
+    <path d="M24 42Q50 56 76 42Z" fill="#B42318"/>
+    <path d="M34 70H66" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity=".85"/>`),
+  nugget: () => svg(`
+    <ellipse cx="50" cy="84" rx="36" ry="6" fill="#E2DAD1"/>
+    <g fill="#D9A04B" stroke="#B57D2C" stroke-width="2">
+      <path d="M18 66q-2-14 12-16q12-2 14 10q2 14-12 15q-12 1-14-9z"/>
+      <path d="M46 60q0-16 16-15q14 1 13 14q-1 14-15 13q-14 0-14-12z"/>
+      <path d="M30 78q-2-12 12-12q14 0 14 10q0 10-13 10q-12 0-13-8z"/>
+    </g>
+    <g fill="#EDC27A"><circle cx="28" cy="60" r="2"/><circle cx="60" cy="54" r="2"/><circle cx="44" cy="74" r="2"/></g>`),
+  cheesestick: () => svg(`
+    <ellipse cx="50" cy="84" rx="36" ry="6" fill="#E2DAD1"/>
+    <g stroke="#B57D2C" stroke-width="2">
+      <rect x="18" y="52" width="56" height="13" rx="6.5" fill="#E2A04E" transform="rotate(-18 46 58)"/>
+      <rect x="24" y="66" width="56" height="13" rx="6.5" fill="#E8AE57" transform="rotate(-6 52 72)"/>
+    </g>
+    <g fill="#FFE38A"><ellipse cx="72" cy="47" rx="4" ry="6" transform="rotate(-18 72 47)"/><ellipse cx="80" cy="68" rx="4" ry="6" transform="rotate(-6 80 68)"/></g>`),
+  coleslaw: () => svg(`
+    <path d="M24 44H76L70 86Q69 90 65 90H35Q31 90 30 86Z" fill="#FFFFFF" stroke="#CFC7BD" stroke-width="2.5"/>
+    <ellipse cx="50" cy="44" rx="26" ry="7" fill="#E8F3D6" stroke="#CFC7BD" stroke-width="2"/>
+    <g stroke-width="3" stroke-linecap="round"><path d="M36 42l6 3" stroke="#7CB342"/><path d="M48 40l5 4" stroke="#F28C28"/><path d="M58 43l6-2" stroke="#7CB342"/><path d="M44 46l5-1" stroke="#A5D6A7"/></g>`),
+  cup: a => svg(`
+    <path d="M60 4L55 24" stroke="#E0603E" stroke-width="5" stroke-linecap="round"/>
+    <path d="M27 30H73L67 88Q66.5 92 62.5 92H37.5Q33.5 92 33 88Z" fill="#FFFFFF" stroke="#CFC7BD" stroke-width="2.5"/>
+    <path d="M28.7 46H71.3L69.3 66H30.7Z" fill="${a.band}"/>
+    <path d="M23 22H77L75 31H25Z" fill="#F3F0EC" stroke="#CFC7BD" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="50" cy="56" r="5" fill="#FFFFFF" opacity=".85"/>`),
+  cone: () => svg(`
+    <path d="M34 50L50 92L66 50Z" fill="#D9A05B" stroke="#B57D2C" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M38 58L58 66M36 52L62 62M42 70L56 76M40 64L60 54M44 74L58 60" stroke="#B57D2C" stroke-width="1.5" opacity=".7"/>
+    <g fill="#FFF8EC" stroke="#E4D8C8" stroke-width="2"><ellipse cx="50" cy="48" rx="20" ry="8"/><ellipse cx="50" cy="38" rx="15" ry="7"/><ellipse cx="50" cy="29" rx="9" ry="6"/></g>
+    <path d="M50 23q2-6 6-6" fill="none" stroke="#E4D8C8" stroke-width="2" stroke-linecap="round"/>`),
+  pie: () => svg(`
+    <ellipse cx="50" cy="80" rx="38" ry="6" fill="#E2DAD1"/>
+    <rect x="18" y="38" width="64" height="38" rx="10" fill="#E3A24F" stroke="#B9772F" stroke-width="2.5"/>
+    <path d="M30 50l8 6M44 48l8 6M58 50l8 6" stroke="#B9772F" stroke-width="3" stroke-linecap="round"/>
+    <path d="M22 64q28 8 56 0" fill="none" stroke="#F3C987" stroke-width="3" stroke-linecap="round"/>`),
+  sundae: () => svg(`
+    <path d="M28 46H72L66 84Q65 90 59 90H41Q35 90 34 84Z" fill="#FFFFFF" fill-opacity=".6" stroke="#C3B9AE" stroke-width="2.5"/>
+    <g fill="#FFF8EC" stroke="#E4D8C8" stroke-width="2"><ellipse cx="50" cy="46" rx="22" ry="9"/><ellipse cx="50" cy="35" rx="15" ry="8"/><ellipse cx="50" cy="26" rx="9" ry="6"/></g>
+    <path d="M32 46q4 8 8 0t8 0 8 0 8 0 8 0" fill="#5A3420"/>
+    <path d="M40 34q5 6 10 0t10 0" fill="none" stroke="#5A3420" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="50" cy="18" r="4" fill="#D8434B"/>`),
+};
+
+/* =====================================================================
+   6) 상태와 도움 함수
+   ===================================================================== */
+const MAX_QTY = 20;
+const PAY_DELAY = 2000;
+const SAVE_KEY = 'kiosk-practice-missions-done';
+
+const app = { view: 'home', practice: null, mission: null, sound: false };
+let store = null;        // 지금 연습 중인 가게 (카페·햄버거). 병원이면 null
+let state = null;        // 지금 연습의 화면 상태
+const once = { sheetOpened: false, bump: false, artPop: false, printAnim: false, enter: false, cardAnim: false, keyWarn: false, warn: false, placeAnim: false };
+let payTimer = null;
+let boardTimer = null;
+let stepTimer = null;
+let toastTimer = null;
+
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+const won = n => n.toLocaleString('ko-KR') + '원';
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const P = () => PRACTICES[app.practice];
+const place = () => store || HOSPITAL;
+const currentMission = () => (app.mission ? MISSIONS.find(m => m.id === app.mission) : null);
+const missionExpect = () => (currentMission() || { expect: {} }).expect;
+const labelOf = (list, id) => { const x = list.find(o => o.id === id); return x ? x.label : '고르지 않음'; };
+
+// 화면 순서 도우미
+const stepName = s => (typeof s === 'string' ? s : s.screen);
+const stepOn = s => typeof s === 'string' || !s.when || s.when(state);
+const firstScreen = () => stepName(P().flow[0]);
+const finalScreen = () => stepName(P().flow[P().flow.length - 1]);
+const isFinal = () => state.screen === finalScreen();
+
+// 받침 보고 조사 고르기
+function hasBatchim(word) {
+  const w = String(word);
+  const code = w.charCodeAt(w.length - 1);
+  if (code >= 0x30 && code <= 0x39) return '013678'.includes(w.slice(-1));
+  if (code < 0xAC00 || code > 0xD7A3) return false;
+  return (code - 0xAC00) % 28 !== 0;
+}
+const pick = (word, withB, withoutB) => (hasBatchim(word) ? withB : withoutB);
+const josa = (word, withB, withoutB) => word + pick(word, withB, withoutB);
+function pickRo(word) {
+  const w = String(word);
+  const code = w.charCodeAt(w.length - 1);
+  if (code >= 0xAC00 && code <= 0xD7A3 && (code - 0xAC00) % 28 === 8) return '로'; // ㄹ 받침
+  return hasBatchim(w) ? '으로' : '로';
+}
+
+// 날짜
+const pad2 = n => String(n).padStart(2, '0');
+function dateOf(daysAgo) { const d = new Date(); d.setDate(d.getDate() - daysAgo); return d; }
+const fmtDot = d => `${d.getFullYear()}.${pad2(d.getMonth() + 1)}.${pad2(d.getDate())}`;
+const fmtKo = d => `${d.getMonth() + 1}월 ${d.getDate()}일 (${'일월화수목금토'[d.getDay()]})`;
+const nowText = () => { const d = new Date(); return `${fmtDot(d)} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`; };
+const whenText = days => (days === 1 ? '어제' : `${days}일 전`);
+
+/* ----- 주문(카페·햄버거) 계산 ----- */
+const findItem = id => store.menu.find(m => m.id === id);
+const findChoice = (groupId, choiceId) => store.optionGroups[groupId].choices.find(c => c.id === choiceId);
+const unitOf = item => (store.categories.find(c => c.id === item.category) || {}).unit || '개';
+const emptyCustom = () => ({ add: [], remove: [] });
+const hasCustom = c => !!c && (c.add.length > 0 || c.remove.length > 0);
+const ingLabel = id => [...store.ingredients.add, ...store.ingredients.remove].find(x => x.id === id).label;
+
+function defaultChoices(item) {
+  const choices = {};
+  item.options.forEach(g => {
+    const def = store.optionGroups[g].choices.find(c => c.default);
+    if (def) choices[g] = def.id;
+  });
+  return choices;
+}
+function isGroupVisible(item, groupId, choices) {
+  const cond = store.optionGroups[groupId].showIf;
+  if (!cond || !item.options.includes(cond.group)) return true;
+  return choices[cond.group] === cond.choice;
+}
+const visibleGroups = (item, choices) => item.options.filter(g => isGroupVisible(item, g, choices));
+
+function variantFor(item, choices = {}, custom = null) {
+  const cold = !!(item.art && item.art.cold);
+  const temp = item.options.includes('temp') && choices.temp ? choices.temp : (cold ? 'ice' : 'hot');
+  return { temp, custom };
+}
+function artSVG(item, variant = variantFor(item)) {
+  const a = item.art;
+  if (a && ART[a.kind]) return ART[a.kind](a, variant);
+  return `<span class="art-emoji" aria-hidden="true">${item.emoji || '🍽️'}</span>`;
+}
+function logoHTML() {
+  if (store) return artSVG({ art: store.logoArt, options: [] }, { temp: 'hot' });
+  return `<span aria-hidden="true">${HOSPITAL.emoji}</span>`;
+}
+
+const setPart = (list, id) => list.find(x => x.id === id) || { extra: 0 };
+const promoFor = itemId => (store.promo && store.promo.itemId === itemId ? store.promo : null);
+const setBasePrice = item => item.price + store.set.price - (promoFor(item.id) ? promoFor(item.id).setDiscount : 0);
+// 한 개 값: 기본 + 옵션 + 세트(크기·사이드·음료 추가금, 할인) + 재료 추가
+function unitPriceOf({ itemId, choices = {}, set = null, custom = null }) {
+  const item = findItem(itemId);
+  let price = item.price + visibleGroups(item, choices).reduce((sum, g) => {
+    const c = choices[g] && findChoice(g, choices[g]);
+    return sum + (c ? c.price : 0);
+  }, 0);
+  if (set && store.set) {
+    price = setBasePrice(item) + setPart(store.set.sizes, set.size).extra + setPart(store.set.sides, set.side).extra + setPart(store.set.drinks, set.drink).extra;
+  }
+  if (custom) price += custom.add.reduce((s, id) => s + (store.ingredients.add.find(x => x.id === id) || { price: 0 }).price, 0);
+  return price;
+}
+function lineText(l) {
+  const item = findItem(l.itemId);
+  const parts = [];
+  if (item.setable) {
+    if (l.set) {
+      const ice = l.set.ice && l.set.ice !== 'normal' ? `(${findChoice('ice', l.set.ice).cartText})` : '';
+      parts.push(`${labelOf(store.set.sizes, l.set.size)} · ${findItem(l.set.side).name} · ${findItem(l.set.drink).name}${ice}`);
+    } else {
+      parts.push('단품');
+    }
+    if (l.custom) [...l.custom.add, ...l.custom.remove].forEach(id => parts.push(ingLabel(id)));
+  }
+  visibleGroups(item, l.choices).forEach(g => {
+    const c = findChoice(g, l.choices[g]);
+    if (c && (c.cartText || !c.default)) parts.push(c.cartText || c.label);
+  });
+  return parts.join(' · ');
+}
+const cartCount = () => state.cart.reduce((s, l) => s + l.qty, 0);
+const cartTotal = () => state.cart.reduce((s, l) => s + unitPriceOf(l) * l.qty, 0);
+const qtyInCart = itemId => state.cart.filter(l => l.itemId === itemId).reduce((s, l) => s + l.qty, 0);
+function summaryText() {
+  const byName = new Map();
+  state.cart.forEach(l => {
+    const name = findItem(l.itemId).name + (l.set ? ' 세트' : '');
+    byName.set(name, (byName.get(name) || 0) + l.qty);
+  });
+  return [...byName].map(([name, q]) => `${name} ${q}개`).join(', ');
+}
+function missingGroup() {
+  const sh = state.sheet;
+  const item = findItem(sh.itemId);
+  return visibleGroups(item, sh.choices).find(g => store.optionGroups[g].required && !sh.choices[g]) || null;
+}
+
+/* ----- 병원 계산 ----- */
+const billTotal = () => HOSPITAL.bill.items.reduce((s, i) => s + i.amount, 0);
+const findVisit = id => HOSPITAL.history.find(v => v.id === id);
+const visitLabel = v => `${fmtKo(dateOf(v.daysAgo))} ${v.dept}`;
+const certVisitList = () => HOSPITAL.history.map(v => ({ id: v.id, label: visitLabel(v) }));
+function certFee(s = state) {
+  const c = HOSPITAL.certificates.find(x => x.id === s.cert);
+  return c ? c.fee * s.copies : 0;
+}
+function totalDue() {
+  if (store) return cartTotal();
+  return P().hospital === 'certificate' ? certFee() : billTotal();
+}
+const isLocked = () => state.screen === 'insert' && state.payStep !== 'ready';
+
+/* ----- 미션 비교 ----- */
+const sameList = (a, b) => [...a].sort().join(',') === [...b].sort().join(',');
+const sameCustom = (a, b) => {
+  const x = a || emptyCustom();
+  const y = b || emptyCustom();
+  return sameList(x.add, y.add) && sameList(x.remove, y.remove);
+};
+function lineMatches(l, e) {
+  if (l.itemId !== e.id) return false;
+  if (e.choices && Object.entries(e.choices).some(([g, c]) => l.choices[g] !== c)) return false;
+  if ('set' in e) {
+    if (!e.set) { if (l.set) return false; }
+    else {
+      if (!l.set || l.set.side !== e.set.side || l.set.drink !== e.set.drink) return false;
+      if ((l.set.size || 'regular') !== (e.set.size || 'regular')) return false;
+      if (e.set.ice && l.set.ice !== e.set.ice) return false;
+    }
+  }
+  if (findItem(l.itemId).setable && !sameCustom(l.custom, e.custom)) return false;
+  return true;
+}
+const matchedQty = e => state.cart.filter(l => lineMatches(l, e)).reduce((s, l) => s + l.qty, 0);
+
+/* =====================================================================
+   7) 소리로 읽어 주기 (브라우저에 들어 있는 음성 읽기)
+   ===================================================================== */
+const speech = {
+  supported: typeof window.speechSynthesis !== 'undefined' && typeof window.SpeechSynthesisUtterance !== 'undefined',
+  voice: null,
+};
+function pickVoice() {
+  if (!speech.supported) return;
+  speech.voice = window.speechSynthesis.getVoices().find(v => /^ko/i.test(v.lang)) || null;
+}
+function speak(text) {
+  if (!speech.supported || !text) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(String(text).replace(/['‘’"“”]/g, ''));
+    u.lang = 'ko-KR';
+    u.rate = 0.95;
+    if (speech.voice) u.voice = speech.voice;
+    window.speechSynthesis.speak(u);
+  } catch (e) { /* 읽기를 못 해도 화면은 그대로 씀 */ }
+}
+function stopSpeaking() {
+  if (speech.supported) { try { window.speechSynthesis.cancel(); } catch (e) { /* 무시 */ } }
+}
+
+/* =====================================================================
+   8) 미션 성공 기록(브라우저에만 저장)과 채점
+   ===================================================================== */
+function loadDone() {
+  try { return new Set(JSON.parse(localStorage.getItem(SAVE_KEY) || '[]')); } catch (e) { return new Set(); }
+}
+const doneMissions = loadDone();
+function saveDone() {
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify([...doneMissions])); } catch (e) { /* 저장을 못 해도 연습은 계속 */ }
+}
+
+function evaluateMission(m) {
+  const errs = store ? evaluateOrder(m.expect) : evaluateHospital(m.expect);
+  return [...new Set(errs)];
+}
+
+function evaluateOrder(ex) {
+  const errs = [];
+  if (ex.orderType && state.orderType !== ex.orderType) {
+    const want = labelOf(store.orderTypes, ex.orderType);
+    const got = labelOf(store.orderTypes, state.orderType);
+    errs.push(`'${want}' 대신 '${got}'${pick(got, '을', '를')} 고르셨어요`);
+  }
+  (ex.items || []).forEach(e => {
+    const item = findItem(e.id);
+    const unit = unitOf(item);
+    const lines = state.cart.filter(l => l.itemId === e.id);
+    const total = lines.reduce((s, l) => s + l.qty, 0);
+    if (!total) { errs.push(`${josa(item.name, '을', '를')} 담지 않으셨어요`); return; }
+    Object.entries(e.choices || {}).forEach(([g, c]) => {
+      if (lines.some(l => l.choices[g] !== c)) {
+        const label = findChoice(g, c).label;
+        errs.push(`${josa(item.name, '을', '를')} '${label}'${pickRo(label)} 고르지 않으셨어요`);
+      }
+    });
+    if ('set' in e) {
+      if (!e.set && lines.some(l => l.set)) errs.push(`${josa(item.name, '을', '를')} 단품이 아니라 세트로 고르셨어요`);
+      if (e.set) {
+        if (lines.some(l => !l.set)) errs.push(`${josa(item.name, '을', '를')} 세트가 아니라 단품으로 고르셨어요`);
+        const sets = lines.filter(l => l.set);
+        const wantSize = e.set.size || 'regular';
+        const badSize = sets.find(l => (l.set.size || 'regular') !== wantSize);
+        if (badSize) {
+          const got = labelOf(store.set.sizes, badSize.set.size);
+          errs.push(`'${labelOf(store.set.sizes, wantSize)}' 대신 '${got}'${pick(got, '을', '를')} 고르셨어요`);
+        }
+        const badSide = sets.find(l => l.set.side !== e.set.side);
+        if (badSide) {
+          const got = findItem(badSide.set.side).name;
+          errs.push(`세트 사이드를 '${findItem(e.set.side).name}' 대신 '${got}'${pickRo(got)} 고르셨어요`);
+        }
+        const badDrink = sets.find(l => l.set.drink !== e.set.drink);
+        if (badDrink) {
+          const got = findItem(badDrink.set.drink).name;
+          errs.push(`세트 음료를 '${findItem(e.set.drink).name}' 대신 '${got}'${pickRo(got)} 고르셨어요`);
+        }
+        if (e.set.ice && sets.some(l => l.set.ice !== e.set.ice)) {
+          errs.push(`세트 음료 얼음을 '${findChoice('ice', e.set.ice).label}'${pickRo(findChoice('ice', e.set.ice).label)} 고르지 않으셨어요`);
+        }
+      }
+    }
+    if (item.setable) {
+      const want = e.custom || emptyCustom();
+      lines.forEach(l => {
+        const got = l.custom || emptyCustom();
+        [...want.add, ...want.remove].filter(id => !got.add.includes(id) && !got.remove.includes(id))
+          .forEach(id => errs.push(`재료 바꾸기에서 '${ingLabel(id)}'${pick(ingLabel(id), '을', '를')} 하지 않으셨어요`));
+        [...got.add, ...got.remove].filter(id => !want.add.includes(id) && !want.remove.includes(id))
+          .forEach(id => errs.push(`미션에 없는 '${ingLabel(id)}'도 하셨어요`));
+      });
+    }
+    if (total !== e.qty) errs.push(`${josa(item.name, '을', '를')} ${e.qty}${unit} 대신 ${total}${unit} 담으셨어요`);
+  });
+  const wanted = new Set((ex.items || []).map(e => e.id));
+  [...new Set(state.cart.filter(l => !wanted.has(l.itemId)).map(l => findItem(l.itemId).name))]
+    .forEach(name => errs.push(`미션에 없는 '${name}'도 담으셨어요`));
+  if (ex.upsell === 'declined' && state.upsellResult === 'added') {
+    errs.push(`디저트 권유 창에서 '${store.upsell.skipLabel}' 대신 디저트를 담으셨어요`);
+  }
+  return errs;
+}
+
+function evaluateHospital(ex) {
+  const H = HOSPITAL;
+  const errs = [];
+  const compare = (list, want, got, what) => {
+    if (!want || got === want) return;
+    const w = labelOf(list, want);
+    const g = labelOf(list, got);
+    errs.push(`${what}에서 '${w}' 대신 '${g}'${pick(g, '을', '를')} 고르셨어요`);
+  };
+  compare(H.visits, ex.visit, state.visit, '방문 구분');
+  compare(H.idMethods, ex.idMethod, state.idc.method, '본인 확인 방법');
+  compare(H.symptoms, ex.symptom, state.symptom, '증상');
+  compare(H.depts, ex.dept, state.dept, '진료과');
+  compare(H.installments, ex.installment, state.installment, '할부');
+  compare(H.certificates, ex.cert, state.cert, '서류');
+  compare(certVisitList(), ex.certVisit, state.certVisit, '진료 날짜');
+  if (ex.copies && state.copies !== ex.copies) errs.push(`${ex.copies}부 대신 ${state.copies}부를 고르셨어요`);
+  Object.entries(ex.docs || {}).forEach(([id, want]) => {
+    const doc = H.docs.find(d => d.id === id);
+    if (!!state.docs[id] === want) return;
+    errs.push(want ? `${josa(doc.label, '을', '를')} '받을게요'로 고르지 않으셨어요` : `${josa(doc.label, '은', '는')} '안 받을게요'로 골라야 했어요`);
+  });
+  return errs;
+}
+
+/* =====================================================================
+   9) 숫자 키패드 (병원 본인 확인, 햄버거 진동벨) — 화면에 보여 준 연습용 번호만 받음
+   ===================================================================== */
+const KEYPADS = {
+  verify: {
+    data: () => state.verify,
+    fields: () => [
+      { id: 'birth', label: '생년월일', target: HOSPITAL.patient.birth },
+      { id: 'phone', label: '휴대폰 뒷자리', target: HOSPITAL.patient.phone },
+    ],
+  },
+  pager: {
+    data: () => state.pagerInput,
+    fields: () => [{ id: 'pager', label: '진동벨 번호', target: store.pager.number }],
+  },
+};
+const keypadDone = name => KEYPADS[name].fields().every(f => KEYPADS[name].data()[f.id] === f.target);
+
+function keypadHTML(name) {
+  const kp = KEYPADS[name];
+  const data = kp.data();
+  const fields = kp.fields();
+  const done = keypadDone(name);
+  const fieldHTML = f => {
+    const typed = data[f.id];
+    const active = data.field === f.id;
+    const slots = [...f.target].map((_, i) => `<span class="slot-digit${active && i === typed.length ? ' cursor' : ''}">${typed[i] || ''}</span>`).join('');
+    const ref = [...f.target].map((d, i) => (i === typed.length && active ? `<i>${d}</i>` : d)).join('');
+    return `
+      <button class="field${active ? ' active' : ''}" data-action="field" data-arg="${f.id}" aria-label="${f.label}, ${typed.length}자리 눌렀음">
+        <span class="field-label">${f.label}</span>
+        <span class="slots" aria-hidden="true">${slots}</span>
+        <span class="field-ref">연습용 <b>${ref}</b></span>
+      </button>`;
+  };
+  const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'del', '0', 'ok'];
+  return `
+    <div class="fields${fields.length === 1 ? ' one' : ''}" style="--cols:${fields.length}">${fields.map(fieldHTML).join('')}</div>
+    <div class="keypad${once.keyWarn ? ' warn' : ''}">
+      ${keys.map(k => {
+        if (k === 'del') return '<button class="key fn" data-action="key-del">지움</button>';
+        if (k === 'ok') return `<button class="key ok${done ? ' hint' : ' is-off'}" data-action="key-ok" aria-disabled="${!done}">확인</button>`;
+        return `<button class="key" data-action="key" data-arg="${k}">${k}</button>`;
+      }).join('')}
+    </div>`;
+}
+function keypadHelp(name) {
+  const kp = KEYPADS[name];
+  const data = kp.data();
+  const f = kp.fields().find(x => data[x.id].length < x.target.length);
+  if (!f) return '[data-action="key-ok"]';
+  if (data.field !== f.id) return `[data-action="field"][data-arg="${f.id}"]`;
+  return `[data-action="key"][data-arg="${f.target[data[f.id].length]}"]`;
+}
+function pressKey(d) {
+  const kp = KEYPADS[state.screen];
+  if (!kp) return;
+  const data = kp.data();
+  const fields = kp.fields();
+  let f = fields.find(x => x.id === data.field) || fields[0];
+  if (data[f.id].length >= f.target.length) {
+    const next = fields.find(x => data[x.id].length < x.target.length);
+    if (!next) { toast("번호를 다 눌렀어요. '확인'을 눌러 주세요"); return; }
+    f = next;
+    data.field = next.id;
+  }
+  const want = f.target[data[f.id].length];
+  if (d !== want) {
+    once.keyWarn = true;
+    render();
+    toast(`화면의 연습용 번호를 눌러 주세요. 다음 숫자는 ${want}번이에요`);
+    return;
+  }
+  data[f.id] += d;
+  if (data[f.id].length === f.target.length) {
+    const next = fields.find(x => data[x.id].length < x.target.length);
+    if (next) data.field = next.id;
+  }
+  render();
+}
+function deleteKey() {
+  const kp = KEYPADS[state.screen];
+  if (!kp) return;
+  const data = kp.data();
+  const fields = kp.fields();
+  let f = data.field;
+  if (!data[f].length) {
+    const i = fields.findIndex(x => x.id === f);
+    if (i > 0) { f = fields[i - 1].id; data.field = f; }
+  }
+  data[f] = data[f].slice(0, -1);
+  render();
+}
+function confirmKey() {
+  if (keypadDone(state.screen)) { goNext(); return; }
+  toast('연습용 번호를 끝까지 눌러 주세요');
+}
+
+/* =====================================================================
+   10) 화면들 — render(그리기), guide(지금 할 일), help(미션 도움말로 반짝일 곳)
+   ===================================================================== */
+const qtyHTML = (n, dec, inc, arg, name, max = MAX_QTY, big = false) => `
+  <div class="qty${big ? ' big' : ''}" role="group" aria-label="${name ? esc(name) + ' ' : ''}수량">
+    <button class="qty-btn" data-action="${dec}" data-arg="${esc(arg)}" aria-label="하나 줄이기"${n <= 1 ? ' disabled' : ''}>−</button>
+    <span class="qty-num">${n}</span>
+    <button class="qty-btn" data-action="${inc}" data-arg="${esc(arg)}" aria-label="하나 늘리기"${n >= max ? ' disabled' : ''}>+</button>
+  </div>`;
+const restartFoot = () => `
+  <div class="cart-foot"><button class="btn btn-primary big${currentMission() ? '' : ' hint'}" data-action="restart">다시 하기</button></div>`;
+const printerHTML = (inner, wide = false, copies = 1) => `
+  <div class="printer${wide ? ' wide' : ''}"><div class="printer-slot"></div><div class="paper-clip"><div class="paper${once.printAnim ? ' printing' : ''}${copies > 1 ? ' copies' : ''}">${inner}</div></div></div>`;
+const stepsHTML = list => `<ol class="steps">${list.map(s => `<li>${esc(s)}</li>`).join('')}</ol>`;
+const pagerHTML = (number, buzzing) => `<div class="pager${buzzing ? ' buzz' : ''}" aria-hidden="true"><span class="pager-led">${number}</span></div>`;
+const footNext = (label = '다음', action = 'next', ready = true) => `
+  <div class="cart-foot"><button class="btn btn-primary big${ready ? ' hint' : ' is-off'}" data-action="${action}" aria-disabled="${!ready}">${label}</button></div>`;
+
+// 처방전 (약국 제출용) — 연습용
+function prescriptionHTML(src) {
+  return `
+    <div class="rx">
+      <p class="rx-title">처방전</p>
+      <p class="rx-sub">약국 제출용 · 연습용</p>
+      <table><tbody>
+        <tr><th>교부일</th><td>${fmtDot(src.date)}</td></tr>
+        <tr><th>환자</th><td>${esc(HOSPITAL.patient.name)} (연습용)</td></tr>
+        <tr><th>병원</th><td>${esc(HOSPITAL.name)} · ${esc(src.dept)}</td></tr>
+        <tr><th>의사</th><td>${esc(src.doctor)}</td></tr>
+      </tbody></table>
+      <p class="rx-h">처방 의약품</p>
+      <table class="rx-drugs">
+        <thead><tr><th>약 이름</th><th>1회</th><th>하루</th><th>며칠</th></tr></thead>
+        <tbody>${src.drugs.map(d => `<tr><td>${esc(d.name)}</td><td>${esc(d.dose)}</td><td>${d.times}번</td><td>${d.days}일</td></tr>`).join('')}</tbody>
+      </table>
+      <p class="rx-note">사용 기간: 교부일부터 3일 안에 약국에 내세요.</p>
+      <p class="rx-note">먹는 법: 밥 먹고 30분 뒤에 드세요.</p>
+    </div>`;
+}
+function certPaperHTML(certId, v) {
+  const date = fmtDot(dateOf(v.daysAgo));
+  const total = v.items.reduce((s, i) => s + i.amount, 0);
+  if (certId === 'prescription') return prescriptionHTML({ date: dateOf(v.daysAgo), dept: v.dept, doctor: v.doctor, drugs: v.drugs });
+  const head = title => `<p class="r-store">${title}</p><p class="r-line">${esc(HOSPITAL.name)} · 연습용</p><div class="r-sep"></div>
+    <div class="r-row"><span>환자</span><b>${esc(HOSPITAL.patient.name)}</b></div>
+    <div class="r-row"><span>진료 날짜</span><b>${date}</b></div>
+    <div class="r-row"><span>진료과</span><b>${esc(v.dept)}</b></div>`;
+  if (certId === 'receipt') return `${head('진료비 영수증')}<div class="r-sep"></div><div class="r-row r-total"><span>낸 금액</span><span>${won(total)}</span></div>`;
+  if (certId === 'detail') {
+    return `${head('진료비 세부내역서')}<div class="r-sep"></div>
+      ${v.items.map(i => `<div class="r-row"><span>${esc(i.label)}</span><span>${won(i.amount)}</span></div>`).join('')}
+      <div class="r-sep"></div><div class="r-row r-total"><span>합계</span><span>${won(total)}</span></div>`;
+  }
+  return `${head('진료확인서')}
+    <div class="r-row"><span>병명</span><b>${esc(v.disease)} (연습용)</b></div>
+    <div class="r-row"><span>담당 의사</span><b>${esc(v.doctor)}</b></div>
+    <div class="r-sep"></div><p>위와 같이 진료하였음을 확인합니다.</p>
+    <p class="r-stamp">${esc(HOSPITAL.name)}장<span>인</span></p>`;
+}
+
+const SCREENS = {
+  /* ================= 주문 ================= */
+  start: {
+    render: () => `
+      <button class="start-screen" data-action="start" aria-label="화면을 눌러 주문을 시작하세요">
+        <span class="start-art">${logoHTML()}</span>
+        <span class="start-name">${esc(store.name)}</span>
+        <span class="start-msg">화면을 눌러<br>주문을 시작하세요</span>
+        <span class="start-finger" aria-hidden="true">👆</span>
+        <span class="start-note">연습용 화면이에요. 실제로 주문·결제되지 않아요.</span>
+      </button>`,
+    guide: () => '화면을 한 번 눌러 보세요',
+    help: () => '[data-action="start"]',
+  },
+
+  where: {
+    render: () => `
+      <div class="screen center" data-scroll="where">
+        <div class="center-inner">
+          <h2 class="title">${esc(store.orderTypeQuestion)}</h2>
+          <div class="where-grid">
+            ${store.orderTypes.map(t => `
+              <button class="where-btn" data-action="order-type" data-arg="${t.id}">
+                <span class="where-emoji" aria-hidden="true">${t.emoji}</span><span>${esc(t.label)}</span>
+              </button>`).join('')}
+          </div>
+        </div>
+      </div>`,
+    guide: () => store.orderTypeGuide,
+    help: ex => `[data-action="order-type"][data-arg="${ex.orderType || store.orderTypes[0].id}"]`,
+  },
+
+  menu: {
+    render: () => {
+      const items = store.menu.filter(m => m.category === state.category);
+      const count = cartCount();
+      return `
+      <div class="screen">
+        ${store.promo ? `
+          <button class="promo" data-action="promo">
+            <span class="promo-badge">${esc(store.promo.badge)}</span><span>${esc(store.promo.text)}</span><span class="promo-arrow" aria-hidden="true">›</span>
+          </button>` : ''}
+        <div class="tabs" aria-label="메뉴 분류">
+          ${store.categories.map(c => `
+            <button class="tab" aria-pressed="${c.id === state.category}" data-action="tab" data-arg="${c.id}">${esc(c.label)}</button>`).join('')}
+        </div>
+        <div class="menu-grid" data-scroll="menu-${state.category}">${items.map(menuCardHTML).join('')}</div>
+        <div class="summary${once.bump ? ' bump' : ''}">
+          <div class="summary-text">
+            <div class="summary-items">${count ? esc(summaryText()) : '아직 담은 메뉴가 없어요'}</div>
+            <div class="summary-total">총 ${count}개 · ${won(cartTotal())}</div>
+          </div>
+          <button class="btn btn-primary pay-btn${count ? '' : ' is-off'}${count && !state.sheet ? ' hint' : ''}" data-action="checkout" aria-disabled="${!count}">결제하기</button>
+        </div>
+      </div>`;
+    },
+    guide: () => (cartCount() ? "다 고르셨으면 '결제하기'를 눌러 보세요" : '원하는 메뉴를 눌러 보세요'),
+    help: ex => {
+      const need = (ex.items || []).find(e => matchedQty(e) < e.qty);
+      if (need) {
+        const item = findItem(need.id);
+        if (state.category !== item.category) return `[data-action="tab"][data-arg="${item.category}"]`;
+        return `[data-action="open-item"][data-arg="${item.id}"]`;
+      }
+      return '[data-action="checkout"]';
+    },
+  },
+
+  cart: {
+    render: () => {
+      if (!state.cart.length) {
+        return `
+        <div class="screen center">
+          <div class="center-inner">
+            <span class="empty-emoji" aria-hidden="true">🛒</span>
+            <h2 class="title">담은 메뉴가 없어요</h2>
+            <p class="sub">아래 '이전'을 눌러 메뉴를 골라 주세요.</p>
+          </div>
+        </div>`;
+      }
+      return `
+      <div class="screen">
+        <h2 class="title pad">주문 내역을 확인해 주세요</h2>
+        <ul class="cart-list" data-scroll="cart">${state.cart.map(lineHTML).join('')}</ul>
+        <div class="cart-foot">
+          <div class="summary-text">
+            <div class="summary-items">총 ${cartCount()}개</div>
+            <div class="summary-total">${won(cartTotal())}</div>
+          </div>
+          <button class="btn btn-primary pay-btn${state.sheet ? '' : ' hint'}" data-action="pay">결제하기</button>
+        </div>
+      </div>`;
+    },
+    guide: () => (cartCount() ? "확인하셨으면 '결제하기'를 눌러 보세요" : "'이전'을 눌러 메뉴를 다시 골라 보세요"),
+    help: ex => {
+      const back = '.kiosk-nav [data-action="back"]';
+      if (!state.cart.length) return back;
+      const items = ex.items || [];
+      const wrong = state.cart.find(l => !items.some(e => lineMatches(l, e)));
+      if (wrong) return `[data-action="remove"][data-arg="${CSS.escape(wrong.key)}"]`;
+      for (const e of items) {
+        const q = matchedQty(e);
+        const line = state.cart.find(l => lineMatches(l, e));
+        if (q > e.qty) return `[data-action="dec"][data-arg="${CSS.escape(line.key)}"]`;
+        if (q < e.qty) return line ? `[data-action="inc"][data-arg="${CSS.escape(line.key)}"]` : back;
+      }
+      return '[data-action="pay"]';
+    },
+  },
+
+  /* ---------- 결제 방법 (공통) ---------- */
+  pay: {
+    render: () => `
+      <div class="screen center" data-scroll="pay">
+        <div class="center-inner">
+          <h2 class="title">결제 방법을 골라 주세요</h2>
+          <div class="amount-box"><span>결제할 금액</span><b>${won(totalDue())}</b></div>
+          <div class="pay-list">
+            ${DEFAULT_PAY_METHODS.map(m => `
+              <button class="pay-option${m.id === 'card' ? ' hint' : ''}" data-action="pay-method" data-arg="${m.id}">
+                <span class="pay-emoji" aria-hidden="true">${m.emoji}</span>${esc(m.label)}
+              </button>`).join('')}
+          </div>
+          <p class="note">연습용이라 실제로 돈이 나가지 않아요.</p>
+        </div>
+      </div>`,
+    guide: () => "'카드 결제'를 눌러 보세요",
+    help: () => '[data-action="pay-method"][data-arg="card"]',
+  },
+
+  /* ---------- 카드 넣기 → (할부) → 결제 중 → 카드 빼기 (공통) ---------- */
+  insert: {
+    render: () => {
+      const step = state.payStep;
+      const [title, sub] = {
+        ready: ['카드를 넣어 주세요', '아래 카드 그림을 누르면 카드가 들어가요'],
+        inserted: ['카드가 들어갔어요', '할부 개월을 골라 주세요'],
+        paying: ['결제 중이에요', '<span class="spinner" role="img" aria-label="결제 중"></span> 카드를 빼지 말고 잠시 기다려 주세요'],
+        remove: ['결제가 끝났어요', '이제 <b>카드를 빼 주세요</b>.<br>카드 그림을 누르면 빠져요'],
+        removed: ['결제가 끝났어요', '카드를 잘 챙기셨어요'],
+        out: ['결제가 끝났어요', '카드를 잘 챙기셨어요'],
+      }[step];
+      const inClass = once.cardAnim ? 'inserting' : 'inserted';
+      const cardClass = { ready: 'hint', inserted: inClass, paying: inClass, remove: 'inserted hint', removed: 'removing', out: '' }[step];
+      const tappable = step === 'ready' || step === 'remove';
+      return `
+      <div class="screen center" data-scroll="insert">
+        <div class="center-inner">
+          <h2 class="title">${title}</h2>
+          <p class="sub">${sub}</p>
+          <div class="insert-stage step-${step}">
+            <div class="reader"><div class="slot"></div><span>카드 넣는 곳</span></div>
+            <div class="arrow" aria-hidden="true">⬆</div>
+            <button class="card ${cardClass}" data-action="insert-card" aria-label="${step === 'remove' ? '연습용 카드 빼기' : '연습용 카드 넣기'}"${tappable ? '' : ' disabled'}>
+              <span class="card-chip" aria-hidden="true"></span><span class="card-name">연습용 카드</span>
+            </button>
+            <div class="arrow-down" aria-hidden="true">⬇</div>
+          </div>
+          <p class="note">카드 번호는 입력하지 않아요. 실제로 결제되지 않아요.</p>
+        </div>
+      </div>`;
+    },
+    guide: () => ({
+      ready: '카드 그림을 눌러 카드를 넣어 보세요',
+      inserted: '할부 개월을 골라 보세요',
+      paying: '결제 중이에요. 잠시 기다려 주세요',
+      remove: '카드 그림을 눌러 카드를 빼 보세요',
+      removed: '카드를 잘 챙기셨어요',
+      out: '카드를 잘 챙기셨어요',
+    }[state.payStep]),
+    help: () => (state.payStep === 'ready' || state.payStep === 'remove' ? '[data-action="insert-card"]' : null),
+  },
+
+  /* ---------- 햄버거: 진동벨 번호 ---------- */
+  pager: {
+    render: () => `
+      <div class="screen center" data-scroll="pager">
+        <div class="center-inner verify">
+          <h2 class="title">진동벨 번호를 눌러 주세요</h2>
+          <div class="pager-row">
+            ${pagerHTML(store.pager.number, false)}
+            <p class="sub left">카운터 옆 진동벨을 하나 가져와 <b>적힌 번호</b>를 눌러요. 연습용 진동벨은 <b>${store.pager.number}번</b>이에요.</p>
+          </div>
+          ${keypadHTML('pager')}
+        </div>
+      </div>`,
+    guide: () => (keypadDone('pager') ? "다 누르셨으면 '확인'을 눌러 보세요" : '진동벨에 적힌 번호를 눌러 보세요'),
+    help: () => keypadHelp('pager'),
+  },
+
+  /* ---------- 주문 완료 ---------- */
+  done: {
+    render: () => {
+      const type = store.orderTypes.find(t => t.id === state.orderType);
+      const no = state.orderNo;
+      let pickupHTML = `<p class="sub">${esc((store.pickup && store.pickup.message) || '')}</p>`;
+      if (state.orderType === 'here' && store.pager) {
+        pickupHTML = `
+          <div class="pager-wait">
+            ${pagerHTML(store.pager.number, state.pagerBuzz)}
+            <p class="pager-msg${state.pagerBuzz ? ' on' : ''}">${state.pagerBuzz ? '🔔 드르륵! 진동벨이 울려요' : '진동벨이 울릴 때까지 자리에서 기다려요'}</p>
+          </div>
+          ${stepsHTML(store.pager.steps)}`;
+      } else if (store.pickup && store.pickup.type === 'board') {
+        pickupHTML = `
+          <div class="board" aria-label="주문 안내 화면">
+            <div class="board-col"><span class="board-head">준비 중</span>
+              ${state.boardReady ? '' : `<span class="board-no mine">${no}</span>`}<span class="board-no">${no + 1}</span></div>
+            <div class="board-col ready"><span class="board-head">받아 가세요</span>
+              <span class="board-no">${no - 1}</span>${state.boardReady ? `<span class="board-no mine">${no}</span>` : ''}</div>
+          </div>
+          ${stepsHTML(store.pickup.steps)}`;
+      }
+      return `
+      <div class="screen">
+        <div class="screen center" data-scroll="done">
+          <div class="center-inner">
+            <p class="done-msg"><span class="done-emoji" aria-hidden="true">🎉</span> 주문이 끝났어요</p>
+            <div class="order-no"><span>주문번호</span><b>${no}</b></div>
+            <p class="praise">잘하셨어요! 👏</p>
+            <p class="sub">${type ? esc(type.badge) + ' 주문 · ' : ''}${won(cartTotal())}</p>
+            ${pickupHTML}
+          </div>
+        </div>
+        ${restartFoot()}
+      </div>`;
+    },
+    guide: () => {
+      if (state.orderType === 'here' && store.pager) {
+        return state.pagerBuzz ? '진동벨이 울려요! 카운터로 가서 음식을 받아요' : '진동벨이 울릴 때까지 기다려 보세요';
+      }
+      if (store.pickup && store.pickup.type === 'board') {
+        return state.boardReady ? "내 번호가 '받아 가세요'에 떴어요. 카운터로 가요" : '주문 끝! 주문번호를 기억해 두세요';
+      }
+      return '주문 끝! 주문번호를 확인해 보세요';
+    },
+    help: () => '[data-action="restart"]',
+  },
+
+  /* ================= 병원 ================= */
+  hospitalStart: {
+    render: () => `
+      <div class="screen center" data-scroll="hospitalStart">
+        <div class="center-inner">
+          <h2 class="title">원하시는 업무를<br>골라 주세요</h2>
+          <div class="hosp-menu">
+            ${HOSPITAL.menu.map(m => `
+              <button class="hosp-btn${m.id === P().hospital ? ' hint' : ''}" data-action="hmenu" data-arg="${m.id}">
+                <span class="hosp-emoji" aria-hidden="true">${m.emoji}</span>
+                <span class="hosp-text"><b>${esc(m.label)}</b><span>${esc(m.sub)}</span></span>
+              </button>`).join('')}
+          </div>
+          <p class="note">연습용 화면이에요. 실제로 접수·결제되지 않아요.</p>
+        </div>
+      </div>`,
+    guide: () => { const label = labelOf(HOSPITAL.menu, P().hospital); return `'${label}'${pick(label, '을', '를')} 눌러 보세요`; },
+    help: () => `[data-action="hmenu"][data-arg="${P().hospital}"]`,
+  },
+
+  visit: {
+    render: () => `
+      <div class="screen center" data-scroll="visit">
+        <div class="center-inner">
+          <h2 class="title">우리 병원에<br>와 보신 적이 있나요?</h2>
+          <div class="choice-list">
+            ${HOSPITAL.visits.map(v => `
+              <button class="choice-card" data-action="visit" data-arg="${v.id}">
+                <span class="choice-emoji" aria-hidden="true">${v.emoji}</span>
+                <span class="choice-text"><b>${esc(v.label)}</b><span>${esc(v.sub)}</span></span>
+              </button>`).join('')}
+          </div>
+        </div>
+      </div>`,
+    guide: () => '처음 왔는지, 와 본 적 있는지 골라 보세요',
+    help: ex => `[data-action="visit"][data-arg="${ex.visit || HOSPITAL.visits[0].id}"]`,
+  },
+
+  /* ---------- 접수: 개인정보 동의 (처음 방문일 때만) ---------- */
+  consent: {
+    render: () => {
+      const c = state.consent;
+      const row = (id, tag, text) => `
+        <button class="check-row${!c.required && id === 'required' ? ' next' : ''}${once.warn && id === 'required' ? ' warn' : ''}" data-action="consent" data-arg="${id}" aria-pressed="${c[id]}">
+          <span class="check-box" aria-hidden="true">✓</span><span>${tag} ${text}</span>
+        </button>`;
+      return `
+      <div class="screen">
+        <h2 class="title pad">개인정보 수집·이용 동의</h2>
+        <div class="scroll-body" data-scroll="consent">
+          <button class="check-row all" data-action="consent-all" aria-pressed="${c.required && c.sms}">
+            <span class="check-box" aria-hidden="true">✓</span><span>전체 동의</span>
+          </button>
+          ${row('required', '<span class="req">필수</span>', '개인정보 수집·이용에 동의합니다')}
+          ${row('sms', '<span class="opt-tag">선택</span>', '진료 안내 문자 받기')}
+          <div class="terms">
+            ${HOSPITAL.consentTerms.map(([k, v]) => `<p><b>${k}</b> ${v}</p>`).join('')}
+            <p class="note">연습용 안내문이에요. 실제로 정보를 모으지 않아요.</p>
+          </div>
+        </div>
+        ${footNext('다음', 'consent-next', c.required)}
+      </div>`;
+    },
+    guide: () => (state.consent.required ? "다 고르셨으면 '다음'을 눌러 보세요" : "'필수' 동의 칸을 눌러 체크해 보세요"),
+    help: () => (state.consent.required ? '[data-action="consent-next"]' : '[data-action="consent"][data-arg="required"]'),
+  },
+
+  verify: {
+    render: () => `
+      <div class="screen center" data-scroll="verify">
+        <div class="center-inner verify">
+          <h2 class="title">본인 확인</h2>
+          <p class="sub verify-sub">${state.visit === 'first' ? '처음 오셨으면 번호로 등록해요. ' : ''}아래 <b>연습용 번호</b>를 눌러 주세요.</p>
+          ${keypadHTML('verify')}
+        </div>
+      </div>`,
+    guide: () => {
+      const v = state.verify;
+      const pt = HOSPITAL.patient;
+      if (v.birth.length < pt.birth.length) return '연습용 생년월일 6자리를 눌러 보세요';
+      if (v.phone.length < pt.phone.length) return '연습용 휴대폰 뒷자리 4자리를 눌러 보세요';
+      return "다 누르셨으면 '확인'을 눌러 보세요";
+    },
+    help: () => keypadHelp('verify'),
+  },
+
+  /* ---------- 접수: 신분증·모바일 건강보험증 ---------- */
+  idcheck: {
+    render: () => {
+      const id = state.idc;
+      if (id.step === 'choose') {
+        return `
+        <div class="screen center" data-scroll="idcheck">
+          <div class="center-inner">
+            <h2 class="title">본인 확인을 위해<br>신분증을 보여 주세요</h2>
+            <p class="sub">둘 중 가지고 계신 것을 골라 주세요</p>
+            <div class="choice-list">
+              ${HOSPITAL.idMethods.map(m => `
+                <button class="choice-card" data-action="id-method" data-arg="${m.id}">
+                  <span class="choice-emoji" aria-hidden="true">${m.emoji}</span>
+                  <span class="choice-text"><b>${esc(m.label)}</b><span>${esc(m.sub)}</span></span>
+                </button>`).join('')}
+            </div>
+          </div>
+        </div>`;
+      }
+      const m = HOSPITAL.idMethods.find(x => x.id === id.method);
+      const itemClass = id.step === 'place' ? 'hint' : (once.placeAnim ? 'placing' : 'placed');
+      const qrPattern = '111010111101001101111011111000101000110110101001011010111001101101010011111011010';
+      const item = m.id === 'card'
+        ? `<span class="idcard"><span class="idcard-photo">👤</span><span class="idcard-text"><b>연습용 신분증</b><span>${esc(HOSPITAL.patient.name)}</span></span></span>`
+        : `<span class="phone"><span class="qr">${[...qrPattern].map(b => `<i${b === '0' ? ' class="w"' : ''}></i>`).join('')}</span>건강보험증</span>`;
+      const title = id.step === 'done' ? '본인 확인이 끝났어요' : id.step === 'scanning' ? '확인 중이에요' : m.placeTitle;
+      const sub = id.step === 'done' ? '<span class="ok-mark">✓ 확인 완료</span>' : id.step === 'scanning' ? '<span class="spinner" role="img" aria-label="확인 중"></span> 잠시 기다려 주세요' : m.placeSub;
+      return `
+      <div class="screen">
+        <div class="screen center" data-scroll="idcheck-${id.step}">
+          <div class="center-inner">
+            <h2 class="title">${title}</h2>
+            <p class="sub">${sub}</p>
+            <div class="scan-stage step-${id.step}">
+              <div class="scanner"><div class="scan-glass"></div><span>${esc(m.scanner)}</span></div>
+              <button class="scan-item ${itemClass}" data-action="id-place" aria-label="${esc(m.label)} 올리기"${id.step === 'place' ? '' : ' disabled'}>${item}</button>
+            </div>
+            <p class="note">연습용이에요. 진짜 신분증 정보는 읽지 않아요.</p>
+          </div>
+        </div>
+        ${id.step === 'done' ? footNext() : ''}
+      </div>`;
+    },
+    guide: () => {
+      const id = state.idc;
+      if (id.step === 'choose') return '신분증이나 모바일 건강보험증을 골라 보세요';
+      if (id.step === 'place') return id.method === 'card' ? '신분증 그림을 눌러 올려 보세요' : '휴대폰 그림을 눌러 QR 코드를 비춰 보세요';
+      if (id.step === 'scanning') return '확인 중이에요. 잠시 기다려 주세요';
+      return "본인 확인 끝! '다음'을 눌러 보세요";
+    },
+    help: ex => {
+      const id = state.idc;
+      if (id.step === 'choose') return `[data-action="id-method"][data-arg="${ex.idMethod || 'card'}"]`;
+      if (ex.idMethod && id.method !== ex.idMethod && id.step !== 'done') return '.kiosk-nav [data-action="back"]';
+      if (id.step === 'place') return '[data-action="id-place"]';
+      if (id.step === 'done') return '[data-action="next"]';
+      return null;
+    },
+    back: () => {
+      if (state.idc.step === 'place') { state.idc = { method: null, step: 'choose' }; render(); return true; }
+      if (state.idc.step === 'scanning') return true;
+      return false;
+    },
+  },
+
+  /* ---------- 접수: 어디가 불편하세요? ---------- */
+  symptom: {
+    render: () => `
+      <div class="screen center" data-scroll="symptom">
+        <div class="center-inner">
+          <h2 class="title">어디가 불편하세요?</h2>
+          <p class="sub">고르시면 진료과를 추천해 드려요</p>
+          <div class="symptom-grid">
+            ${HOSPITAL.symptoms.map(s => `
+              <button class="symptom-btn" data-action="symptom" data-arg="${s.id}">
+                <span class="symptom-emoji" aria-hidden="true">${s.emoji}</span><span>${esc(s.label)}</span>
+              </button>`).join('')}
+          </div>
+        </div>
+      </div>`,
+    guide: () => '불편한 곳을 골라 보세요',
+    help: ex => {
+      let id = ex.symptom;
+      if (!id && ex.dept) id = (HOSPITAL.symptoms.find(s => s.dept === ex.dept) || HOSPITAL.symptoms[HOSPITAL.symptoms.length - 1]).id;
+      return `[data-action="symptom"][data-arg="${id || HOSPITAL.symptoms[0].id}"]`;
+    },
+  },
+
+  dept: {
+    render: () => {
+      const rec = (HOSPITAL.symptoms.find(s => s.id === state.symptom) || {}).dept;
+      return `
+      <div class="screen center" data-scroll="dept">
+        <div class="center-inner">
+          <h2 class="title">진료 받을 과를 골라 주세요</h2>
+          <div class="dept-grid">
+            ${HOSPITAL.depts.map(d => `
+              <button class="dept-btn${d.id === rec ? ' rec hint' : ''}" data-action="dept" data-arg="${d.id}">
+                ${d.id === rec ? '<span class="rec-badge">추천</span>' : ''}
+                <span class="dept-emoji" aria-hidden="true">${d.emoji}</span><b>${esc(d.label)}</b><span class="dept-wait">대기 ${d.waiting}명</span>
+              </button>`).join('')}
+          </div>
+        </div>
+      </div>`;
+    },
+    guide: () => {
+      const rec = (HOSPITAL.symptoms.find(s => s.id === state.symptom) || {}).dept;
+      if (!rec) return '진료 받을 과를 골라 보세요';
+      const label = labelOf(HOSPITAL.depts, rec);
+      return `'${label}'${pick(label, '을', '를')} 추천해요. 진료과를 골라 보세요`;
+    },
+    help: ex => {
+      const rec = (HOSPITAL.symptoms.find(s => s.id === state.symptom) || {}).dept;
+      return `[data-action="dept"][data-arg="${ex.dept || rec || HOSPITAL.depts[0].id}"]`;
+    },
+  },
+
+  confirm: {
+    render: () => {
+      const d = HOSPITAL.depts.find(x => x.id === state.dept);
+      const rows = [
+        ['이름', `${HOSPITAL.patient.name} (연습용)`],
+        ['방문 구분', labelOf(HOSPITAL.visits, state.visit)],
+        ['본인 확인', labelOf(HOSPITAL.idMethods, state.idc.method)],
+        ['불편한 곳', labelOf(HOSPITAL.symptoms, state.symptom)],
+        ['진료과', d.label],
+        ['앞에 기다리는 사람', `${d.waiting}명`],
+        ['기다리는 시간', `약 ${d.waiting * 5}분`],
+      ];
+      return `
+      <div class="screen">
+        <h2 class="title pad">접수 내용을 확인해 주세요</h2>
+        <div class="scroll-body" data-scroll="confirm">
+          <div class="info-table">${rows.map(([k, val]) => `<div class="info-row"><span>${k}</span><b>${esc(val)}</b></div>`).join('')}</div>
+          <p class="note">내용이 다르면 아래 '이전'을 눌러 다시 고르세요.</p>
+        </div>
+        ${footNext('접수하기', 'confirm-reception')}
+      </div>`;
+    },
+    guide: () => "내용을 확인하고 '접수하기'를 눌러 보세요",
+    help: ex => (['dept', 'symptom'].some(k => ex[k] && state[k] !== ex[k]) ? '.kiosk-nav [data-action="back"]' : '[data-action="confirm-reception"]'),
+  },
+
+  /* ---------- 접수: 번호표 + 대기 현황판 ---------- */
+  ticket: {
+    render: () => {
+      const d = HOSPITAL.depts.find(x => x.id === state.dept);
+      const myNo = `${d.code}-${String(state.ticketNum).padStart(3, '0')}`;
+      const front = state.callFront;
+      const serving = `${d.code}-${String(state.ticketNum - Math.max(front, 0) - 1 + (state.called ? 1 : 0)).padStart(3, '0')}`;
+      return `
+      <div class="screen">
+        <div class="screen center" data-scroll="ticket">
+          <div class="center-inner">
+            <p class="done-msg"><span class="done-emoji" aria-hidden="true">🎉</span> 접수가 끝났어요</p>
+            ${printerHTML(`
+              <p class="r-store">${esc(HOSPITAL.name)}</p>
+              <p class="r-line">대기번호</p>
+              <p class="r-big">${myNo}</p>
+              <div class="r-sep"></div>
+              <div class="r-row"><span>진료과</span><b>${esc(d.label)} · ${esc(d.room)}</b></div>
+              <div class="r-row"><span>앞 대기</span><b>${d.waiting}명</b></div>
+              <p class="r-note">${nowText()} · 연습용 번호표</p>`)}
+            <div class="call-board" aria-live="polite">
+              <p class="call-head">${esc(d.label)} 대기 현황</p>
+              <div class="call-row"><span>지금 진료 중</span><b>${serving}</b></div>
+              <div class="call-row"><span>내 번호 ${myNo}</span><b>${state.called ? '내 차례!' : `앞에 ${front}명`}</b></div>
+              ${state.called ? `<p class="call-alert">🔔 ${myNo}번 ${esc(HOSPITAL.patient.masked)} 님<br>${esc(d.room)}${pickRo(d.room)} 들어오세요</p>` : ''}
+            </div>
+            <p class="praise">잘하셨어요! 👏</p>
+            ${stepsHTML(HOSPITAL.ticketSteps.map(s => s.replace('{dept}', d.label).replace('{room}', d.room)))}
+          </div>
+        </div>
+        ${restartFoot()}
+      </div>`;
+    },
+    guide: () => {
+      const d = HOSPITAL.depts.find(x => x.id === state.dept);
+      return state.called ? `내 번호가 불렸어요! ${d.room}${pickRo(d.room)} 들어가요` : '번호표를 받았어요. 내 번호가 불릴 때까지 기다려요';
+    },
+    help: () => '[data-action="restart"]',
+  },
+
+  /* ---------- 수납 ---------- */
+  bill: {
+    render: () => `
+      <div class="screen">
+        <h2 class="title pad">오늘 진료비를 확인해 주세요</h2>
+        <div class="scroll-body" data-scroll="bill">
+          <div class="info-table">
+            <div class="info-row"><span>이름</span><b>${esc(HOSPITAL.patient.name)} (연습용)</b></div>
+            <div class="info-row"><span>진료과</span><b>${esc(HOSPITAL.bill.dept)}</b></div>
+          </div>
+          <div class="info-table">
+            ${HOSPITAL.bill.items.map(i => `<div class="info-row"><span>${esc(i.label)}</span><b>${won(i.amount)}</b></div>`).join('')}
+            <div class="info-row total"><span>낼 금액</span><b>${won(billTotal())}</b></div>
+          </div>
+        </div>
+        ${footNext()}
+      </div>`,
+    guide: () => "낼 금액을 확인하고 '다음'을 눌러 보세요",
+    help: () => '[data-action="next"]',
+  },
+
+  docs: {
+    render: () => {
+      const missing = HOSPITAL.docs.find(d => state.docs[d.id] === undefined);
+      return `
+      <div class="screen">
+        <h2 class="title pad">받을 서류를 골라 주세요</h2>
+        <div class="scroll-body" data-scroll="docs">
+          ${HOSPITAL.docs.map(d => `
+            <fieldset class="doc-group${missing && missing.id === d.id ? ' next' : ''}${once.warn && missing && missing.id === d.id ? ' warn' : ''}">
+              <legend>
+                <span class="doc-emoji" aria-hidden="true">${d.emoji}</span>
+                <span class="doc-title"><b>${esc(d.label)}</b><span>${esc(d.desc)}</span></span>
+              </legend>
+              <div class="opt-choices">
+                ${[['yes', '받을게요'], ['no', '안 받을게요']].map(([val, label]) => {
+                  const sel = state.docs[d.id] !== undefined && state.docs[d.id] === (val === 'yes');
+                  return `<button class="opt${sel ? ' selected' : ''}" aria-pressed="${sel}" data-action="doc" data-arg="${d.id}:${val}">
+                    <span class="opt-label">${label}</span>${sel ? '<span class="opt-check" aria-hidden="true">✓</span>' : ''}</button>`;
+                }).join('')}
+              </div>
+            </fieldset>`).join('')}
+        </div>
+        ${footNext('다음', 'docs-next', !missing)}
+      </div>`;
+    },
+    guide: () => {
+      const missing = HOSPITAL.docs.find(d => state.docs[d.id] === undefined);
+      return missing ? `${josa(missing.label, '을', '를')} 받을지 골라 보세요` : "다 고르셨으면 '다음'을 눌러 보세요";
+    },
+    help: ex => {
+      const want = ex.docs || {};
+      const d = HOSPITAL.docs.find(x => state.docs[x.id] === undefined || (x.id in want && state.docs[x.id] !== want[x.id]));
+      if (d) return `[data-action="doc"][data-arg="${d.id}:${want[d.id] === false ? 'no' : 'yes'}"]`;
+      return '[data-action="docs-next"]';
+    },
+  },
+
+  paid: {
+    render: () => {
+      const inst = labelOf(HOSPITAL.installments, state.installment);
+      const anim = once.printAnim ? ' printing' : '';
+      const slip = inner => `<div class="slip-col"><div class="printer-slot"></div><div class="paper-clip"><div class="paper${anim}">${inner}</div></div></div>`;
+      const slips = [];
+      if (state.docs.receipt) {
+        slips.push(slip(`<p class="r-store">영수증</p><p class="r-line">${esc(HOSPITAL.patient.name)} · ${esc(HOSPITAL.bill.dept)}</p><div class="r-sep"></div><div class="r-row r-total"><span>낸 돈</span><span>${won(billTotal())}</span></div><p class="r-line">${esc(inst)}</p>`));
+      }
+      if (state.docs.prescription) {
+        slips.push(slip(`<p class="r-store">처방전</p><p class="r-line">${esc(HOSPITAL.patient.name)} · ${esc(HOSPITAL.bill.dept)}</p><div class="r-sep"></div><p class="r-line">💊 약 ${HOSPITAL.bill.drugs.length}가지</p><p class="r-line">약국에 내 주세요</p>`));
+      }
+      return `
+      <div class="screen">
+        <div class="screen center" data-scroll="paid">
+          <div class="center-inner">
+            <p class="done-msg"><span class="done-emoji" aria-hidden="true">🎉</span> 수납이 끝났어요</p>
+            ${slips.length ? `<div class="slips">${slips.join('')}</div>` : '<p class="sub">받을 서류는 고르지 않으셨어요.</p>'}
+            ${state.docs.prescription ? '<button class="open-paper" data-action="open-paper">📄 처방전 크게 보기</button>' : ''}
+            <p class="praise">잘하셨어요! 👏</p>
+            <p class="sub">${won(billTotal())} · ${esc(inst)}</p>
+            ${state.docs.prescription ? stepsHTML(HOSPITAL.pharmacySteps) : '<p class="note">약이 필요하면 원무과 창구에 처방전을 달라고 말씀하세요.</p>'}
+          </div>
+        </div>
+        ${restartFoot()}
+      </div>`;
+    },
+    guide: () => (state.docs.prescription ? '수납 끝! 약국 가는 법을 읽어 보세요' : '수납 끝! 잘하셨어요'),
+    help: () => '[data-action="restart"]',
+  },
+
+  /* ---------- 증명서 발급 ---------- */
+  certType: {
+    render: () => `
+      <div class="screen center" data-scroll="certType">
+        <div class="center-inner">
+          <h2 class="title">발급할 서류를 골라 주세요</h2>
+          <div class="choice-list">
+            ${HOSPITAL.certificates.map(c => `
+              <button class="choice-card${c.counterOnly ? ' counter-only' : ''}" data-action="cert" data-arg="${c.id}">
+                <span class="choice-emoji" aria-hidden="true">${c.emoji}</span>
+                <span class="choice-text"><b>${esc(c.label)}</b><span><em class="fee">${c.counterOnly ? '창구에서만' : c.fee ? won(c.fee) : '무료'}</em> · ${esc(c.desc)}</span></span>
+              </button>`).join('')}
+          </div>
+        </div>
+      </div>`,
+    guide: () => '뽑을 서류를 골라 보세요',
+    help: ex => `[data-action="cert"][data-arg="${ex.cert || HOSPITAL.certificates[0].id}"]`,
+  },
+
+  certVisit: {
+    render: () => `
+      <div class="screen center" data-scroll="certVisit">
+        <div class="center-inner">
+          <h2 class="title">어느 날 진료한<br>서류인가요?</h2>
+          <div class="choice-list">
+            ${HOSPITAL.history.map(v => `
+              <button class="choice-card" data-action="cert-visit" data-arg="${v.id}">
+                <span class="choice-emoji" aria-hidden="true">📅</span>
+                <span class="choice-text"><b>${fmtKo(dateOf(v.daysAgo))}</b><span>${whenText(v.daysAgo)} · ${esc(v.dept)} · ${esc(v.doctor)} 의사</span></span>
+              </button>`).join('')}
+          </div>
+        </div>
+      </div>`,
+    guide: () => '어느 날 진료 서류인지 골라 보세요',
+    help: ex => `[data-action="cert-visit"][data-arg="${ex.certVisit || HOSPITAL.history[0].id}"]`,
+  },
+
+  certCopies: {
+    render: () => {
+      const c = HOSPITAL.certificates.find(x => x.id === state.cert);
+      return `
+      <div class="screen">
+        <div class="screen center" data-scroll="certCopies">
+          <div class="center-inner">
+            <h2 class="title">몇 부 뽑을까요?</h2>
+            <p class="sub">${esc(c.label)}</p>
+            ${qtyHTML(state.copies, 'copies-dec', 'copies-inc', '', '부수', HOSPITAL.maxCopies, true)}
+            <div class="amount-box"><span>발급 수수료</span><b>${c.fee ? `${won(c.fee * state.copies)}` : '무료'}</b></div>
+            ${c.fee ? `<p class="note">한 부에 ${won(c.fee)}이에요.</p>` : ''}
+          </div>
+        </div>
+        ${footNext()}
+      </div>`;
+    },
+    guide: () => "몇 부인지 고르고 '다음'을 눌러 보세요",
+    help: ex => {
+      const want = ex.copies || 1;
+      if (state.copies < want) return '[data-action="copies-inc"]';
+      if (state.copies > want) return '[data-action="copies-dec"]';
+      return '[data-action="next"]';
+    },
+  },
+
+  certConfirm: {
+    render: () => {
+      const c = HOSPITAL.certificates.find(x => x.id === state.cert);
+      const v = findVisit(state.certVisit);
+      const fee = certFee();
+      const rows = [
+        ['서류', c.label],
+        ['진료 날짜', fmtKo(dateOf(v.daysAgo))],
+        ['진료과', v.dept],
+        ['부수', `${state.copies}부`],
+      ];
+      return `
+      <div class="screen">
+        <h2 class="title pad">발급 내용을 확인해 주세요</h2>
+        <div class="scroll-body" data-scroll="certConfirm">
+          <div class="info-table">
+            ${rows.map(([k, val]) => `<div class="info-row"><span>${k}</span><b>${esc(val)}</b></div>`).join('')}
+            <div class="info-row total"><span>수수료</span><b>${fee ? won(fee) : '무료'}</b></div>
+          </div>
+          <p class="note">내용이 다르면 아래 '이전'을 눌러 다시 고르세요.</p>
+        </div>
+        ${footNext(fee ? '결제하기' : '발급하기', 'cert-confirm')}
+      </div>`;
+    },
+    guide: () => (certFee() ? "확인하고 '결제하기'를 눌러 보세요" : "확인하고 '발급하기'를 눌러 보세요"),
+    help: ex => {
+      const off = (ex.cert && state.cert !== ex.cert) || (ex.certVisit && state.certVisit !== ex.certVisit) || (ex.copies && state.copies !== ex.copies);
+      return off ? '.kiosk-nav [data-action="back"]' : '[data-action="cert-confirm"]';
+    },
+  },
+
+  certDone: {
+    render: () => {
+      const c = HOSPITAL.certificates.find(x => x.id === state.cert);
+      const v = findVisit(state.certVisit);
+      const isRx = state.cert === 'prescription';
+      return `
+      <div class="screen">
+        <div class="screen center" data-scroll="certDone">
+          <div class="center-inner">
+            <p class="done-msg"><span class="done-emoji" aria-hidden="true">🎉</span> 서류가 나왔어요</p>
+            ${printerHTML(certPaperHTML(state.cert, v), isRx, state.copies)}
+            ${state.copies > 1 ? `<p class="copies-note">${esc(c.label)} ${state.copies}부가 나왔어요</p>` : ''}
+            <p class="praise">잘하셨어요! 👏</p>
+            ${stepsHTML(isRx ? HOSPITAL.pharmacySteps : HOSPITAL.paperSteps)}
+          </div>
+        </div>
+        ${restartFoot()}
+      </div>`;
+    },
+    guide: () => (state.cert === 'prescription' ? '처방전이 나왔어요! 약국 가는 법을 읽어 보세요' : '서류가 나왔어요! 잘 챙겨 가세요'),
+    help: () => '[data-action="restart"]',
+  },
+};
+
+function menuCardHTML(item) {
+  const n = qtyInCart(item.id);
+  const tag = item.tag && store.tags[item.tag];
+  const label = `${item.name} ${won(item.price)}${item.soldOut ? ', 품절' : ''}${tag ? ', ' + tag.label : ''}${n ? `, ${n}개 담음` : ''}`;
+  return `
+    <button class="menu-card${item.soldOut ? ' sold' : ''}" data-action="open-item" data-arg="${item.id}" aria-label="${esc(label)}">
+      ${tag ? `<span class="tag" style="background:${tag.color}" aria-hidden="true">${esc(tag.label)}</span>` : ''}
+      ${n ? `<span class="in-cart" aria-hidden="true">✓ ${n}개</span>` : ''}
+      <span class="menu-art">${artSVG(item)}</span>
+      ${item.soldOut ? '<span class="sold-label" aria-hidden="true">품절</span>' : ''}
+      <span class="menu-name">${esc(item.name)}</span>
+      <span class="menu-price">${won(item.price)}</span>
+    </button>`;
+}
+
+function lineHTML(l) {
+  const item = findItem(l.itemId);
+  const opt = lineText(l);
+  return `
+    <li class="cart-row">
+      <div class="row-head">
+        <span class="row-art">${artSVG(item, variantFor(item, l.choices, l.custom))}</span>
+        <div class="row-info">
+          <div class="row-name">${esc(item.name)}${l.set ? ' 세트' : ''}</div>
+          ${opt ? `<div class="row-opt">${esc(opt)}</div>` : ''}
+        </div>
+        <button class="btn-remove" data-action="remove" data-arg="${esc(l.key)}" aria-label="${esc(item.name)} 빼기">빼기</button>
+      </div>
+      <div class="row-foot">
+        ${qtyHTML(l.qty, 'dec', 'inc', l.key, item.name)}
+        <div class="row-price">${won(unitPriceOf(l) * l.qty)}</div>
+      </div>
+    </li>`;
+}
+
+/* =====================================================================
+   11) 팝업 창
+   ===================================================================== */
+const LOCKED_SHEETS = ['receipt', 'installment', 'result'];
+const SET_PREV = {
+  setSize: () => 'type', side: () => 'setSize', drink: () => 'side', ice: () => 'drink',
+  confirm: sh => (sh.set ? 'ice' : 'type'), custom: () => 'confirm',
+};
+
+function sheetHTML() {
+  return `
+    <div class="sheet-backdrop${once.sheetOpened ? ' opening' : ''}">
+      <div class="sheet" role="dialog" aria-labelledby="sheetTitle">${SHEETS[state.sheet.type].render()}</div>
+    </div>`;
+}
+const pickRowHTML = (item, extra, action) => `
+  <button class="upsell-row" data-action="${action}" data-arg="${item.id}">
+    <span class="row-art">${artSVG(item)}</span>
+    <span class="upsell-info"><span class="row-name">${esc(item.name)}</span><span class="upsell-price">${extra ? '+' + won(extra) : '추가 금액 없음'}</span></span>
+  </button>`;
+function infoBoxHTML(info) {
+  return `
+    <dl class="info-box">
+      <dt>열량</dt><dd>${info.kcal}kcal</dd>
+      <dt>알레르기</dt><dd>${esc(info.allergens.join(', '))}</dd>
+      <dd class="info-note">연습용 예시 값이에요. 알레르기가 있으면 꼭 확인하세요.</dd>
+    </dl>`;
+}
+// compact: 세트 고르는 중간 단계에서는 그림을 작게, 영양 정보 버튼은 숨김
+function sheetHead(item, priceText, variant, scale = 1, compact = false) {
+  const sh = state.sheet;
+  const info = item.info && !compact;
+  return `
+    <div class="sheet-head">
+      <span class="art-lg${compact ? ' small' : ''}${once.artPop ? ' pop' : ''}" style="--s:${scale}">${artSVG(item, variant)}</span>
+      <div class="sheet-head-text">
+        <h3 class="sheet-title" id="sheetTitle">${esc(item.name)}</h3>
+        <p class="sheet-price">${priceText}</p>
+        ${item.desc ? `<p class="item-desc">${esc(item.desc)}</p>` : ''}
+        ${info ? `<button class="info-btn" data-action="toggle-info" aria-expanded="${!!sh.showInfo}">ℹ️ 영양·알레르기</button>` : ''}
+      </div>
+    </div>
+    ${info && sh.showInfo ? infoBoxHTML(item.info) : ''}`;
+}
+
+const SHEETS = {
+  /* ---------- 옵션 고르기 (카페 음료, 햄버거 사이드·음료·디저트) ---------- */
+  option: {
+    render: () => {
+      const sh = state.sheet;
+      const item = findItem(sh.itemId);
+      const groups = visibleGroups(item, sh.choices);
+      const miss = missingGroup();
+      const scale = sh.choices.size === 'large' ? 1.08 : sh.choices.size === 'regular' ? 0.88 : 1;
+      return `
+        <div class="sheet-body" data-scroll="option-${item.id}">
+          ${sheetHead(item, won(item.price), variantFor(item, sh.choices), scale)}
+          ${groups.some(g => store.optionGroups[g].required) ? '<p class="sheet-help"><span class="req">필수</span> 표시는 꼭 골라야 해요</p>' : ''}
+          ${groups.length ? groups.map(g => groupHTML(item, g, miss)).join('') : '<p class="no-option">이 메뉴는 고를 것이 없어요.</p>'}
+          <div class="qty-row"><span class="qty-label">수량</span>${qtyHTML(sh.qty, 'sheet-dec', 'sheet-inc', '', item.name)}</div>
+        </div>
+        <div class="sheet-foot">
+          <button class="btn btn-secondary" data-action="sheet-close">취소</button>
+          <button class="btn btn-primary${miss ? ' is-off' : ' hint'}" data-action="option-add" aria-disabled="${!!miss}">담기 · ${won(unitPriceOf(sh) * sh.qty)}</button>
+        </div>`;
+    },
+    guide: () => {
+      const g = missingGroup();
+      return g ? store.optionGroups[g].guide : "다 고르셨으면 '담기'를 눌러 보세요";
+    },
+    help: ex => {
+      const sh = state.sheet;
+      const item = findItem(sh.itemId);
+      const e = (ex.items || []).find(x => x.id === item.id);
+      if (!e) return '[data-action="sheet-close"]';
+      for (const g of visibleGroups(item, sh.choices)) {
+        const want = e.choices && e.choices[g];
+        if (want && sh.choices[g] !== want) return `[data-action="choose"][data-arg="${g}:${want}"]`;
+        if (!want && store.optionGroups[g].required && !sh.choices[g]) return `[data-action="choose"][data-arg="${g}:${store.optionGroups[g].choices[0].id}"]`;
+      }
+      const remaining = Math.max(1, e.qty - matchedQty(e));
+      if (sh.qty < remaining) return '[data-action="sheet-inc"]';
+      if (sh.qty > remaining) return '[data-action="sheet-dec"]';
+      return '[data-action="option-add"]';
+    },
+  },
+
+  /* ---------- 햄버거: 단품/세트 → 세트 크기 → 사이드 → 음료 → 얼음 → 확인 (재료 바꾸기) ---------- */
+  set: {
+    render: () => {
+      const sh = state.sheet;
+      const item = findItem(sh.itemId);
+      const S = store.set;
+      const promo = promoFor(item.id);
+      const compact = sh.step !== 'type' && sh.step !== 'confirm';
+      const head = sheetHead(item, compact ? `${sh.set ? '세트' : '단품'} 고르는 중` : `단품 ${won(item.price)}`, { custom: sh.custom }, 1, compact);
+      const cancelFoot = '<div class="sheet-foot one"><button class="btn btn-secondary" data-action="sheet-close">취소</button></div>';
+      let body = '';
+      let foot = cancelFoot;
+      if (sh.step === 'type') {
+        const side = findItem(S.sides[0].id);
+        const drink = findItem(S.drinks[0].id);
+        body = `
+          <div class="set-choice">
+            <button class="set-card" data-action="set-type" data-arg="single">
+              <span class="set-art">${artSVG(item)}</span><b>단품</b><span>버거만</span><span class="set-price">${won(item.price)}</span>
+            </button>
+            <button class="set-card" data-action="set-type" data-arg="set">
+              <span class="set-art combo"><span>${artSVG(item)}</span><span>${artSVG(side)}</span><span>${artSVG(drink)}</span></span>
+              <b>세트</b><span>${esc(S.desc)}</span>
+              <span class="set-price">${promo ? `<s>${won(item.price + S.price)}</s> ` : ''}${won(setBasePrice(item))}</span>
+              ${promo ? `<span class="item-desc">${won(promo.setDiscount)} 할인 중</span>` : ''}
+            </button>
+          </div>`;
+      } else if (sh.step === 'setSize') {
+        body = `
+          <p class="step-label">세트 고르기 1/4</p>
+          <p class="sheet-text"><b>세트 크기</b>를 골라 주세요</p>
+          <div class="choice-list">
+            ${S.sizes.map(z => `
+              <button class="choice-card" data-action="set-size" data-arg="${z.id}">
+                <span class="choice-emoji size-emoji" style="font-size:${z.emojiSize}px" aria-hidden="true">${z.emoji}</span>
+                <span class="choice-text"><b>${esc(z.label)}</b><span>${esc(z.sub)}</span></span>
+                <span class="fee-tag">${z.extra ? '+' + won(z.extra) : '그대로'}</span>
+              </button>`).join('')}
+          </div>`;
+      } else if (sh.step === 'side' || sh.step === 'drink') {
+        const isSide = sh.step === 'side';
+        const list = isSide ? S.sides : S.drinks;
+        body = `
+          <p class="step-label">세트 고르기 ${isSide ? 2 : 3}/4</p>
+          <p class="sheet-text"><b>${isSide ? '사이드' : '음료'}</b>를 골라 주세요</p>
+          <div class="pick-list">${list.map(o => pickRowHTML(findItem(o.id), o.extra, isSide ? 'set-side' : 'set-drink')).join('')}</div>`;
+      } else if (sh.step === 'ice') {
+        body = `
+          <p class="step-label">세트 고르기 4/4</p>
+          <p class="sheet-text"><b>${esc(findItem(sh.set.drink).name)}</b> 얼음 양을 골라 주세요</p>
+          <div class="opt-choices" style="--cols:3">
+            ${store.optionGroups.ice.choices.map(c => `
+              <button class="opt" data-action="set-ice" data-arg="${c.id}"><span class="opt-emoji" aria-hidden="true">🧊</span><span class="opt-label">${esc(c.label)}</span></button>`).join('')}
+          </div>`;
+      } else if (sh.step === 'custom') {
+        const toggle = (kind, ing) => {
+          const on = sh.custom[kind].includes(ing.id);
+          return `<button class="opt${on ? ' selected' : ''}" aria-pressed="${on}" data-action="ing" data-arg="${kind}:${ing.id}">
+            <span class="opt-emoji" aria-hidden="true">${ing.emoji}</span><span class="opt-label">${esc(ing.label)}</span>
+            ${ing.price ? `<span class="opt-price">+${won(ing.price)}</span>` : ''}${on ? '<span class="opt-check" aria-hidden="true">✓</span>' : ''}</button>`;
+        };
+        body = `
+          <p class="step-label">재료 바꾸기</p>
+          <fieldset class="opt-group"><legend><span class="opt-title">더 넣기</span><span class="opt-tag">선택</span></legend>
+            <div class="opt-choices" style="--cols:2">${store.ingredients.add.map(i => toggle('add', i)).join('')}</div></fieldset>
+          <fieldset class="opt-group"><legend><span class="opt-title">빼기</span><span class="opt-tag">선택</span></legend>
+            <div class="opt-choices" style="--cols:2">${store.ingredients.remove.map(i => toggle('remove', i)).join('')}</div></fieldset>`;
+        foot = '<div class="sheet-foot one"><button class="btn btn-primary big hint" data-action="custom-done">다 했어요</button></div>';
+      } else {
+        const changes = [...sh.custom.add, ...sh.custom.remove].map(ingLabel);
+        body = `
+          <div class="set-summary">
+            <b>${esc(item.name)} ${sh.set ? labelOf(S.sizes, sh.set.size) : '단품'}</b>
+            <span>${sh.set ? esc(`${findItem(sh.set.side).name} · ${findItem(sh.set.drink).name} (얼음 ${findChoice('ice', sh.set.ice).label})`) : '버거만'}</span>
+            ${changes.length ? `<span>${esc(changes.join(' · '))}</span>` : ''}
+          </div>
+          <button class="custom-btn" data-action="set-custom">🍅 재료 바꾸기 (더 넣기·빼기)</button>
+          <div class="qty-row"><span class="qty-label">수량</span>${qtyHTML(sh.qty, 'sheet-dec', 'sheet-inc', '', item.name)}</div>`;
+        foot = `
+          <div class="sheet-foot">
+            <button class="btn btn-secondary" data-action="sheet-close">취소</button>
+            <button class="btn btn-primary hint" data-action="set-add">담기 · ${won(unitPriceOf(sh) * sh.qty)}</button>
+          </div>`;
+      }
+      return `<div class="sheet-body" data-scroll="set-${sh.step}">${head}${body}</div>${foot}`;
+    },
+    guide: () => ({
+      type: "'단품'이나 '세트'를 골라 보세요",
+      setSize: '세트 크기를 골라 보세요',
+      side: '세트에 넣을 사이드를 골라 보세요',
+      drink: '세트에 넣을 음료를 골라 보세요',
+      ice: '음료 얼음 양을 골라 보세요',
+      custom: "바꿀 재료를 누르고 '다 했어요'를 눌러 보세요",
+      confirm: "다 고르셨으면 '담기'를 눌러 보세요",
+    }[state.sheet.step]),
+    help: ex => {
+      const sh = state.sheet;
+      const e = (ex.items || []).find(x => x.id === sh.itemId);
+      if (!e) return '[data-action="sheet-close"]';
+      const wantSet = !!e.set;
+      const wantCustom = e.custom || emptyCustom();
+      switch (sh.step) {
+        case 'type': return `[data-action="set-type"][data-arg="${wantSet ? 'set' : 'single'}"]`;
+        case 'setSize': return `[data-action="set-size"][data-arg="${e.set.size || 'regular'}"]`;
+        case 'side': return `[data-action="set-side"][data-arg="${e.set.side}"]`;
+        case 'drink': return `[data-action="set-drink"][data-arg="${e.set.drink}"]`;
+        case 'ice': return `[data-action="set-ice"][data-arg="${e.set.ice || 'normal'}"]`;
+        case 'custom': {
+          for (const kind of ['add', 'remove']) {
+            const ing = store.ingredients[kind].find(i => wantCustom[kind].includes(i.id) !== sh.custom[kind].includes(i.id));
+            if (ing) return `[data-action="ing"][data-arg="${kind}:${ing.id}"]`;
+          }
+          return '[data-action="custom-done"]';
+        }
+        default: {
+          if (!!sh.set !== wantSet) return '.kiosk-nav [data-action="back"]';
+          if (!sameCustom(sh.custom, wantCustom)) return '[data-action="set-custom"]';
+          const remaining = Math.max(1, e.qty - matchedQty(e));
+          if (sh.qty < remaining) return '[data-action="sheet-inc"]';
+          if (sh.qty > remaining) return '[data-action="sheet-dec"]';
+          return '[data-action="set-add"]';
+        }
+      }
+    },
+  },
+
+  upsell: {
+    render: () => {
+      const u = store.upsell;
+      const items = u.items.map(findItem).filter(item => item && !item.soldOut);
+      return `
+        <div class="sheet-body" data-scroll="upsell">
+          <h3 class="sheet-title" id="sheetTitle">${esc(u.question)}</h3>
+          <p class="sheet-sub">${esc(u.sub)}</p>
+          <div class="upsell-list">
+            ${items.map(item => {
+              const n = qtyInCart(item.id);
+              return `
+              <button class="upsell-row${n ? ' added' : ''}" data-action="upsell-add" data-arg="${item.id}" aria-label="${esc(item.name)} ${won(item.price)} 담기${n ? `, ${n}개 담음` : ''}">
+                <span class="row-art">${artSVG(item)}</span>
+                <span class="upsell-info"><span class="row-name">${esc(item.name)}</span><span class="upsell-price">${won(item.price)}</span></span>
+                <span class="upsell-add" aria-hidden="true">${n ? `✓ ${n}개` : '+ 담기'}</span>
+              </button>`;
+            }).join('')}
+          </div>
+        </div>
+        <div class="sheet-foot one">
+          <button class="btn btn-primary big hint" data-action="upsell-done">${esc(state.sheet.added ? u.doneLabel : u.skipLabel)}</button>
+        </div>`;
+    },
+    guide: () => (state.sheet.added ? store.upsell.guideDone : store.upsell.guideSkip),
+    help: ex => {
+      const need = (ex.items || []).find(e => store.upsell.items.includes(e.id) && matchedQty(e) < e.qty);
+      return need ? `[data-action="upsell-add"][data-arg="${need.id}"]` : '[data-action="upsell-done"]';
+    },
+  },
+
+  discount: {
+    render: () => {
+      const d = store.discount;
+      const picked = state.sheet.picked && d.options.find(o => o.id === state.sheet.picked);
+      if (picked) {
+        return `
+          <div class="sheet-body center-text" data-scroll="discount-info">
+            <span class="info-emoji" aria-hidden="true">${picked.emoji}</span>
+            <h3 class="sheet-title" id="sheetTitle">${esc(picked.label)}</h3>
+            <p class="sheet-text">${esc(picked.explain)}</p>
+            <p class="note">${esc(picked.note)}</p>
+          </div>
+          <div class="sheet-foot one"><button class="btn btn-primary big hint" data-action="discount-done">확인</button></div>`;
+      }
+      return `
+        <div class="sheet-body" data-scroll="discount">
+          <h3 class="sheet-title" id="sheetTitle">${esc(d.question)}</h3>
+          <p class="sheet-sub">${esc(d.sub)}</p>
+          <div class="choice-list">
+            ${d.options.map(o => `
+              <button class="choice-card" data-action="discount-pick" data-arg="${o.id}">
+                <span class="choice-emoji" aria-hidden="true">${o.emoji}</span>
+                <span class="choice-text"><b>${esc(o.label)}</b><span>${esc(o.sub)}</span></span>
+              </button>`).join('')}
+          </div>
+        </div>
+        <div class="sheet-foot one"><button class="btn btn-primary big hint" data-action="discount-done">${esc(d.skipLabel)}</button></div>`;
+    },
+    guide: () => (state.sheet.picked ? store.discount.guideInfo : store.discount.guide),
+    help: () => '[data-action="discount-done"]',
+  },
+
+  receipt: {
+    render: () => {
+      const r = store.receipt;
+      if (!state.sheet.printing) {
+        return `
+          <div class="sheet-body center-text">
+            <span class="info-emoji" aria-hidden="true">🧾</span>
+            <h3 class="sheet-title" id="sheetTitle">${esc(r.question)}</h3>
+            <p class="sheet-sub">${esc(r.sub)}</p>
+          </div>
+          <div class="sheet-foot two">
+            <button class="btn btn-secondary" data-action="receipt-skip">${esc(r.skipLabel)}</button>
+            <button class="btn btn-primary" data-action="receipt-print">${esc(r.printLabel)}</button>
+          </div>`;
+      }
+      const type = store.orderTypes.find(t => t.id === state.orderType);
+      return `
+        <div class="sheet-body center-text" data-scroll="receipt">
+          <h3 class="sheet-title" id="sheetTitle">${esc(r.takeMessage)}</h3>
+          ${printerHTML(`
+            <p class="r-store">${esc(store.name)}</p>
+            <p class="r-line">주문번호 ${state.orderNo}${type ? ' · ' + esc(type.badge) : ''}</p>
+            <div class="r-sep"></div>
+            ${state.cart.map(l => `<div class="r-row"><span>${esc(findItem(l.itemId).name)} ×${l.qty}</span><span>${won(unitPriceOf(l) * l.qty)}</span></div>`).join('')}
+            <div class="r-sep"></div>
+            <div class="r-row r-total"><span>합계</span><span>${won(cartTotal())}</span></div>
+            <p class="r-note">연습용 영수증 · 실제 결제 아님</p>`)}
+        </div>
+        <div class="sheet-foot one"><button class="btn btn-primary big hint" data-action="receipt-done">확인</button></div>`;
+    },
+    guide: () => (state.sheet.printing ? store.receipt.guidePrint : store.receipt.guide),
+    help: () => (state.sheet.printing ? '[data-action="receipt-done"]' : '[data-action="receipt-skip"]'),
+  },
+
+  installment: {
+    render: () => `
+      <div class="sheet-body" data-scroll="installment">
+        <h3 class="sheet-title" id="sheetTitle">할부 개월을 골라 주세요</h3>
+        <p class="sheet-sub">결제할 금액 ${won(totalDue())} · 한 번에 내려면 '일시불'</p>
+        <div class="choice-list">
+          ${HOSPITAL.installments.map(i => `
+            <button class="choice-card" data-action="installment" data-arg="${i.id}">
+              <span class="choice-text"><b>${esc(i.label)}</b><span>${esc(i.sub)}</span></span>
+            </button>`).join('')}
+        </div>
+      </div>`,
+    guide: () => "한 번에 내려면 '일시불'을 눌러 보세요",
+    help: ex => `[data-action="installment"][data-arg="${ex.installment || 'once'}"]`,
+  },
+
+  /* ---------- 처방전 크게 보기 ---------- */
+  paper: {
+    render: () => `
+      <div class="sheet-body" data-scroll="paper">
+        <h3 class="sheet-title" id="sheetTitle">처방전 크게 보기</h3>
+        <div class="paper">${prescriptionHTML({ date: new Date(), dept: HOSPITAL.bill.dept, doctor: HOSPITAL.bill.doctor, drugs: HOSPITAL.bill.drugs })}</div>
+      </div>
+      <div class="sheet-foot one"><button class="btn btn-primary big" data-action="sheet-close">닫기</button></div>`,
+    guide: () => "처방전을 읽어 보고 '닫기'를 눌러 보세요",
+    help: () => '[data-action="sheet-close"]',
+  },
+
+  result: {
+    render: () => {
+      const r = state.sheet;
+      const m = currentMission();
+      return `
+        <div class="sheet-body center-text" data-scroll="result">
+          <span class="info-emoji" aria-hidden="true">${r.pass ? '🏆' : '🤔'}</span>
+          <h3 class="sheet-title" id="sheetTitle">${r.pass ? '미션 성공! 잘하셨어요!' : '거의 다 왔어요! 조금 달랐어요'}</h3>
+          <p class="mission-quote">🎯 ${esc(m.text)}</p>
+          ${r.pass
+            ? '<p class="sheet-text">미션 목록에 성공 표시를 해 두었어요.</p>'
+            : `<ul class="diff-list">${r.diffs.map(d => `<li>${esc(d)}</li>`).join('')}</ul>`}
+        </div>
+        <div class="sheet-foot two">
+          <button class="btn ${r.pass ? 'btn-primary hint' : 'btn-secondary'}" data-action="mission-list">미션 목록으로</button>
+          <button class="btn ${r.pass ? 'btn-secondary' : 'btn-primary hint'}" data-action="mission-retry">다시 하기</button>
+        </div>`;
+    },
+    guide: () => (state.sheet.pass ? "미션 성공! '미션 목록으로'를 눌러 보세요" : "다른 점을 읽고 '다시 하기'를 눌러 보세요"),
+    help: () => (state.sheet.pass ? '[data-action="mission-list"]' : '[data-action="mission-retry"]'),
+  },
+};
+
+function groupHTML(item, groupId, miss) {
+  const g = store.optionGroups[groupId];
+  const sh = state.sheet;
+  const cls = ['opt-group', groupId === miss ? 'next' : '', sh.warn === groupId ? 'warn' : ''].filter(Boolean).join(' ');
+  return `
+    <fieldset class="${cls}" data-group="${groupId}">
+      <legend>
+        <span class="opt-title">${esc(g.title)}</span>
+        ${g.required ? '<span class="req">필수</span>' : '<span class="opt-tag">선택</span>'}
+        ${g.hint ? `<span class="opt-hint">${esc(g.hint)}</span>` : ''}
+      </legend>
+      <div class="opt-choices" style="--cols:${Math.min(g.choices.length, 3)}">
+        ${g.choices.map(c => {
+          const sel = sh.choices[groupId] === c.id;
+          return `
+          <button class="opt${sel ? ' selected' : ''}" aria-pressed="${sel}" data-action="choose" data-arg="${groupId}:${c.id}">
+            ${optionIcon(item, g, c)}
+            <span class="opt-label">${esc(c.label)}</span>
+            ${c.price ? `<span class="opt-price">+${won(c.price)}</span>` : ''}
+            ${sel ? '<span class="opt-check" aria-hidden="true">✓</span>' : ''}
+          </button>`;
+        }).join('')}
+      </div>
+    </fieldset>`;
+}
+function optionIcon(item, group, choice) {
+  if (group.icon === 'temp') return `<span class="opt-icon">${artSVG(item, { temp: choice.id })}</span>`;
+  if (group.icon === 'size') return `<span class="opt-icon" style="--s:${choice.iconScale || 1}">${artSVG(item, variantFor(item, state.sheet.choices))}</span>`;
+  return '';
+}
+
+/* =====================================================================
+   12) 그리기
+   ===================================================================== */
+const guideText = () => (state.sheet ? SHEETS[state.sheet.type].guide() : SCREENS[state.screen].guide());
+
+function render() {
+  const screenEl = $('#screen');
+  const kiosk = $('#kiosk');
+  const screenChanged = screenEl.dataset.screen !== state.screen;
+  if (screenChanged) hideToast();
+
+  const scrolls = {};
+  if (!screenChanged) $$('[data-scroll]', screenEl).forEach(el => { scrolls[el.dataset.scroll] = el.scrollTop; });
+
+  const active = document.activeElement;
+  const focusInKiosk = !!active && active !== document.body && kiosk.contains(active);
+  let focusSel = null;
+  if (focusInKiosk && active.dataset && active.dataset.action) {
+    focusSel = `[data-action="${active.dataset.action}"]` +
+      (active.dataset.arg != null ? `[data-arg="${CSS.escape(active.dataset.arg)}"]` : ':not([data-arg])');
+  }
+
+  screenEl.dataset.screen = state.screen;
+  screenEl.innerHTML = SCREENS[state.screen].render() + (state.sheet ? sheetHTML() : '');
+  if (screenChanged && once.enter && screenEl.firstElementChild) {
+    screenEl.firstElementChild.classList.add(once.enter === 'back' ? 'enter-back' : 'enter');
+  }
+  $$('[data-scroll]', screenEl).forEach(el => { if (el.dataset.scroll in scrolls) el.scrollTop = scrolls[el.dataset.scroll]; });
+
+  renderChrome();
+
+  if (once.sheetOpened) {
+    const first = $('.sheet button:not([disabled])', screenEl);
+    if (first) first.focus({ preventScroll: true });
+  } else if (focusInKiosk) {
+    const target = focusSel && kiosk.querySelector(focusSel);
+    if (target && !target.disabled) target.focus({ preventScroll: true });
+    else screenEl.focus({ preventScroll: true });
+  }
+  Object.keys(once).forEach(k => { once[k] = false; });
+}
+
+function renderChrome() {
+  const text = guideText();
+  const guideTextEl = $('#guideText');
+  if (guideTextEl.textContent !== text) {
+    guideTextEl.textContent = text;
+    const box = $('#guide');
+    box.classList.remove('flash');
+    void box.offsetWidth;
+    box.classList.add('flash');
+    if (app.sound && app.view === 'practice') speak(text);
+  }
+
+  const badge = $('#orderBadge');
+  let badgeText = '';
+  if (store) {
+    const type = store.orderTypes.find(t => t.id === state.orderType);
+    if (type && state.screen !== 'start') badgeText = type.badge;
+  } else if (state.screen !== 'hospitalStart') {
+    badgeText = labelOf(HOSPITAL.menu, P().hospital);
+  }
+  badge.hidden = !badgeText;
+  badge.textContent = badgeText;
+
+  const first = state.screen === firstScreen();
+  const lockedSheet = state.sheet && LOCKED_SHEETS.includes(state.sheet.type);
+  const backBtn = $('.kiosk-nav [data-action="back"]');
+  const homeBtn = $('.kiosk-nav [data-action="home"]');
+  backBtn.disabled = ((first || isFinal()) && !state.sheet) || isLocked() || !!lockedSheet;
+  homeBtn.disabled = (first && !state.sheet) || isLocked();
+  backBtn.classList.toggle('hint', state.screen === 'cart' && !state.cart.length && !state.sheet);
+}
+
+function toast(message) {
+  const el = $('#toast');
+  el.textContent = message;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(hideToast, 2400);
+}
+function hideToast() {
+  clearTimeout(toastTimer);
+  $('#toast').classList.remove('show');
+}
+
+const rectOf = sel => { const el = $(sel); return el ? el.getBoundingClientRect() : null; };
+function fly(svgMarkup, from, to) {
+  if (!from || !to || reduceMotion() || !document.body.animate) return;
+  const el = document.createElement('div');
+  el.className = 'fly';
+  el.innerHTML = svgMarkup;
+  Object.assign(el.style, { left: from.left + 'px', top: from.top + 'px', width: from.width + 'px', height: from.height + 'px' });
+  document.body.appendChild(el);
+  const dx = to.left + to.width / 2 - (from.left + from.width / 2);
+  const dy = to.top + to.height / 2 - (from.top + from.height / 2);
+  el.animate(
+    [{ transform: 'translate(0, 0) scale(1)', opacity: 1 }, { transform: `translate(${dx}px, ${dy}px) scale(.3)`, opacity: 0 }],
+    { duration: 650, easing: 'cubic-bezier(.45, -0.15, .7, 1)', fill: 'forwards' }
+  ).onfinish = () => el.remove();
+  setTimeout(() => el.remove(), 900); // 애니메이션이 멈춰도 그림이 남지 않게
+}
+
+// 미션 '도움말': 다음에 누를 버튼을 반짝이게
+function showHelp() {
+  if (app.view !== 'practice' || !state) return;
+  const ex = missionExpect();
+  const def = state.sheet ? SHEETS[state.sheet.type] : SCREENS[state.screen];
+  const sel = def.help ? def.help(ex) : null;
+  const el = sel && $('#kiosk').querySelector(sel);
+  $$('.help-glow').forEach(e => e.classList.remove('help-glow'));
+  if (!el || el.disabled) { toast('잠시 기다리거나 지금 할 일 안내를 따라 해 보세요'); return; }
+  el.classList.add('help-glow');
+  el.scrollIntoView({ block: 'nearest', behavior: reduceMotion() ? 'auto' : 'smooth' });
+  toast('반짝이는 곳을 눌러 보세요');
+  if (app.sound) speak('반짝이는 곳을 눌러 보세요');
+}
+
+/* =====================================================================
+   13) 화면 이동
+   ===================================================================== */
+function freshState() {
+  return {
+    screen: firstScreen(),
+    history: [],
+    sheet: null,
+    // 주문
+    orderType: null,
+    category: store ? store.categories[0].id : null,
+    cart: [],              // { key, itemId, choices, set, custom, qty }
+    upsellShown: false,
+    upsellResult: null,    // 'added' | 'declined'
+    pagerInput: { pager: '', field: 'pager' },
+    pagerBuzz: false,
+    boardReady: false,
+    // 병원
+    visit: null,
+    consent: { required: false, sms: false },
+    verify: { birth: '', phone: '', field: 'birth' },
+    idc: { method: null, step: 'choose' },
+    symptom: null,
+    dept: null,
+    ticketNum: null,
+    callFront: 0,
+    called: false,
+    docs: {},
+    installment: null,
+    cert: null,
+    certVisit: null,
+    copies: 1,
+    // 결제
+    payStep: 'ready',      // ready → (inserted) → paying → remove → removed → out
+    orderNo: null,
+  };
+}
+
+function clearTimers() {
+  clearTimeout(payTimer);
+  clearTimeout(boardTimer);
+  clearTimeout(stepTimer);
+}
+
+function go(screen) {
+  clearTimeout(stepTimer);
+  state.history.push(state.screen);
+  state.screen = screen;
+  once.enter = 'forward';
+  if (isFinal()) { state.history = []; finishPractice(); }
+  render();
+}
+function goNext() {
+  const f = P().flow;
+  let i = f.findIndex(s => stepName(s) === state.screen) + 1;
+  while (i < f.length - 1 && !stepOn(f[i])) i++;
+  go(stepName(f[i]));
+}
+
+// 마지막 화면에 도착했을 때: 안내판·진동벨·호출 움직이기, 미션 채점
+function finishPractice() {
+  once.printAnim = true;
+  if (store) {
+    if (state.orderType === 'here' && store.pager) {
+      boardTimer = setTimeout(() => { state.pagerBuzz = true; render(); }, 3500);
+    } else if (store.pickup && store.pickup.type === 'board') {
+      boardTimer = setTimeout(() => { state.boardReady = true; render(); }, 3500);
+    }
+  }
+  if (state.screen === 'ticket') {
+    const tick = () => {
+      if (state.callFront > 0) {
+        state.callFront -= 1;
+        boardTimer = setTimeout(tick, 1300);
+      } else {
+        state.called = true;
+      }
+      render();
+    };
+    boardTimer = setTimeout(tick, 1600);
+  }
+  const m = currentMission();
+  if (m) {
+    const diffs = evaluateMission(m);
+    const pass = diffs.length === 0;
+    if (pass) { doneMissions.add(m.id); saveDone(); }
+    state.sheet = { type: 'result', pass, diffs };
+    once.sheetOpened = true;
+    if (app.sound) setTimeout(() => speak(pass ? '미션 성공! 잘하셨어요!' : `조금 달랐어요. ${diffs[0]}`), 50);
+  }
+}
+
+function back() {
+  if (state.sheet) { sheetBack(); return; }
+  const screenBack = SCREENS[state.screen].back;
+  if (screenBack && screenBack()) return;
+  if (isLocked() || isFinal() || !state.history.length) return;
+  clearTimeout(stepTimer);
+  state.screen = state.history.pop();
+  once.enter = 'back';
+  render();
+}
+
+function restartPractice() {
+  if (isLocked() && !isFinal()) return;
+  clearTimers();
+  state = freshState();
+  once.enter = 'forward';
+  render();
+}
+
+function openSheet(sheet) {
+  hideToast();
+  state.sheet = sheet;
+  once.sheetOpened = true;
+  render();
+}
+function sheetBack() {
+  const sh = state.sheet;
+  if (LOCKED_SHEETS.includes(sh.type)) return;
+  if (sh.type === 'set' && sh.step !== 'type') { sh.step = SET_PREV[sh.step](sh); render(); return; }
+  if (sh.type === 'discount' && sh.picked) { sh.picked = null; render(); return; }
+  closeSheet();
+}
+function closeSheet() {
+  const sh = state.sheet;
+  if (!sh || LOCKED_SHEETS.includes(sh.type)) return;
+  if (sh.type === 'upsell') state.upsellResult = sh.added ? 'added' : 'declined';
+  state.sheet = null;
+  render();
+  if (sh.type === 'option' || sh.type === 'set') focusMenuCard(sh.itemId);
+}
+function focusMenuCard(itemId) {
+  const card = $(`#screen [data-action="open-item"][data-arg="${itemId}"]`);
+  if (card) card.focus({ preventScroll: true });
+}
+
+/* ----- 주문 동작 ----- */
+function openItem(itemId) {
+  const item = findItem(itemId);
+  if (item.soldOut) { toast('품절된 메뉴예요. 다른 메뉴를 골라 주세요'); return; }
+  if (item.setable && store.set) {
+    openSheet({ type: 'set', itemId, step: 'type', set: null, custom: emptyCustom(), choices: {}, qty: 1, showInfo: false });
+  } else {
+    openSheet({ type: 'option', itemId, choices: defaultChoices(item), qty: 1, warn: null, showInfo: false });
+  }
+}
+
+function scrollToGroup(groupId) {
+  const el = $(`.opt-group[data-group="${groupId}"]`);
+  if (el) el.scrollIntoView({ block: 'nearest', behavior: reduceMotion() ? 'auto' : 'smooth' });
+}
+
+function chooseOption(arg) {
+  const [groupId, choiceId] = arg.split(':');
+  const sh = state.sheet;
+  const item = findItem(sh.itemId);
+  const before = variantFor(item, sh.choices).temp + sh.choices.size;
+  sh.choices[groupId] = choiceId;
+  if (variantFor(item, sh.choices).temp + sh.choices.size !== before) once.artPop = true;
+  render();
+  const next = missingGroup();
+  if (store.optionGroups[groupId].required && next) scrollToGroup(next);
+}
+
+function toggleIngredient(arg) {
+  const [kind, id] = arg.split(':');
+  const list = state.sheet.custom[kind];
+  state.sheet.custom[kind] = list.includes(id) ? list.filter(x => x !== id) : [...list, id];
+  once.artPop = true;
+  render();
+}
+
+// 같은 메뉴·같은 옵션이면 한 줄로 합침. 실제로 담은 개수를 돌려줌
+function addLine(item, choices, qty, set = null, custom = null) {
+  const parts = [item.id, ...visibleGroups(item, choices).map(g => `${g}=${choices[g]}`)];
+  if (set) parts.push(`set=${set.size}+${set.side}+${set.drink}+${set.ice}`);
+  const cleanCustom = hasCustom(custom) ? { add: [...custom.add].sort(), remove: [...custom.remove].sort() } : null;
+  if (cleanCustom) parts.push(`custom=${cleanCustom.add.join(',')}/${cleanCustom.remove.join(',')}`);
+  const key = parts.join('|');
+  let line = state.cart.find(l => l.key === key);
+  if (!line) {
+    line = { key, itemId: item.id, choices: { ...choices }, set: set ? { ...set } : null, custom: cleanCustom, qty: 0 };
+    state.cart.push(line);
+  }
+  const added = Math.min(qty, MAX_QTY - line.qty);
+  line.qty += added;
+  if (!line.qty) state.cart = state.cart.filter(l => l !== line);
+  return added;
+}
+
+function addFromSheet() {
+  const sh = state.sheet;
+  const item = findItem(sh.itemId);
+  if (sh.type === 'option') {
+    const miss = missingGroup();
+    if (miss) {
+      sh.warn = miss;
+      render();
+      sh.warn = null;
+      scrollToGroup(miss);
+      toast('먼저 ' + store.optionGroups[miss].guide);
+      return;
+    }
+  }
+  const from = rectOf('.sheet .art-lg');
+  const picture = artSVG(item, variantFor(item, sh.choices, sh.custom));
+  const added = addLine(item, sh.choices, sh.qty, sh.set, sh.custom);
+  state.sheet = null;
+  once.bump = true;
+
+  const u = store.upsell;
+  const askUpsell = u && u.trigger === 'afterAdd' && !state.upsellShown && item.category === u.afterCategory && added > 0;
+  if (askUpsell) {
+    state.upsellShown = true;
+    state.sheet = { type: 'upsell', added: 0 };
+    once.sheetOpened = true;
+  }
+  render();
+  fly(picture, from, rectOf('.summary'));
+  if (askUpsell) return;
+  focusMenuCard(item.id);
+  if (added < sh.qty) toast(`한 메뉴는 ${MAX_QTY}개까지 담을 수 있어요`);
+  else toast(`${josa(item.name, '을', '를')} ${added}${unitOf(item)} 담았어요`);
+}
+
+function checkout() {
+  if (!cartCount()) { toast('먼저 메뉴를 하나 담아 주세요'); return; }
+  const u = store.upsell;
+  const hasCategory = u && state.cart.some(l => findItem(l.itemId).category === u.category);
+  if (u && u.trigger === 'checkout' && !state.upsellShown && !hasCategory) {
+    state.upsellShown = true;
+    openSheet({ type: 'upsell', added: 0 });
+    return;
+  }
+  goNext();
+}
+
+function upsellAdd(itemId) {
+  const item = findItem(itemId);
+  const from = rectOf(`.upsell-row[data-arg="${itemId}"] .row-art`);
+  const added = addLine(item, defaultChoices(item), 1);
+  if (!added) { toast(`한 메뉴는 ${MAX_QTY}개까지 담을 수 있어요`); return; }
+  state.sheet.added += 1;
+  once.bump = true;
+  render();
+  fly(artSVG(item), from, rectOf('.summary'));
+}
+
+function upsellDone() {
+  state.upsellResult = state.sheet.added ? 'added' : 'declined';
+  state.sheet = null;
+  if (store.upsell.trigger === 'checkout') goNext();
+  else render();
+}
+
+function changeQty(key, delta) {
+  const line = state.cart.find(l => l.key === key);
+  if (!line) return;
+  line.qty = Math.min(MAX_QTY, Math.max(1, line.qty + delta));
+  render();
+}
+
+function removeLine(key) {
+  const line = state.cart.find(l => l.key === key);
+  if (!line) return;
+  state.cart = state.cart.filter(l => l !== line);
+  render();
+  toast(`${josa(findItem(line.itemId).name, '을', '를')} 뺐어요`);
+}
+
+/* ----- 카드 결제 (공통) ----- */
+function cardTap() {
+  if (state.payStep === 'ready') {
+    once.cardAnim = true;
+    if (!store && P().hospital === 'payment') {
+      state.payStep = 'inserted';
+      openSheet({ type: 'installment' });
+    } else {
+      startPaying();
+    }
+  } else if (state.payStep === 'remove') {
+    state.payStep = 'removed';
+    render();
+    payTimer = setTimeout(() => {
+      state.payStep = 'out'; // 카드가 다 빠진 상태 (애니메이션이 다시 돌지 않게)
+      if (store && store.receipt) openSheet({ type: 'receipt', printing: false });
+      else goNext();
+    }, 750);
+  }
+}
+function startPaying() {
+  state.payStep = 'paying';
+  render();
+  payTimer = setTimeout(() => {
+    state.payStep = 'remove';
+    state.orderNo = 100 + Math.floor(Math.random() * 800);
+    render();
+  }, PAY_DELAY);
+}
+
+/* ----- 병원 동작 ----- */
+function hospitalMenu(id) {
+  const task = P().hospital;
+  if (id === task) { goNext(); return; }
+  const want = labelOf(HOSPITAL.menu, task);
+  toast(`이번은 '${want}' 연습이에요. '${want}'${pick(want, '을', '를')} 눌러 주세요`);
+}
+
+function consentToggle(id) {
+  state.consent[id] = !state.consent[id];
+  render();
+}
+function consentAll() {
+  const all = !(state.consent.required && state.consent.sms);
+  state.consent = { required: all, sms: all };
+  render();
+}
+function consentNext() {
+  if (!state.consent.required) {
+    once.warn = true;
+    render();
+    toast('필수 항목에 동의해야 접수할 수 있어요');
+    return;
+  }
+  goNext();
+}
+
+function idPlace() {
+  if (state.idc.step !== 'place') return;
+  state.idc.step = 'scanning';
+  once.placeAnim = true;
+  render();
+  stepTimer = setTimeout(() => { state.idc.step = 'done'; render(); }, 1600);
+}
+
+function chooseDoc(arg) {
+  const [id, val] = arg.split(':');
+  state.docs[id] = val === 'yes';
+  render();
+}
+function docsNext() {
+  if (HOSPITAL.docs.some(d => state.docs[d.id] === undefined)) {
+    once.warn = true;
+    render();
+    toast('받을 서류를 모두 골라 주세요');
+    return;
+  }
+  goNext();
+}
+
+function chooseCert(id) {
+  const c = HOSPITAL.certificates.find(x => x.id === id);
+  if (c.counterOnly) { toast(`${josa(c.label, '은', '는')} 의사 확인이 필요해서 원무과 창구에서 발급해요`); return; }
+  state.cert = id;
+  goNext();
+}
+
+/* ----- 키오스크 안 버튼들 ----- */
+const actions = {
+  start: () => goNext(),
+  'order-type': id => { state.orderType = id; goNext(); },
+  tab: id => { state.category = id; render(); },
+  promo: () => { const item = findItem(store.promo.itemId); state.category = item.category; openItem(item.id); },
+  'open-item': id => openItem(id),
+  'toggle-info': () => { state.sheet.showInfo = !state.sheet.showInfo; render(); },
+  choose: arg => chooseOption(arg),
+  'sheet-close': () => closeSheet(),
+  'sheet-dec': () => { state.sheet.qty = Math.max(1, state.sheet.qty - 1); render(); },
+  'sheet-inc': () => { state.sheet.qty = Math.min(MAX_QTY, state.sheet.qty + 1); render(); },
+  'option-add': () => addFromSheet(),
+  'set-type': kind => {
+    const sh = state.sheet;
+    sh.showInfo = false;
+    if (kind === 'set') { sh.step = 'setSize'; sh.set = { size: null, side: null, drink: null, ice: null }; } else { sh.step = 'confirm'; sh.set = null; }
+    render();
+  },
+  'set-size': id => { state.sheet.set.size = id; state.sheet.step = 'side'; render(); },
+  'set-side': id => { state.sheet.set.side = id; state.sheet.step = 'drink'; render(); },
+  'set-drink': id => { state.sheet.set.drink = id; state.sheet.step = 'ice'; render(); },
+  'set-ice': id => { state.sheet.set.ice = id; state.sheet.step = 'confirm'; render(); },
+  'set-custom': () => { state.sheet.step = 'custom'; render(); },
+  ing: arg => toggleIngredient(arg),
+  'custom-done': () => { state.sheet.step = 'confirm'; render(); },
+  'set-add': () => addFromSheet(),
+  checkout: () => checkout(),
+  'upsell-add': id => upsellAdd(id),
+  'upsell-done': () => upsellDone(),
+  inc: key => changeQty(key, 1),
+  dec: key => changeQty(key, -1),
+  remove: key => removeLine(key),
+  pay: () => {
+    if (!cartCount()) return;
+    if (store.discount) openSheet({ type: 'discount', picked: null });
+    else goNext();
+  },
+  'discount-pick': id => { state.sheet.picked = id; render(); },
+  'discount-done': () => { state.sheet = null; goNext(); },
+  'pay-method': id => {
+    if (id !== 'card') { toast("이번 연습에서는 '카드 결제'를 눌러 주세요"); return; }
+    state.payStep = 'ready';
+    goNext();
+  },
+  'insert-card': () => cardTap(),
+  installment: id => { state.installment = id; state.sheet = null; startPaying(); },
+  'receipt-skip': () => { state.sheet = null; goNext(); },
+  'receipt-print': () => { state.sheet.printing = true; once.printAnim = true; render(); },
+  'receipt-done': () => { state.sheet = null; goNext(); },
+  field: id => { KEYPADS[state.screen].data().field = id; render(); },
+  key: d => pressKey(d),
+  'key-del': () => deleteKey(),
+  'key-ok': () => confirmKey(),
+  hmenu: id => hospitalMenu(id),
+  visit: id => { state.visit = id; goNext(); },
+  consent: id => consentToggle(id),
+  'consent-all': () => consentAll(),
+  'consent-next': () => consentNext(),
+  'id-method': id => { state.idc = { method: id, step: 'place' }; render(); },
+  'id-place': () => idPlace(),
+  symptom: id => { state.symptom = id; goNext(); },
+  dept: id => { state.dept = id; goNext(); },
+  'confirm-reception': () => {
+    const d = HOSPITAL.depts.find(x => x.id === state.dept);
+    state.ticketNum = 10 + Math.floor(Math.random() * 20) + d.waiting;
+    state.callFront = d.waiting;
+    state.called = false;
+    goNext();
+  },
+  next: () => goNext(),
+  doc: arg => chooseDoc(arg),
+  'docs-next': () => docsNext(),
+  'open-paper': () => openSheet({ type: 'paper' }),
+  cert: id => chooseCert(id),
+  'cert-visit': id => { state.certVisit = id; goNext(); },
+  'copies-dec': () => { state.copies = Math.max(1, state.copies - 1); render(); },
+  'copies-inc': () => { state.copies = Math.min(HOSPITAL.maxCopies, state.copies + 1); render(); },
+  'cert-confirm': () => goNext(),
+  restart: () => restartPractice(),
+  'mission-retry': () => restartPractice(),
+  'mission-list': () => leavePractice('missions'),
+  back: () => back(),
+  home: () => restartPractice(),
+};
+
+/* =====================================================================
+   14) 첫 화면 · 미션 목록 · 연습 시작
+   ===================================================================== */
+function renderHome() {
+  $('#homeGrid').innerHTML = Object.entries(PRACTICES).map(([id, p]) => `
+    <button class="home-card" data-app="practice" data-arg="${id}">
+      <span class="home-emoji" aria-hidden="true">${p.emoji}</span><b>${esc(p.title)}</b><span>${esc(p.desc)}</span>
+    </button>`).join('');
+  $('#homeMissionCount').textContent = `${MISSIONS.filter(m => doneMissions.has(m.id)).length}/${MISSIONS.length}`;
+}
+
+function renderMissions() {
+  const doneCount = MISSIONS.filter(m => doneMissions.has(m.id)).length;
+  $('#missionProgress').textContent = `성공 ${doneCount}/${MISSIONS.length}`;
+  $('#missionList').innerHTML = Object.entries(PRACTICES).map(([pid, p]) => {
+    const list = MISSIONS.filter(m => m.practice === pid);
+    if (!list.length) return '';
+    return `
+      <section class="mission-group">
+        <h2>${p.emoji} ${esc(p.title)}</h2>
+        <div class="mission-cards">
+          ${list.map(m => {
+            const ok = doneMissions.has(m.id);
+            return `
+            <button class="mission-card${ok ? ' done' : ''}" data-app="mission" data-arg="${m.id}" aria-label="${esc(m.text)}${ok ? ', 성공함' : ''}">
+              <span class="mission-card-text">${esc(m.text)}</span>
+              <span class="mission-card-state">${ok ? '✓ 성공' : '도전 →'}</span>
+            </button>`;
+          }).join('')}
+        </div>
+      </section>`;
+  }).join('');
+}
+
+function updateSoundButtons() {
+  const home = $('#homeSound');
+  const mini = $('#miniSound');
+  if (!speech.supported) {
+    home.disabled = true;
+    home.textContent = '🔇 소리로 읽어 주기를 쓸 수 없어요';
+    $('#soundNote').textContent = '이 브라우저는 소리로 읽어 주기를 지원하지 않아요.';
+    mini.hidden = true;
+    $('#speakBtn').hidden = true;
+    return;
+  }
+  home.setAttribute('aria-pressed', String(app.sound));
+  home.textContent = app.sound ? '🔊 소리 켜짐 · 누르면 꺼져요' : '🔇 소리 꺼짐 · 누르면 켜져요';
+  $('#soundNote').textContent = app.sound ? '화면이 바뀔 때마다 안내를 소리로 읽어 드려요.' : '소리를 켜면 화면이 바뀔 때마다 안내를 읽어 드려요.';
+  mini.setAttribute('aria-pressed', String(app.sound));
+  mini.textContent = app.sound ? '🔊 소리 켬' : '🔇 소리 끔';
+  mini.setAttribute('aria-label', app.sound ? '안내 소리 끄기' : '안내 소리 켜기');
+}
+
+function toggleSound() {
+  if (!speech.supported) return;
+  app.sound = !app.sound;
+  updateSoundButtons();
+  if (app.sound) speak('소리를 켰어요. 화면이 바뀔 때마다 안내를 읽어 드릴게요.');
+  else stopSpeaking();
+}
+
+function showView(view) {
+  app.view = view;
+  $('#homeView').hidden = view !== 'home';
+  $('#missionView').hidden = view !== 'missions';
+  $('#practiceView').hidden = view !== 'practice';
+  if (view !== 'practice') { clearTimers(); hideToast(); }
+  if (view === 'home') {
+    renderHome();
+    $('#homeView').scrollTop = 0;
+    $('#homeTitle').focus({ preventScroll: true });
+    if (app.sound) speak('무엇을 연습할지 골라 보세요');
+  }
+  if (view === 'missions') {
+    renderMissions();
+    $('#missionView').scrollTop = 0;
+    $('#missionTitle').focus({ preventScroll: true });
+    if (app.sound) speak('해 보고 싶은 미션을 골라 보세요');
+  }
+  updateSoundButtons();
+}
+
+function startPractice(practiceId, missionId = null) {
+  clearTimers();
+  app.practice = practiceId;
+  app.mission = missionId;
+  const p = P();
+  store = p.store ? STORES[p.store] : null;
+  const t = place().theme;
+  const view = $('#practiceView');
+  [['--brand', t.brand], ['--action', t.action], ['--action-press', t.press], ['--action-soft', t.soft], ['--pulse', t.pulse]]
+    .forEach(([k, val]) => view.style.setProperty(k, val));
+  $('#storeName').innerHTML = `<span class="logo">${logoHTML()}</span>${esc(place().name)}`;
+  const m = currentMission();
+  $('#practiceTitle').textContent = `${p.emoji} ${p.title}${m ? ' · 미션' : ''}`;
+  $('#leaveBtn').textContent = m ? '← 미션 목록' : '← 첫 화면';
+  $('#missionBar').hidden = !m;
+  $('#missionText').textContent = m ? m.text : '';
+  view.classList.toggle('has-mission', !!m);
+  state = freshState();
+  $('#guideText').textContent = '';
+  $('#screen').dataset.screen = '';
+  showView('practice');
+  render();
+  $('#screen').focus({ preventScroll: true });
+  if (app.sound) speak((m ? `미션. ${m.text}. ` : '') + `지금 할 일. ${guideText()}`);
+}
+
+function leavePractice(to) {
+  clearTimers();
+  stopSpeaking();
+  const dest = to || (app.mission ? 'missions' : 'home');
+  app.practice = null;
+  app.mission = null;
+  showView(dest);
+}
+
+/* =====================================================================
+   15) 버튼 연결
+   ===================================================================== */
+const APP_ACTIONS = {
+  home: () => showView('home'),
+  missions: () => showView('missions'),
+  practice: id => startPractice(id),
+  mission: id => { const m = MISSIONS.find(x => x.id === id); if (m) startPractice(m.practice, m.id); },
+  leave: () => leavePractice(),
+  sound: () => toggleSound(),
+  speak: () => { if (state) speak(guideText()); },
+  help: () => showHelp(),
+};
+
+document.addEventListener('click', e => {
+  const appBtn = e.target.closest('[data-app]');
+  if (appBtn && !appBtn.disabled) {
+    const fn = APP_ACTIONS[appBtn.dataset.app];
+    if (fn) fn(appBtn.dataset.arg);
+    return;
+  }
+  const el = e.target.closest('#kiosk [data-action]');
+  if (!el || el.disabled) return;
+  const fn = actions[el.dataset.action];
+  if (fn) fn(el.dataset.arg);
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && app.view === 'practice' && state && state.sheet) sheetBack();
+});
+
+if (speech.supported) {
+  pickVoice();
+  if ('onvoiceschanged' in window.speechSynthesis) window.speechSynthesis.onvoiceschanged = pickVoice;
+}
+showView('home');
+</script>
+</body>
+</html>
