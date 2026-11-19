@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>한국 키오스크 연습</title>
-<meta name="description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.">
+<meta name="description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="한국 키오스크 연습 · Korea Kiosk Practice">
-<meta property="og:description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권 키오스크를 미리 눌러 보며 연습해 보세요. English · 日本語 · 中文 지원. 실제로 결제되지 않아요.">
+<meta property="og:description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드 키오스크를 미리 눌러 보며 연습해 보세요. English · 日本語 · 中文 지원. 실제로 결제되지 않아요.">
 <meta name="theme-color" content="#3F3A36">
 <meta name="format-detection" content="telephone=no">
 <meta name="google-adsense-account" content="ca-pub-7426969547164889">
@@ -620,6 +620,44 @@
   .booking-day { padding: 2px 10px; border-radius: 999px; background: #E7E5E4; color: var(--muted); font-size: 20px; font-weight: 800; white-space: nowrap; }
   .booking-day.today { background: var(--brand); color: #fff; }
   .booking-card.other-day { background: var(--soft); }
+  /* ---------- 지하철 ---------- */
+  .line-tab[aria-pressed="true"] { background: var(--line); border-color: var(--line); }
+  .line-dots { flex: none; display: flex; gap: 4px; }
+  .line-dot { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; color: #fff; font-size: 20px; font-weight: 900; }
+  .amount-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .amount-btn { min-height: 76px; background: #fff; border: 3px solid var(--line); border-radius: 16px; font-size: 26px; font-weight: 900; }
+  .amount-btn:active { background: var(--action-soft); border-color: var(--action); }
+  .bill-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .bill { min-height: 80px; padding: 6px; border: 2px solid rgba(0, 0, 0, .18); border-radius: 10px; color: #1C1917; font-size: 20px; font-weight: 900; box-shadow: 0 4px 8px rgba(0, 0, 0, .12); }
+  .bill span { height: 100%; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed rgba(0, 0, 0, .2); border-radius: 6px; line-height: 1.15; white-space: nowrap; }
+  .bill b { font-size: 24px; }
+  .bill.b1000 { background: #CFE3F7; }
+  .bill.b5000 { background: #F8D2BC; }
+  .bill.b10000 { background: #CDEBC8; }
+  .tcard { width: 210px; height: 126px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; background: linear-gradient(135deg, #34D399, #047857); border-radius: 14px; color: #fff; font-size: 20px; text-align: left; box-shadow: 0 6px 12px rgba(0, 0, 0, .15); }
+  .tcard b { font-size: 24px; }
+  .tcard-top { font-size: 30px; line-height: 1; }
+  .card.single-card { background: linear-gradient(135deg, #FDE68A, #F59E0B); color: #1C1917; }
+  .card-icon { align-self: flex-end; font-size: 34px; line-height: 1; }
+  .tcard.single { background: linear-gradient(135deg, #FDE68A, #F59E0B); color: #1C1917; }
+  .gate { width: 250px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .gate-box { position: relative; z-index: 2; width: 100%; padding: 12px; display: flex; flex-direction: column; align-items: center; gap: 10px; background: var(--bezel); border-radius: 16px; color: #fff; font-size: 20px; font-weight: 700; }
+  .gate-screen { width: 100%; min-height: 50px; padding: 6px 10px; display: grid; place-items: center; border-radius: 8px; background: #0B3B36; color: #6EE7B7; font-size: 21px; font-weight: 800; text-align: center; }
+  .gate.open .gate-screen { background: #047857; color: #fff; }
+  .gate-reader { display: flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 999px; background: #FACC15; color: #111827; }
+  .gate.open .gate-reader { background: #34D399; }
+  .gate-doors { position: relative; width: 100%; height: 24px; overflow: hidden; }
+  .gate-doors i { position: absolute; top: 0; width: 50%; height: 100%; background: #DC2626; border-radius: 6px; transition: transform .6s ease; }
+  .gate-doors i:first-child { left: 0; }
+  .gate-doors i:last-child { right: 0; }
+  .gate.open .gate-doors i:first-child { transform: translateX(-90%); }
+  .gate.open .gate-doors i:last-child { transform: translateX(90%); }
+  .gate-card { --lift: 40px; }
+  .ticket-out { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .single-ticket { width: 150px; padding: 12px; display: flex; flex-direction: column; gap: 4px; background: linear-gradient(135deg, #FDE68A, #F59E0B); border-radius: 12px; font-size: 20px; text-align: left; box-shadow: 0 4px 10px rgba(0, 0, 0, .15); }
+  .single-ticket b { font-size: 21px; }
+  .change-line { font-size: 22px; font-weight: 800; }
+  .coin-out { font-size: 72px; line-height: 1; }
   .platform-sign { padding: 8px 20px; border-radius: 14px; background: #FACC15; color: #111827; font-size: 28px; font-weight: 900; }
 
   /* ---------- 알림(토스트) ---------- */
@@ -665,6 +703,11 @@
     .slot-digit { height: 34px; font-size: 23px; }
     .keypad { gap: 6px; }
     .key { min-height: 50px; }
+    /* 개찰구 그림: 휴대폰에서는 작게 해서 카드 그림이 한 화면에 보이게 */
+    .gate-box { padding: 8px; gap: 6px; }
+    .gate-screen { min-height: 40px; padding: 4px 8px; }
+    .gate-reader { padding: 4px 14px; }
+    .gate-doors { height: 18px; }
     /* 예매 내역 찾기: 휴대폰에서 키패드가 한 화면에 다 들어가게 */
     .bus-lookup { gap: 8px; }
     .bus-lookup .key { min-height: 46px; }
@@ -870,6 +913,23 @@ const M_KO = {
   dPeople: (w, g) => `인원을 '${w}' 대신 '${g}'${pickRo(g)} 고르셨어요`,
   dWindow: () => '창가 자리를 고르지 않으셨어요',
   dTogether: () => '나란히 붙은 자리를 고르지 않으셨어요',
+  // 지하철
+  subHere: st => `지금 있는 역: ${st}`,
+  subFare: w => `요금 ${w}`,
+  subRoute: (a, b) => `${a} → ${b}`,
+  timesN: (w, n) => `${w} × ${n}`,
+  balanceNow: w => `지금 잔액 ${w}`,
+  cashLeft: w => `${w}이 더 필요해요. 지폐 그림을 눌러 넣어 보세요`,
+  cashBack: w => `넣은 돈 ${w}을 돌려드렸어요`,
+  billAria: w => `${w} 지폐 넣기`,
+  changeOut: w => `거스름돈 ${w}을 받으세요`,
+  maxTickets: n => `한 번에 ${n}장까지 살 수 있어요`,
+  dTickets: (w, g) => `1회용 교통카드를 ${w}장 대신 ${g}장 사셨어요`,
+  arrived: st => `${st}역에 도착했어요`,
+  arrivedTap: st => `${st}역에 도착했어요. 나갈 때도 카드를 대 보세요`,
+  cardChange: w => `1회용 교통카드와 거스름돈 ${w}을 챙겼어요. 개찰구로 가요`,
+  gateBalance: w => `잔액 ${w}`,
+  gateFare: (f, w) => `기본요금 ${f}이 빠지고 잔액 ${w}이 남았어요`,
   langBtn: () => '언어 · Language',
   langChanged: () => '한국어로 바꿨어요',
   // 미션 결과: 다른 점
@@ -983,6 +1043,23 @@ addLang('en', {
     dPeople: (w, g) => `Passengers: you chose '${g}' instead of '${w}'`,
     dWindow: () => "You didn't choose a window seat",
     dTogether: () => "You didn't choose seats side by side",
+    // 지하철
+    subHere: st => `You are at: ${st}`,
+    subFare: w => `Fare ${w}`,
+    subRoute: (a, b) => `${a} → ${b}`,
+    timesN: (w, n) => `${w} × ${n}`,
+    balanceNow: w => `Balance ${w}`,
+    cashLeft: w => `${w} more to go. Tap a bill picture to insert it`,
+    cashBack: w => `Your ${w} was returned`,
+    billAria: w => `Insert a ${w} bill`,
+    changeOut: w => `Take your change: ${w}`,
+    maxTickets: n => `You can buy up to ${n} at a time`,
+    dTickets: (w, g) => `You bought ${g} ticket${g === 1 ? '' : 's'} instead of ${w}`,
+    arrived: st => `You've arrived at ${st}`,
+    arrivedTap: st => `You've arrived at ${st}. Tap your card to go out too`,
+    cardChange: w => `You have your ticket and ${w} change. Go to the gate`,
+    gateBalance: w => `Balance ${w}`,
+    gateFare: (f, w) => `The base fare ${f} was taken. Balance: ${w}`,
     langBtn: () => 'Language',
     langChanged: () => 'Switched to English',
     dOrderType: (w, g) => `You chose '${g}' instead of '${w}'`,
@@ -1615,6 +1692,124 @@ addLang('en', {
     "오늘 출발하는 표를 골라 보세요": "Choose today's ticket",
     "예매할 때 결제한 표예요": "Paid when you booked",
     "다른 날 출발하는 표예요. 오늘 표를 골라 주세요": "This ticket is for another day. Please choose today's ticket",
+    // 지하철 교통카드
+    "지하철 교통카드": "Subway ticket",
+    "1회용 교통카드 사기·충전": "Buy a single ticket or top up",
+    "한빛지하철": "Hanbit Subway",
+    "1회용 교통카드": "Single journey ticket",
+    "1회용 카드": "Single ticket",
+    "한 번 타는 표를 사요": "Buy a ticket for one trip",
+    "교통카드 충전": "Top up a transit card",
+    "충전": "Top-up",
+    "내 교통카드에 돈을 넣어요": "Add money to your transit card",
+    "보증금 환급": "Deposit refund",
+    "다 쓴 카드로 500원 받기": "Get 500 won back for a used card",
+    "1호선": "Line 1",
+    "2호선": "Line 2",
+    "3호선": "Line 3",
+    "4호선": "Line 4",
+    "시청": "City Hall",
+    "종각": "Jonggak",
+    "종로3가": "Jongno 3-ga",
+    "동대문": "Dongdaemun",
+    "청량리": "Cheongnyangni",
+    "을지로입구": "Euljiro 1-ga",
+    "신촌": "Sinchon",
+    "강남": "Gangnam",
+    "사당": "Sadang",
+    "경복궁": "Gyeongbokgung",
+    "안국": "Anguk",
+    "고속터미널": "Express Bus Terminal",
+    "회현": "Hoehyeon",
+    "혜화": "Hyehwa",
+    "탈 때와 내릴 때 개찰구 단말기에 카드를 대요": "Tap your card on the gate reader when you get on and off",
+    "버스에서 내릴 때도 카드를 대야 갈아탈 때 할인을 받아요": "On buses, tap your card when you get off too, so you get the transfer discount",
+    "잔액이 모자라면 개찰구가 열리지 않아요. 그때는 다시 충전해요": "If your balance is too low, the gate won't open. Top up again then",
+    "동전 나오는 곳에서 500원을 꺼내요": "Take the 500 won coin from the coin tray",
+    "다 쓴 카드는 기계가 가져가요": "The machine keeps the used card",
+    "서울역에서 강남까지 가는 1회용 교통카드 1장 사기": "Buy 1 single journey ticket from Seoul Station to Gangnam",
+    "명동까지 가는 1회용 교통카드 2장 사기": "Buy 2 single journey tickets to Myeongdong",
+    "교통카드에 10,000원 충전하기": "Top up your transit card with 10,000 won",
+    "다 쓴 1회용 교통카드로 보증금 500원 돌려받기": "Get the 500 won deposit back for a used single journey ticket",
+    "도착역": "Destination",
+    "충전 금액": "Top-up amount",
+    "연습용 화면이에요. 실제로 돈이 나가지 않아요.": "This is a practice screen. No real money is used.",
+    "도착역을 골라 주세요": "Choose a station",
+    "호선": "Lines",
+    "요금은 연습용 예시예요.": "Fares are practice examples.",
+    "내릴 역을 골라 보세요": "Choose where to get off",
+    "몇 장 살까요?": "How many tickets?",
+    "장수": "Tickets",
+    "요금": "Fare",
+    "보증금": "Deposit",
+    "보증금 500원은 다 타고 나서 보증금 환급기에서 돌려받아요.": "You get the 500 won deposit back at a deposit refund machine after your trip.",
+    "장수를 확인하고 '다음'을 눌러 보세요": "Check the number of tickets and tap 'Next'",
+    "카드를 읽었어요": "Card read",
+    "카드를 읽고 있어요": "Reading your card",
+    "교통카드를 올려 주세요": "Place your transit card",
+    "카드를 떼지 말고 기다려 주세요": "Don't remove the card. Please wait",
+    "아래 카드 그림을 누르면 카드 올리는 곳에 올라가요": "Tap the card picture below to place it on the reader",
+    "카드 올리는 곳": "Card reader",
+    "교통카드 올리기": "Place transit card",
+    "교통카드": "Transit card",
+    "연습용 카드예요. 진짜 카드 정보는 읽지 않아요.": "This is a practice card. No real card data is read.",
+    "카드 그림을 눌러 카드를 올려 보세요": "Tap the card picture to place your card",
+    "카드를 읽고 있어요. 잠시 기다려 주세요": "Reading your card. Please wait",
+    "잔액을 확인하고 '다음'을 눌러 보세요": "Check your balance and tap 'Next'",
+    "충전할 금액을 골라 주세요": "Choose how much to add",
+    "충전한 돈은 탈 때마다 요금만큼 빠져나가요.": "Each time you ride, the fare is taken from your balance.",
+    "충전할 금액을 골라 보세요": "Choose how much to add",
+    "충전하고 있어요": "Topping up",
+    "1회용 교통카드를 만들고 있어요": "Issuing your ticket",
+    "현금을 넣어 주세요": "Please insert cash",
+    "충전이 끝날 때까지 카드를 떼지 마세요": "Don't remove the card until the top-up is finished",
+    "원": "won",
+    "넣은 돈": "Inserted",
+    "거스름돈": "Change",
+    "남은 돈": "Still to pay",
+    "다 쓴 1회용 교통카드를 넣어 주세요": "Insert your used single journey ticket",
+    "카드를 확인하고 있어요": "Checking the card",
+    "실제로는 개찰구 근처에 있는 '보증금 환급기'라는 작은 기계에서 해요.": "In real stations, you do this at a small 'deposit refund machine' near the gates.",
+    "1회용 교통카드 넣기": "Insert single journey ticket",
+    "충전 전 잔액": "Balance before",
+    "충전한 금액": "Added",
+    "지금 잔액": "Balance now",
+    "보증금 500원이 나왔어요": "Your 500 won deposit came out",
+    // 지하철: 결제 방법·개찰구
+    "현금": "Cash",
+    "개찰구 근처에서 보증금 환급기를 찾아요": "Find a deposit refund machine near the gates",
+    "다 쓴 카드를 넣으면 보증금 500원이 나와요": "Put the used ticket in and a 500 won coin comes out",
+    "보증금 환급은 처음 화면의 '보증금 환급'에서 연습해 볼 수 있어요": "You can practice the refund with 'Deposit refund' on the first screen",
+    "시청까지 가는 1회용 교통카드 1장을 카드로 사기": "Buy 1 single journey ticket to City Hall by card",
+    "결제 방법": "Payment method",
+    "새 발매기는 카드도 받아요. 오래된 발매기는 현금만 받기도 해요.": "Newer machines take cards too. Some older machines take cash only.",
+    "현금이나 카드 중에 골라 보세요": "Choose cash or card",
+    "잔액이 기본요금보다 적어서 개찰구가 열리지 않아요. 충전해 주세요": "Your balance is less than the base fare, so the gate won't open. Please top up",
+    "교통카드 충전은 현금만 받아요. 지폐 그림을 누르면 지폐가 들어가요.": "Top-ups take cash only. Tap a bill picture to insert it.",
+    "지폐 그림을 누르면 지폐가 들어가요.": "Tap a bill picture to insert it.",
+    "다 쓴 1회용 교통카드는 '보증금 환급기'에 넣으면 보증금 500원을 돌려받아요": "Put the used ticket into the 'deposit refund machine' to get your 500 won deposit back",
+    "충전한 카드로 개찰구를 지나갔어요": "You went through the gate with your topped-up card",
+    "개찰구에서 낸 기본요금": "Base fare at the gate",
+    "잔액을 확인해 보세요": "Check your balance",
+    "보증금 환급기에서 500원을 돌려받아요": "Get your 500 won back at the deposit refund machine",
+    "문이 열렸어요. 지나가세요": "The gate is open. Go through",
+    "개찰구에 카드를 대 주세요": "Tap your card at the gate",
+    "1회용 교통카드를 챙겼어요. 개찰구로 가요": "You have your ticket. Go to the gate",
+    "충전한 교통카드로 개찰구를 지나가 봐요": "Go through the gate with your topped-up card",
+    "들어갈 때 카드를 댔어요. 나갈 때도 대야 해요": "You tapped in. You must tap out too",
+    "문이 열렸어요. 밖으로 나가세요": "The gate is open. Go out",
+    "나갈 때도 카드를 단말기에 대요": "Tap your card on the reader to go out too",
+    "카드를 대 주세요": "Tap your card",
+    "안녕히 가세요": "Goodbye",
+    "들어가세요": "Go in",
+    "카드 대는 곳": "Tap here",
+    "지나가기": "Go through",
+    "나가기": "Go out",
+    "카드 그림을 눌러 개찰구에 대 보세요": "Tap the card picture to touch it to the gate",
+    "문이 열렸어요. '지나가기'를 눌러 보세요": "The gate is open. Tap 'Go through'",
+    "문이 열렸어요. '나가기'를 눌러 보세요": "The gate is open. Tap 'Go out'",
+    "결제는 이미 끝났어요. 개찰구를 지나가 보세요": "You've already paid. Go through the gate",
+    "카드를 단말기에 대기": "Tap the card on the reader",
   },
 });
 addLang('ja', {
@@ -1690,6 +1885,23 @@ addLang('ja', {
     dPeople: (w, g) => `人数で「${w}」ではなく「${g}」を選びました`,
     dWindow: () => '窓側の席を選んでいません',
     dTogether: () => '隣り合った席を選んでいません',
+    // 지하철
+    subHere: st => `現在の駅: ${st}`,
+    subFare: w => `運賃 ${w}`,
+    subRoute: (a, b) => `${a} → ${b}`,
+    timesN: (w, n) => `${w} × ${n}`,
+    balanceNow: w => `現在の残高 ${w}`,
+    cashLeft: w => `あと${w}必要です。紙幣の絵を押して入れてください`,
+    cashBack: w => `入れたお金${w}を返しました`,
+    billAria: w => `${w}紙幣を入れる`,
+    changeOut: w => `おつり${w}を受け取ってください`,
+    maxTickets: n => `一度に${n}枚まで買えます`,
+    dTickets: (w, g) => `1回用交通カードを${w}枚ではなく${g}枚買いました`,
+    arrived: st => `${st}駅に着きました`,
+    arrivedTap: st => `${st}駅に着きました。出るときもカードをタッチしてください`,
+    cardChange: w => `1回用交通カードとおつり${w}を受け取りました。改札へ行きましょう`,
+    gateBalance: w => `残高 ${w}`,
+    gateFare: (f, w) => `基本運賃${f}が引かれ、残高は${w}です`,
     langBtn: () => '言語 · Language',
     langChanged: () => '日本語に切り替えました',
     dOrderType: (w, g) => `「${w}」ではなく「${g}」を選びました`,
@@ -2322,6 +2534,124 @@ addLang('ja', {
     "오늘 출발하는 표를 골라 보세요": "今日出発する乗車券を選んでください",
     "예매할 때 결제한 표예요": "予約のときに支払い済みです",
     "다른 날 출발하는 표예요. 오늘 표를 골라 주세요": "別の日に出発する乗車券です。今日の乗車券を選んでください",
+    // 지하철 교통카드
+    "지하철 교통카드": "地下鉄の交通カード",
+    "1회용 교통카드 사기·충전": "1回用交通カードの購入・チャージ",
+    "한빛지하철": "ハンビッ地下鉄",
+    "1회용 교통카드": "1回用交通カード",
+    "1회용 카드": "1回用カード",
+    "한 번 타는 표를 사요": "1回乗るための乗車券を買います",
+    "교통카드 충전": "交通カードのチャージ",
+    "충전": "チャージ",
+    "내 교통카드에 돈을 넣어요": "自分の交通カードにお金を入れます",
+    "보증금 환급": "保証金の払い戻し",
+    "다 쓴 카드로 500원 받기": "使ったカードで500ウォンを受け取る",
+    "1호선": "1号線",
+    "2호선": "2号線",
+    "3호선": "3号線",
+    "4호선": "4号線",
+    "시청": "市庁",
+    "종각": "鐘閣",
+    "종로3가": "鍾路3街",
+    "동대문": "東大門",
+    "청량리": "清凉里",
+    "을지로입구": "乙支路入口",
+    "신촌": "新村",
+    "강남": "江南",
+    "사당": "舎堂",
+    "경복궁": "景福宮",
+    "안국": "安国",
+    "고속터미널": "高速ターミナル",
+    "회현": "会賢",
+    "혜화": "恵化",
+    "탈 때와 내릴 때 개찰구 단말기에 카드를 대요": "乗るときと降りるとき、改札機にカードをタッチします",
+    "버스에서 내릴 때도 카드를 대야 갈아탈 때 할인을 받아요": "バスを降りるときもカードをタッチすると、乗り換え割引が受けられます",
+    "잔액이 모자라면 개찰구가 열리지 않아요. 그때는 다시 충전해요": "残高が足りないと改札が開きません。そのときはもう一度チャージします",
+    "동전 나오는 곳에서 500원을 꺼내요": "硬貨の出口から500ウォンを取り出します",
+    "다 쓴 카드는 기계가 가져가요": "使ったカードは機械が回収します",
+    "서울역에서 강남까지 가는 1회용 교통카드 1장 사기": "ソウル駅から江南までの1回用交通カードを1枚買う",
+    "명동까지 가는 1회용 교통카드 2장 사기": "明洞までの1回用交通カードを2枚買う",
+    "교통카드에 10,000원 충전하기": "交通カードに10,000ウォンをチャージする",
+    "다 쓴 1회용 교통카드로 보증금 500원 돌려받기": "使った1回用交通カードで保証金500ウォンを受け取る",
+    "도착역": "到着駅",
+    "충전 금액": "チャージ金額",
+    "연습용 화면이에요. 실제로 돈이 나가지 않아요.": "練習用の画面です。実際にお金はかかりません。",
+    "도착역을 골라 주세요": "到着駅を選んでください",
+    "호선": "路線",
+    "요금은 연습용 예시예요.": "料金は練習用の例です。",
+    "내릴 역을 골라 보세요": "降りる駅を選んでください",
+    "몇 장 살까요?": "何枚買いますか?",
+    "장수": "枚数",
+    "요금": "運賃",
+    "보증금": "保証金",
+    "보증금 500원은 다 타고 나서 보증금 환급기에서 돌려받아요.": "保証金500ウォンは、乗り終わったあと保証金払い戻し機で戻ってきます。",
+    "장수를 확인하고 '다음'을 눌러 보세요": "枚数を確認して「次へ」を押してください",
+    "카드를 읽었어요": "カードを読み取りました",
+    "카드를 읽고 있어요": "カードを読み取っています",
+    "교통카드를 올려 주세요": "交通カードを置いてください",
+    "카드를 떼지 말고 기다려 주세요": "カードを離さずにお待ちください",
+    "아래 카드 그림을 누르면 카드 올리는 곳에 올라가요": "下のカードの絵を押すと、カードを置く場所に置かれます",
+    "카드 올리는 곳": "カードを置く場所",
+    "교통카드 올리기": "交通カードを置く",
+    "교통카드": "交通カード",
+    "연습용 카드예요. 진짜 카드 정보는 읽지 않아요.": "練習用のカードです。本物のカード情報は読み取りません。",
+    "카드 그림을 눌러 카드를 올려 보세요": "カードの絵を押してカードを置いてください",
+    "카드를 읽고 있어요. 잠시 기다려 주세요": "カードを読み取っています。少々お待ちください",
+    "잔액을 확인하고 '다음'을 눌러 보세요": "残高を確認して「次へ」を押してください",
+    "충전할 금액을 골라 주세요": "チャージする金額を選んでください",
+    "충전한 돈은 탈 때마다 요금만큼 빠져나가요.": "チャージしたお金は、乗るたびに運賃の分だけ引かれます。",
+    "충전할 금액을 골라 보세요": "チャージする金額を選んでください",
+    "충전하고 있어요": "チャージしています",
+    "1회용 교통카드를 만들고 있어요": "1回用交通カードを発行しています",
+    "현금을 넣어 주세요": "現金を入れてください",
+    "충전이 끝날 때까지 카드를 떼지 마세요": "チャージが終わるまでカードを離さないでください",
+    "원": "ウォン",
+    "넣은 돈": "入れたお金",
+    "거스름돈": "おつり",
+    "남은 돈": "残り",
+    "다 쓴 1회용 교통카드를 넣어 주세요": "使った1回用交通カードを入れてください",
+    "카드를 확인하고 있어요": "カードを確認しています",
+    "실제로는 개찰구 근처에 있는 '보증금 환급기'라는 작은 기계에서 해요.": "実際には、改札の近くにある「保証金払い戻し機」という小さな機械で行います。",
+    "1회용 교통카드 넣기": "1回用交通カードを入れる",
+    "충전 전 잔액": "チャージ前の残高",
+    "충전한 금액": "チャージした金額",
+    "지금 잔액": "現在の残高",
+    "보증금 500원이 나왔어요": "保証金500ウォンが出てきました",
+    // 지하철: 결제 방법·개찰구
+    "현금": "現金",
+    "개찰구 근처에서 보증금 환급기를 찾아요": "改札の近くで保証金払い戻し機を探します",
+    "다 쓴 카드를 넣으면 보증금 500원이 나와요": "使ったカードを入れると保証金500ウォンが出てきます",
+    "보증금 환급은 처음 화면의 '보증금 환급'에서 연습해 볼 수 있어요": "保証金の払い戻しは、最初の画面の「保証金の払い戻し」で練習できます",
+    "시청까지 가는 1회용 교통카드 1장을 카드로 사기": "市庁までの1回用交通カードを1枚、カードで買う",
+    "결제 방법": "支払い方法",
+    "새 발매기는 카드도 받아요. 오래된 발매기는 현금만 받기도 해요.": "新しい券売機はカードも使えます。古い券売機は現金しか使えないこともあります。",
+    "현금이나 카드 중에 골라 보세요": "現金かカードを選んでください",
+    "잔액이 기본요금보다 적어서 개찰구가 열리지 않아요. 충전해 주세요": "残高が基本運賃より少ないので、改札が開きません。チャージしてください",
+    "교통카드 충전은 현금만 받아요. 지폐 그림을 누르면 지폐가 들어가요.": "交通カードのチャージは現金のみです。紙幣の絵を押すと紙幣が入ります。",
+    "지폐 그림을 누르면 지폐가 들어가요.": "紙幣の絵を押すと紙幣が入ります。",
+    "다 쓴 1회용 교통카드는 '보증금 환급기'에 넣으면 보증금 500원을 돌려받아요": "使った1回用交通カードは「保証金払い戻し機」に入れると、保証金500ウォンが戻ります",
+    "충전한 카드로 개찰구를 지나갔어요": "チャージしたカードで改札を通りました",
+    "개찰구에서 낸 기본요금": "改札で引かれた基本運賃",
+    "잔액을 확인해 보세요": "残高を確認してみましょう",
+    "보증금 환급기에서 500원을 돌려받아요": "保証金払い戻し機で500ウォンを受け取ります",
+    "문이 열렸어요. 지나가세요": "ゲートが開きました。通ってください",
+    "개찰구에 카드를 대 주세요": "改札にカードをタッチしてください",
+    "1회용 교통카드를 챙겼어요. 개찰구로 가요": "1回用交通カードを受け取りました。改札へ行きましょう",
+    "충전한 교통카드로 개찰구를 지나가 봐요": "チャージした交通カードで改札を通ってみましょう",
+    "들어갈 때 카드를 댔어요. 나갈 때도 대야 해요": "入るときにタッチしました。出るときもタッチが必要です",
+    "문이 열렸어요. 밖으로 나가세요": "ゲートが開きました。外に出てください",
+    "나갈 때도 카드를 단말기에 대요": "出るときもカードを読み取り機にタッチします",
+    "카드를 대 주세요": "カードをタッチしてください",
+    "안녕히 가세요": "お気をつけて",
+    "들어가세요": "お入りください",
+    "카드 대는 곳": "タッチ部",
+    "지나가기": "通る",
+    "나가기": "出る",
+    "카드 그림을 눌러 개찰구에 대 보세요": "カードの絵を押して改札にタッチしてください",
+    "문이 열렸어요. '지나가기'를 눌러 보세요": "ゲートが開きました。「通る」を押してください",
+    "문이 열렸어요. '나가기'를 눌러 보세요": "ゲートが開きました。「出る」を押してください",
+    "결제는 이미 끝났어요. 개찰구를 지나가 보세요": "支払いはもう終わっています。改札を通ってみましょう",
+    "카드를 단말기에 대기": "カードを読み取り機にタッチする",
   },
 });
 addLang('zh-Hans', {
@@ -2397,6 +2727,23 @@ addLang('zh-Hans', {
     dPeople: (w, g) => `人数选了“${g}”,而不是“${w}”`,
     dWindow: () => '您没有选择靠窗座位',
     dTogether: () => '您没有选择相邻的座位',
+    // 지하철
+    subHere: st => `当前车站: ${st}`,
+    subFare: w => `票价 ${w}`,
+    subRoute: (a, b) => `${a} → ${b}`,
+    timesN: (w, n) => `${w} × ${n}`,
+    balanceNow: w => `当前余额 ${w}`,
+    cashLeft: w => `还差${w}。请点纸币图放入纸币`,
+    cashBack: w => `已退还放入的${w}`,
+    billAria: w => `放入${w}纸币`,
+    changeOut: w => `请拿好找零${w}`,
+    maxTickets: n => `一次最多可以买${n}张`,
+    dTickets: (w, g) => `一次性交通卡买了${g}张,而不是${w}张`,
+    arrived: st => `到达${st.endsWith('站') ? st : st + '站'}了`,
+    arrivedTap: st => `到达${st.endsWith('站') ? st : st + '站'}了。出站时也要刷卡`,
+    cardChange: w => `拿好了一次性交通卡和找零${w},去闸机吧`,
+    gateBalance: w => `余额 ${w}`,
+    gateFare: (f, w) => `扣除基本票价${f}后,余额为${w}`,
     langBtn: () => '语言 · Language',
     langChanged: () => '已切换为简体中文',
     dOrderType: (w, g) => `您选了“${g}”,而不是“${w}”`,
@@ -3029,6 +3376,124 @@ addLang('zh-Hans', {
     "오늘 출발하는 표를 골라 보세요": "请选择今天出发的车票",
     "예매할 때 결제한 표예요": "预订时已付款",
     "다른 날 출발하는 표예요. 오늘 표를 골라 주세요": "这是其他日期出发的车票。请选择今天的车票",
+    // 지하철 교통카드
+    "지하철 교통카드": "地铁交通卡",
+    "1회용 교통카드 사기·충전": "购买单程票·充值",
+    "한빛지하철": "韩光地铁",
+    "1회용 교통카드": "一次性交通卡",
+    "1회용 카드": "一次性卡",
+    "한 번 타는 표를 사요": "购买乘坐一次的车票",
+    "교통카드 충전": "交通卡充值",
+    "충전": "充值",
+    "내 교통카드에 돈을 넣어요": "给自己的交通卡充钱",
+    "보증금 환급": "退还押金",
+    "다 쓴 카드로 500원 받기": "用过的卡退回500韩元",
+    "1호선": "1号线",
+    "2호선": "2号线",
+    "3호선": "3号线",
+    "4호선": "4号线",
+    "시청": "市厅",
+    "종각": "钟阁",
+    "종로3가": "钟路3街",
+    "동대문": "东大门",
+    "청량리": "清凉里",
+    "을지로입구": "乙支路入口",
+    "신촌": "新村",
+    "강남": "江南",
+    "사당": "舍堂",
+    "경복궁": "景福宫",
+    "안국": "安国",
+    "고속터미널": "高速巴士客运站",
+    "회현": "会贤",
+    "혜화": "惠化",
+    "탈 때와 내릴 때 개찰구 단말기에 카드를 대요": "上车和下车时都在闸机读卡器上刷卡",
+    "버스에서 내릴 때도 카드를 대야 갈아탈 때 할인을 받아요": "下公交车时也要刷卡,换乘才有优惠",
+    "잔액이 모자라면 개찰구가 열리지 않아요. 그때는 다시 충전해요": "余额不足时闸机不会打开。这时请再充值",
+    "동전 나오는 곳에서 500원을 꺼내요": "从硬币出口取出500韩元",
+    "다 쓴 카드는 기계가 가져가요": "用过的卡会被机器收回",
+    "서울역에서 강남까지 가는 1회용 교통카드 1장 사기": "购买1张从首尔站到江南的一次性交通卡",
+    "명동까지 가는 1회용 교통카드 2장 사기": "购买2张到明洞的一次性交通卡",
+    "교통카드에 10,000원 충전하기": "给交通卡充值10,000韩元",
+    "다 쓴 1회용 교통카드로 보증금 500원 돌려받기": "退回用过的一次性交通卡,拿回500韩元押金",
+    "도착역": "到达站",
+    "충전 금액": "充值金额",
+    "연습용 화면이에요. 실제로 돈이 나가지 않아요.": "这是练习画面,不会真的花钱。",
+    "도착역을 골라 주세요": "请选择到达站",
+    "호선": "线路",
+    "요금은 연습용 예시예요.": "票价是练习用的示例。",
+    "내릴 역을 골라 보세요": "请选择要下车的车站",
+    "몇 장 살까요?": "要买几张?",
+    "장수": "张数",
+    "요금": "票价",
+    "보증금": "押金",
+    "보증금 500원은 다 타고 나서 보증금 환급기에서 돌려받아요.": "500韩元押金可在乘车后到押金退还机拿回。",
+    "장수를 확인하고 '다음'을 눌러 보세요": "确认张数后请点“下一步”",
+    "카드를 읽었어요": "已读取卡片",
+    "카드를 읽고 있어요": "正在读取卡片",
+    "교통카드를 올려 주세요": "请放上交通卡",
+    "카드를 떼지 말고 기다려 주세요": "请不要拿开卡片,稍等一下",
+    "아래 카드 그림을 누르면 카드 올리는 곳에 올라가요": "点下面的卡片图,卡片就会放到读卡处",
+    "카드 올리는 곳": "读卡处",
+    "교통카드 올리기": "放上交通卡",
+    "교통카드": "交通卡",
+    "연습용 카드예요. 진짜 카드 정보는 읽지 않아요.": "这是练习用的卡,不会读取真实的卡片信息。",
+    "카드 그림을 눌러 카드를 올려 보세요": "请点卡片图放上卡片",
+    "카드를 읽고 있어요. 잠시 기다려 주세요": "正在读取卡片,请稍等",
+    "잔액을 확인하고 '다음'을 눌러 보세요": "确认余额后请点“下一步”",
+    "충전할 금액을 골라 주세요": "请选择充值金额",
+    "충전한 돈은 탈 때마다 요금만큼 빠져나가요.": "每次乘车都会从余额中扣除车费。",
+    "충전할 금액을 골라 보세요": "请选择充值金额",
+    "충전하고 있어요": "正在充值",
+    "1회용 교통카드를 만들고 있어요": "正在制作一次性交通卡",
+    "현금을 넣어 주세요": "请放入现金",
+    "충전이 끝날 때까지 카드를 떼지 마세요": "充值完成前请不要拿开卡片",
+    "원": "韩元",
+    "넣은 돈": "已放入",
+    "거스름돈": "找零",
+    "남은 돈": "还差",
+    "다 쓴 1회용 교통카드를 넣어 주세요": "请放入用过的一次性交通卡",
+    "카드를 확인하고 있어요": "正在确认卡片",
+    "실제로는 개찰구 근처에 있는 '보증금 환급기'라는 작은 기계에서 해요.": "实际上是在闸机附近一台叫“押金退还机”的小机器上办理。",
+    "1회용 교통카드 넣기": "放入一次性交通卡",
+    "충전 전 잔액": "充值前余额",
+    "충전한 금액": "已充值",
+    "지금 잔액": "当前余额",
+    "보증금 500원이 나왔어요": "500韩元押金退出来了",
+    // 지하철: 결제 방법·개찰구
+    "현금": "现金",
+    "개찰구 근처에서 보증금 환급기를 찾아요": "在闸机附近找到押金退还机",
+    "다 쓴 카드를 넣으면 보증금 500원이 나와요": "放入用过的卡,就会退出500韩元押金",
+    "보증금 환급은 처음 화면의 '보증금 환급'에서 연습해 볼 수 있어요": "可以在开始画面的“退还押金”练习退押金",
+    "시청까지 가는 1회용 교통카드 1장을 카드로 사기": "刷卡购买1张到市厅的一次性交通卡",
+    "결제 방법": "付款方式",
+    "새 발매기는 카드도 받아요. 오래된 발매기는 현금만 받기도 해요.": "新售票机也可以刷卡。有些旧售票机只收现金。",
+    "현금이나 카드 중에 골라 보세요": "请选择现金或刷卡",
+    "잔액이 기본요금보다 적어서 개찰구가 열리지 않아요. 충전해 주세요": "余额低于基本票价,闸机不会打开。请充值",
+    "교통카드 충전은 현금만 받아요. 지폐 그림을 누르면 지폐가 들어가요.": "交通卡充值只收现金。点纸币图就会放入纸币。",
+    "지폐 그림을 누르면 지폐가 들어가요.": "点纸币图就会放入纸币。",
+    "다 쓴 1회용 교통카드는 '보증금 환급기'에 넣으면 보증금 500원을 돌려받아요": "把用过的一次性交通卡放进“押金退还机”,就能拿回500韩元押金",
+    "충전한 카드로 개찰구를 지나갔어요": "用充值后的卡通过了闸机",
+    "개찰구에서 낸 기본요금": "闸机扣除的基本票价",
+    "잔액을 확인해 보세요": "请确认余额",
+    "보증금 환급기에서 500원을 돌려받아요": "在押金退还机拿回500韩元",
+    "문이 열렸어요. 지나가세요": "闸门开了,请通过",
+    "개찰구에 카드를 대 주세요": "请在闸机上刷卡",
+    "1회용 교통카드를 챙겼어요. 개찰구로 가요": "拿好一次性交通卡了,去闸机吧",
+    "충전한 교통카드로 개찰구를 지나가 봐요": "用充值后的交通卡通过闸机吧",
+    "들어갈 때 카드를 댔어요. 나갈 때도 대야 해요": "进站时刷了卡,出站时也要刷",
+    "문이 열렸어요. 밖으로 나가세요": "闸门开了,请出站",
+    "나갈 때도 카드를 단말기에 대요": "出站时也要在读卡器上刷卡",
+    "카드를 대 주세요": "请刷卡",
+    "안녕히 가세요": "再见",
+    "들어가세요": "请进站",
+    "카드 대는 곳": "刷卡处",
+    "지나가기": "通过",
+    "나가기": "出站",
+    "카드 그림을 눌러 개찰구에 대 보세요": "点卡片图,在闸机上刷卡",
+    "문이 열렸어요. '지나가기'를 눌러 보세요": "闸门开了。请点“通过”",
+    "문이 열렸어요. '나가기'를 눌러 보세요": "闸门开了。请点“出站”",
+    "결제는 이미 끝났어요. 개찰구를 지나가 보세요": "已经付过款了。请通过闸机",
+    "카드를 단말기에 대기": "在读卡器上刷卡",
   },
 });
 addLang('zh-Hant', {
@@ -3104,6 +3569,23 @@ addLang('zh-Hant', {
     dPeople: (w, g) => `人數選了「${g}」,而不是「${w}」`,
     dWindow: () => '您沒有選擇靠窗座位',
     dTogether: () => '您沒有選擇相鄰的座位',
+    // 지하철
+    subHere: st => `目前車站: ${st}`,
+    subFare: w => `票價 ${w}`,
+    subRoute: (a, b) => `${a} → ${b}`,
+    timesN: (w, n) => `${w} × ${n}`,
+    balanceNow: w => `目前餘額 ${w}`,
+    cashLeft: w => `還差${w}。請點紙鈔圖放入紙鈔`,
+    cashBack: w => `已退還放入的${w}`,
+    billAria: w => `放入${w}紙鈔`,
+    changeOut: w => `請拿好找零${w}`,
+    maxTickets: n => `一次最多可以買${n}張`,
+    dTickets: (w, g) => `一次性交通卡買了${g}張,而不是${w}張`,
+    arrived: st => `到達${st.endsWith('站') ? st : st + '站'}了`,
+    arrivedTap: st => `到達${st.endsWith('站') ? st : st + '站'}了。出站時也要刷卡`,
+    cardChange: w => `拿好了一次性交通卡和找零${w},去閘門吧`,
+    gateBalance: w => `餘額 ${w}`,
+    gateFare: (f, w) => `扣除基本票價${f}後,餘額為${w}`,
     langBtn: () => '語言 · Language',
     langChanged: () => '已切換為繁體中文',
     dOrderType: (w, g) => `您選了「${g}」,而不是「${w}」`,
@@ -3736,6 +4218,124 @@ addLang('zh-Hant', {
     "오늘 출발하는 표를 골라 보세요": "請選擇今天出發的車票",
     "예매할 때 결제한 표예요": "預訂時已付款",
     "다른 날 출발하는 표예요. 오늘 표를 골라 주세요": "這是其他日期出發的車票。請選擇今天的車票",
+    // 지하철 교통카드
+    "지하철 교통카드": "地鐵交通卡",
+    "1회용 교통카드 사기·충전": "購買單程票·儲值",
+    "한빛지하철": "韓光地鐵",
+    "1회용 교통카드": "一次性交通卡",
+    "1회용 카드": "一次性卡",
+    "한 번 타는 표를 사요": "購買搭乘一次的車票",
+    "교통카드 충전": "交通卡儲值",
+    "충전": "儲值",
+    "내 교통카드에 돈을 넣어요": "幫自己的交通卡儲值",
+    "보증금 환급": "退還押金",
+    "다 쓴 카드로 500원 받기": "用過的卡退回500韓元",
+    "1호선": "1號線",
+    "2호선": "2號線",
+    "3호선": "3號線",
+    "4호선": "4號線",
+    "시청": "市廳",
+    "종각": "鐘閣",
+    "종로3가": "鍾路3街",
+    "동대문": "東大門",
+    "청량리": "清涼里",
+    "을지로입구": "乙支路入口",
+    "신촌": "新村",
+    "강남": "江南",
+    "사당": "舍堂",
+    "경복궁": "景福宮",
+    "안국": "安國",
+    "고속터미널": "高速巴士客運站",
+    "회현": "會賢",
+    "혜화": "惠化",
+    "탈 때와 내릴 때 개찰구 단말기에 카드를 대요": "上車和下車時都在閘門感應器上刷卡",
+    "버스에서 내릴 때도 카드를 대야 갈아탈 때 할인을 받아요": "下公車時也要刷卡,轉乘才有優惠",
+    "잔액이 모자라면 개찰구가 열리지 않아요. 그때는 다시 충전해요": "餘額不足時閘門不會打開。這時請再儲值",
+    "동전 나오는 곳에서 500원을 꺼내요": "從硬幣出口取出500韓元",
+    "다 쓴 카드는 기계가 가져가요": "用過的卡會被機器收回",
+    "서울역에서 강남까지 가는 1회용 교통카드 1장 사기": "購買1張從首爾站到江南的一次性交通卡",
+    "명동까지 가는 1회용 교통카드 2장 사기": "購買2張到明洞的一次性交通卡",
+    "교통카드에 10,000원 충전하기": "幫交通卡儲值10,000韓元",
+    "다 쓴 1회용 교통카드로 보증금 500원 돌려받기": "退回用過的一次性交通卡,拿回500韓元押金",
+    "도착역": "到達站",
+    "충전 금액": "儲值金額",
+    "연습용 화면이에요. 실제로 돈이 나가지 않아요.": "這是練習畫面,不會真的花錢。",
+    "도착역을 골라 주세요": "請選擇到達站",
+    "호선": "路線",
+    "요금은 연습용 예시예요.": "票價是練習用的範例。",
+    "내릴 역을 골라 보세요": "請選擇要下車的車站",
+    "몇 장 살까요?": "要買幾張?",
+    "장수": "張數",
+    "요금": "票價",
+    "보증금": "押金",
+    "보증금 500원은 다 타고 나서 보증금 환급기에서 돌려받아요.": "500韓元押金可在搭乘後到押金退還機拿回。",
+    "장수를 확인하고 '다음'을 눌러 보세요": "確認張數後請點「下一步」",
+    "카드를 읽었어요": "已讀取卡片",
+    "카드를 읽고 있어요": "正在讀取卡片",
+    "교통카드를 올려 주세요": "請放上交通卡",
+    "카드를 떼지 말고 기다려 주세요": "請不要拿開卡片,稍等一下",
+    "아래 카드 그림을 누르면 카드 올리는 곳에 올라가요": "點下面的卡片圖,卡片就會放到感應處",
+    "카드 올리는 곳": "感應處",
+    "교통카드 올리기": "放上交通卡",
+    "교통카드": "交通卡",
+    "연습용 카드예요. 진짜 카드 정보는 읽지 않아요.": "這是練習用的卡,不會讀取真實的卡片資訊。",
+    "카드 그림을 눌러 카드를 올려 보세요": "請點卡片圖放上卡片",
+    "카드를 읽고 있어요. 잠시 기다려 주세요": "正在讀取卡片,請稍等",
+    "잔액을 확인하고 '다음'을 눌러 보세요": "確認餘額後請點「下一步」",
+    "충전할 금액을 골라 주세요": "請選擇儲值金額",
+    "충전한 돈은 탈 때마다 요금만큼 빠져나가요.": "每次搭乘都會從餘額中扣除車資。",
+    "충전할 금액을 골라 보세요": "請選擇儲值金額",
+    "충전하고 있어요": "正在儲值",
+    "1회용 교통카드를 만들고 있어요": "正在製作一次性交通卡",
+    "현금을 넣어 주세요": "請放入現金",
+    "충전이 끝날 때까지 카드를 떼지 마세요": "儲值完成前請不要拿開卡片",
+    "원": "韓元",
+    "넣은 돈": "已放入",
+    "거스름돈": "找零",
+    "남은 돈": "還差",
+    "다 쓴 1회용 교통카드를 넣어 주세요": "請放入用過的一次性交通卡",
+    "카드를 확인하고 있어요": "正在確認卡片",
+    "실제로는 개찰구 근처에 있는 '보증금 환급기'라는 작은 기계에서 해요.": "實際上是在閘門附近一台叫「押金退還機」的小機器上辦理。",
+    "1회용 교통카드 넣기": "放入一次性交通卡",
+    "충전 전 잔액": "儲值前餘額",
+    "충전한 금액": "已儲值",
+    "지금 잔액": "目前餘額",
+    "보증금 500원이 나왔어요": "500韓元押金退出來了",
+    // 지하철: 결제 방법·개찰구
+    "현금": "現金",
+    "개찰구 근처에서 보증금 환급기를 찾아요": "在閘門附近找到押金退還機",
+    "다 쓴 카드를 넣으면 보증금 500원이 나와요": "放入用過的卡,就會退出500韓元押金",
+    "보증금 환급은 처음 화면의 '보증금 환급'에서 연습해 볼 수 있어요": "可以在開始畫面的「退還押金」練習退押金",
+    "시청까지 가는 1회용 교통카드 1장을 카드로 사기": "刷卡購買1張到市廳的一次性交通卡",
+    "결제 방법": "付款方式",
+    "새 발매기는 카드도 받아요. 오래된 발매기는 현금만 받기도 해요.": "新售票機也可以刷卡。有些舊售票機只收現金。",
+    "현금이나 카드 중에 골라 보세요": "請選擇現金或刷卡",
+    "잔액이 기본요금보다 적어서 개찰구가 열리지 않아요. 충전해 주세요": "餘額低於基本票價,閘門不會打開。請儲值",
+    "교통카드 충전은 현금만 받아요. 지폐 그림을 누르면 지폐가 들어가요.": "交通卡儲值只收現金。點紙鈔圖就會放入紙鈔。",
+    "지폐 그림을 누르면 지폐가 들어가요.": "點紙鈔圖就會放入紙鈔。",
+    "다 쓴 1회용 교통카드는 '보증금 환급기'에 넣으면 보증금 500원을 돌려받아요": "把用過的一次性交通卡放進「押金退還機」,就能拿回500韓元押金",
+    "충전한 카드로 개찰구를 지나갔어요": "用儲值後的卡通過了閘門",
+    "개찰구에서 낸 기본요금": "閘門扣除的基本票價",
+    "잔액을 확인해 보세요": "請確認餘額",
+    "보증금 환급기에서 500원을 돌려받아요": "在押金退還機拿回500韓元",
+    "문이 열렸어요. 지나가세요": "閘門開了,請通過",
+    "개찰구에 카드를 대 주세요": "請在閘門上刷卡",
+    "1회용 교통카드를 챙겼어요. 개찰구로 가요": "拿好一次性交通卡了,去閘門吧",
+    "충전한 교통카드로 개찰구를 지나가 봐요": "用儲值後的交通卡通過閘門吧",
+    "들어갈 때 카드를 댔어요. 나갈 때도 대야 해요": "進站時刷了卡,出站時也要刷",
+    "문이 열렸어요. 밖으로 나가세요": "閘門開了,請出站",
+    "나갈 때도 카드를 단말기에 대요": "出站時也要在感應器上刷卡",
+    "카드를 대 주세요": "請刷卡",
+    "안녕히 가세요": "再見",
+    "들어가세요": "請進站",
+    "카드 대는 곳": "感應區",
+    "지나가기": "通過",
+    "나가기": "出站",
+    "카드 그림을 눌러 개찰구에 대 보세요": "點卡片圖,在閘門上刷卡",
+    "문이 열렸어요. '지나가기'를 눌러 보세요": "閘門開了。請點「通過」",
+    "문이 열렸어요. '나가기'를 눌러 보세요": "閘門開了。請點「出站」",
+    "결제는 이미 끝났어요. 개찰구를 지나가 보세요": "已經付過款了。請通過閘門",
+    "카드를 단말기에 대기": "在感應器上刷卡",
   },
 });
 /* @@LANG-PACKS@@ */
@@ -3783,6 +4383,12 @@ const flagSVG = code => `<svg viewBox="0 0 60 40" aria-hidden="true" focusable="
 const certFeeDue = s => certFee(s) > 0;
 const busBuy = s => s.busMode !== 'booked';
 const busBooked = s => s.busMode === 'booked';
+const subSingle = s => s.subMode === 'single';
+const subCharge = s => s.subMode === 'charge';
+const subPays = s => s.subMode === 'single' || s.subMode === 'charge';
+const subCashPay = s => s.subMode === 'charge' || (s.subMode === 'single' && s.subPay === 'cash');
+const subCardPay = s => s.subMode === 'single' && s.subPay === 'card';
+const subRefund = s => s.subMode === 'refund';
 const PRACTICES = {
   cafe: {
     title: '카페 주문', emoji: '☕', desc: '커피·디저트 주문하기', store: 'cafe',
@@ -3813,6 +4419,17 @@ const PRACTICES = {
       { screen: 'busSeat', when: busBuy }, { screen: 'busConfirm', when: busBuy },
       { screen: 'pay', when: busBuy }, { screen: 'insert', when: busBuy },
       { screen: 'busLookup', when: busBooked }, { screen: 'busBooking', when: busBooked }, 'busTicket'],
+  },
+  subway: {
+    title: '지하철 교통카드', emoji: '🚇', desc: '1회용 교통카드 사기·충전', subway: true,
+    // 1회용 교통카드: 도착역 → 장수 → 결제 방법(현금·카드) → 개찰구 들어가기 → 개찰구 나가기
+    // 충전: 카드 올리기 → 금액 → 현금 → 개찰구 들어가기 / 보증금 환급: 카드 넣기
+    flow: ['subStart',
+      { screen: 'subDest', when: subSingle }, { screen: 'subQty', when: subSingle }, { screen: 'subPayWay', when: subSingle },
+      { screen: 'subCard', when: subCharge }, { screen: 'subAmount', when: subCharge },
+      { screen: 'subCash', when: subCashPay }, { screen: 'insert', when: subCardPay },
+      { screen: 'subGateIn', when: subPays }, { screen: 'subGateOut', when: subSingle },
+      { screen: 'subRefund', when: subRefund }, 'subDone'],
   },
 };
 
@@ -4190,6 +4807,55 @@ const BUS = {
   ticketSteps: ['{platform} 승차장으로 가요. 바닥이나 기둥에 번호가 적혀 있어요', '출발 10분 전까지 승차장에서 기다려요', '큰 짐은 버스 아래 짐칸에 실어요. 짐표를 주면 잘 챙겨요', '버스에 탈 때 기사님께 승차권을 보여 줘요'],
 };
 
+/* ----- 지하철 교통카드 발매기 (가상 '한빛지하철', 역 이름과 호선은 실제 서울 지하철) ----- */
+const SUBWAY = {
+  name: '한빛지하철',
+  emoji: '🚇',
+  theme: { brand: '#065F46', action: '#047857', press: '#065F46', soft: '#E7F6EF', pulse: '4, 120, 87' },
+  here: '서울역', // 발매기가 있는 역
+  menu: [
+    { id: 'single', label: '1회용 교통카드', badge: '1회용 카드', emoji: '🎫', sub: '한 번 타는 표를 사요' },
+    { id: 'charge', label: '교통카드 충전', badge: '충전', emoji: '💳', sub: '내 교통카드에 돈을 넣어요' },
+    { id: 'refund', label: '보증금 환급', badge: '보증금 환급', emoji: '🪙', sub: '다 쓴 카드로 500원 받기' },
+  ],
+  lines: [
+    { id: '1', label: '1호선', color: '#0052A4' },
+    { id: '2', label: '2호선', color: '#00A84D' },
+    { id: '3', label: '3호선', color: '#EF7C1C' },
+    { id: '4', label: '4호선', color: '#00A5DE' },
+  ],
+  // fare: 서울역에서 가는 1회용 요금(연습용 예시. 2025년 6월부터 기본 1,650원), lines: 그 역을 지나는 호선(1~4호선만 표시)
+  stations: [
+    { id: 'cityhall', label: '시청', lines: ['1', '2'], fare: 1650 },
+    { id: 'jonggak', label: '종각', lines: ['1'], fare: 1650 },
+    { id: 'jongno3', label: '종로3가', lines: ['1', '3'], fare: 1650 },
+    { id: 'dongdaemun', label: '동대문', lines: ['1', '4'], fare: 1650 },
+    { id: 'cheongnyangni', label: '청량리', lines: ['1'], fare: 1650 },
+    { id: 'euljiro', label: '을지로입구', lines: ['2'], fare: 1650 },
+    { id: 'hongdae', label: '홍대입구', lines: ['2'], fare: 1650 },
+    { id: 'sinchon', label: '신촌', lines: ['2'], fare: 1650 },
+    { id: 'gangnam', label: '강남', lines: ['2'], fare: 1750 },
+    { id: 'jamsil', label: '잠실', lines: ['2'], fare: 1850 },
+    { id: 'sadang', label: '사당', lines: ['2', '4'], fare: 1750 },
+    { id: 'gyeongbokgung', label: '경복궁', lines: ['3'], fare: 1650 },
+    { id: 'anguk', label: '안국', lines: ['3'], fare: 1650 },
+    { id: 'expressbus', label: '고속터미널', lines: ['3'], fare: 1750 },
+    { id: 'hoehyeon', label: '회현', lines: ['4'], fare: 1650 },
+    { id: 'myeongdong', label: '명동', lines: ['4'], fare: 1650 },
+    { id: 'hyehwa', label: '혜화', lines: ['4'], fare: 1650 },
+  ],
+  deposit: 500, // 1회용 교통카드 보증금 (내린 뒤 환급기에서 돌려받음)
+  maxTickets: 5,
+  balance: 800, // 연습용 교통카드에 남아 있는 돈 (기본요금보다 적어서 충전이 필요함)
+  cardFare: 1550, // 교통카드로 탈 때 개찰구에서 빠지는 기본요금 (연습용 예시)
+  payWays: [{ id: 'cash', label: '현금', emoji: '💵' }, { id: 'card', label: '카드 결제', emoji: '💳' }],
+  chargeAmounts: [1000, 3000, 5000, 10000, 20000, 30000],
+  bills: [1000, 5000, 10000],
+  singleSteps: ['개찰구 근처에서 보증금 환급기를 찾아요', '다 쓴 카드를 넣으면 보증금 500원이 나와요', "보증금 환급은 처음 화면의 '보증금 환급'에서 연습해 볼 수 있어요"],
+  chargeSteps: ['탈 때와 내릴 때 개찰구 단말기에 카드를 대요', '버스에서 내릴 때도 카드를 대야 갈아탈 때 할인을 받아요', '잔액이 모자라면 개찰구가 열리지 않아요. 그때는 다시 충전해요'],
+  refundSteps: ['동전 나오는 곳에서 500원을 꺼내요', '다 쓴 카드는 기계가 가져가요'],
+};
+
 /* =====================================================================
    4) 미션 — practice: 어느 연습인지, expect: 맞았는지 볼 내용
    ===================================================================== */
@@ -4230,6 +4896,16 @@ const MISSIONS = [
     expect: { dest: 'myeongdong', adults: 2, children: 0, together: true } },
   { id: 'bus-booked', practice: 'airportbus', text: '미리 예매한 공항버스 표를 키오스크에서 뽑기',
     expect: { mode: 'booked' } },
+  { id: 'sub-gangnam', practice: 'subway', text: '서울역에서 강남까지 가는 1회용 교통카드 1장 사기',
+    expect: { mode: 'single', dest: 'gangnam', qty: 1 } },
+  { id: 'sub-myeongdong-two', practice: 'subway', text: '명동까지 가는 1회용 교통카드 2장 사기',
+    expect: { mode: 'single', dest: 'myeongdong', qty: 2 } },
+  { id: 'sub-cardpay', practice: 'subway', text: '시청까지 가는 1회용 교통카드 1장을 카드로 사기',
+    expect: { mode: 'single', dest: 'cityhall', qty: 1, pay: 'card' } },
+  { id: 'sub-charge', practice: 'subway', text: '교통카드에 10,000원 충전하기',
+    expect: { mode: 'charge', amount: 10000 } },
+  { id: 'sub-refund', practice: 'subway', text: '다 쓴 1회용 교통카드로 보증금 500원 돌려받기',
+    expect: { mode: 'refund' } },
 ];
 
 /* =====================================================================
@@ -4433,7 +5109,7 @@ const won = n => msg('won', n);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const P = () => PRACTICES[app.practice];
-const place = () => store || (app.practice && P().bus ? BUS : HOSPITAL);
+const place = () => store || (app.practice && P().bus ? BUS : app.practice && P().subway ? SUBWAY : HOSPITAL);
 const currentMission = () => (app.mission ? MISSIONS.find(m => m.id === app.mission) : null);
 const missionExpect = () => (currentMission() || { expect: {} }).expect;
 const labelOf = (list, id) => { const x = list.find(o => o.id === id); return x ? x.label : '고르지 않음'; };
@@ -4567,6 +5243,7 @@ function certFee(s = state) {
 function totalDue() {
   if (store) return cartTotal();
   if (P().bus) return busTotal();
+  if (P().subway) return subDue();
   return P().hospital === 'certificate' ? certFee() : billTotal();
 }
 
@@ -4605,6 +5282,21 @@ function bookingSlot(b) {
   const s = busSlots(b.dest)[b.slot];
   return { ...s, date: new Date(s.date.getTime() + b.days * 86400000) };
 }
+
+/* ----- 지하철 계산 ----- */
+const findStation = id => SUBWAY.stations.find(x => x.id === id);
+const findLine = id => SUBWAY.lines.find(l => l.id === id);
+const subWantMode = () => missionExpect().mode || 'single';
+function subDue() {
+  if (state.subMode === 'single') {
+    const st = findStation(state.subDest);
+    return st ? (st.fare + SUBWAY.deposit) * state.subQty : 0;
+  }
+  if (state.subMode === 'charge') return state.chargeAmount || 0;
+  return 0;
+}
+const subBalanceAfter = () => SUBWAY.balance + (state.chargeAmount || 0) - SUBWAY.cardFare;
+const lineDot = id => `<span class="line-dot" style="background:${findLine(id).color}">${id}</span>`;
 const busPeople = () => state.adults + state.children;
 const busTotal = () => {
   const d = findDest(state.busDest);
@@ -4618,7 +5310,10 @@ function durationText(min) {
   const m = min % 60;
   return msg('duration', h, m);
 }
-const isLocked = () => state.screen === 'insert' && state.payStep !== 'ready';
+const isLocked = () => (state.screen === 'insert' && state.payStep !== 'ready')
+  || (state.screen === 'subCash' && state.cashStep !== 'ready')
+  || (state.screen === 'subCard' && state.cardStep === 'reading')
+  || (state.screen === 'subRefund' && state.refundStep !== 'ready');
 
 /* ----- 미션 비교 ----- */
 const sameList = (a, b) => [...a].sort().join(',') === [...b].sort().join(',');
@@ -4687,7 +5382,8 @@ function saveDone() {
 }
 
 function evaluateMission(m) {
-  const diffs = store ? evaluateOrder(m.expect) : P().bus ? evaluateBus(m.expect) : evaluateHospital(m.expect);
+  const diffs = store ? evaluateOrder(m.expect) : P().bus ? evaluateBus(m.expect)
+    : P().subway ? evaluateSubway(m.expect) : evaluateHospital(m.expect);
   const seen = new Set();
   return diffs.filter(d => { const key = JSON.stringify(d); if (seen.has(key)) return false; seen.add(key); return true; });
 }
@@ -4780,12 +5476,32 @@ function evaluateBus(ex) {
   return out;
 }
 
+function evaluateSubway(ex) {
+  const out = [];
+  const wantMode = ex.mode || 'single';
+  if (state.subMode !== wantMode) {
+    out.push({ k: 'pick', what: '메뉴', w: labelOf(SUBWAY.menu, wantMode), g: labelOf(SUBWAY.menu, state.subMode) });
+    return out;
+  }
+  if (ex.dest && state.subDest !== ex.dest) {
+    out.push({ k: 'pick', what: '도착역', w: labelOf(SUBWAY.stations, ex.dest), g: labelOf(SUBWAY.stations, state.subDest) });
+  }
+  if (ex.qty && state.subQty !== ex.qty) out.push({ k: 'tickets', w: ex.qty, g: state.subQty });
+  if (ex.pay && state.subPay !== ex.pay) {
+    out.push({ k: 'pick', what: '결제 방법', w: labelOf(SUBWAY.payWays, ex.pay), g: labelOf(SUBWAY.payWays, state.subPay) });
+  }
+  if (ex.amount && state.chargeAmount !== ex.amount) out.push({ k: 'chargeAmt', w: ex.amount, g: state.chargeAmount });
+  return out;
+}
+
 function fmtDiff(x) {
   switch (x.k) {
     case 'busFirst': return msg('dBusFirst');
     case 'people': return msg('dPeople', msg('peopleLine', x.wa, x.wc), msg('peopleLine', x.ga, x.gc));
     case 'window': return msg('dWindow');
     case 'together': return msg('dTogether');
+    case 'tickets': return msg('dTickets', x.w, x.g);
+    case 'chargeAmt': return msg('dPick', T('충전 금액'), won(x.w), won(x.g));
     case 'orderType': return msg('dOrderType', T(x.w), T(x.g));
     case 'missing': return msg('dMissing', T(x.n));
     case 'choice': return msg('dChoice', T(x.n), T(x.l));
@@ -5977,7 +6693,332 @@ const SCREENS = {
     guide: () => msg('busGo', findDest(state.busDest).platform),
     help: () => '[data-action="restart"]',
   },
+
+  /* ---------- 지하철 교통카드 발매기 ---------- */
+  subStart: {
+    render: () => `
+      <div class="screen center" data-scroll="subStart">
+        <div class="center-inner">
+          <h2 class="title">${T('원하시는 메뉴를<br>골라 주세요')}</h2>
+          <div class="hosp-menu">
+            ${SUBWAY.menu.map(m => `
+              <button class="hosp-btn${m.id === subWantMode() ? ' hint' : ''}" data-action="smenu" data-arg="${m.id}">
+                <span class="hosp-emoji" aria-hidden="true">${m.emoji}</span>
+                <span class="hosp-text"><b>${E(m.label)}</b><span>${E(m.sub)}</span></span>
+              </button>`).join('')}
+          </div>
+          <p class="note">${E('연습용 화면이에요. 실제로 돈이 나가지 않아요.')}</p>
+          ${kioskLangBtn()}
+        </div>
+      </div>`,
+    guide: () => msg('tap', T(labelOf(SUBWAY.menu, subWantMode()))),
+    help: () => `[data-action="smenu"][data-arg="${subWantMode()}"]`,
+  },
+
+  subDest: {
+    render: () => {
+      const list = SUBWAY.stations.filter(x => x.lines.includes(state.subLine));
+      return `
+      <div class="screen">
+        <h2 class="title pad">${E('도착역을 골라 주세요')}</h2>
+        <p class="sub bus-sub">${esc(msg('subHere', T(SUBWAY.here)))}</p>
+        <div class="tabs" aria-label="${E('호선')}">
+          ${SUBWAY.lines.map(l => `
+            <button class="tab line-tab" style="--line:${l.color}" aria-pressed="${l.id === state.subLine}" data-action="sub-line" data-arg="${l.id}">${E(l.label)}</button>`).join('')}
+        </div>
+        <div class="scroll-body" data-scroll="subDest-${state.subLine}">
+          <div class="choice-list">
+            ${list.map(x => `
+              <button class="choice-card station-card" data-action="sub-dest" data-arg="${x.id}">
+                <span class="line-dots" aria-hidden="true">${x.lines.map(lineDot).join('')}</span>
+                <span class="choice-text"><b>${E(x.label)}</b><span class="keep">${esc(msg('subFare', won(x.fare)))}</span></span>
+              </button>`).join('')}
+          </div>
+          <p class="note">${E('요금은 연습용 예시예요.')}</p>
+        </div>
+      </div>`;
+    },
+    guide: () => T('내릴 역을 골라 보세요'),
+    help: ex => {
+      const want = findStation(ex.dest) || SUBWAY.stations[0];
+      if (!want.lines.includes(state.subLine)) return `[data-action="sub-line"][data-arg="${want.lines[0]}"]`;
+      return `[data-action="sub-dest"][data-arg="${want.id}"]`;
+    },
+  },
+
+  subQty: {
+    render: () => {
+      const st = findStation(state.subDest);
+      const n = state.subQty;
+      return `
+      <div class="screen">
+        <h2 class="title pad">${E('몇 장 살까요?')}</h2>
+        <p class="sub bus-sub">${esc(msg('subRoute', T(SUBWAY.here), T(st.label)))}</p>
+        <div class="scroll-body" data-scroll="subQty">
+          <div class="qty-row people-row">
+            <span class="people-label"><b>${E('장수')}</b></span>
+            ${qtyHTML(n, 'sub-dec', 'sub-inc', 'qty', T('1회용 교통카드'), SUBWAY.maxTickets)}
+          </div>
+          <div class="info-table">
+            <div class="info-row"><span>${E('요금')}</span><b>${esc(msg('timesN', won(st.fare), n))}</b></div>
+            <div class="info-row"><span>${E('보증금')}</span><b>${esc(msg('timesN', won(SUBWAY.deposit), n))}</b></div>
+            <div class="info-row total"><span>${E('결제할 금액')}</span><b>${won(subDue())}</b></div>
+          </div>
+          <p class="note">${E('보증금 500원은 다 타고 나서 보증금 환급기에서 돌려받아요.')}</p>
+        </div>
+        ${footNext('다음', 'sub-qty-next')}
+      </div>`;
+    },
+    guide: () => T("장수를 확인하고 '다음'을 눌러 보세요"),
+    help: ex => {
+      const want = ex.qty || state.subQty;
+      if (state.subQty < want) return '[data-action="sub-inc"]';
+      if (state.subQty > want) return '[data-action="sub-dec"]';
+      return '[data-action="sub-qty-next"]';
+    },
+  },
+
+  subPayWay: {
+    render: () => `
+      <div class="screen center" data-scroll="subPayWay">
+        <div class="center-inner">
+          <h2 class="title">${E('결제 방법을 골라 주세요')}</h2>
+          <div class="amount-box"><span>${E('결제할 금액')}</span><b>${won(subDue())}</b></div>
+          <div class="pay-list">
+            ${SUBWAY.payWays.map(w => `
+              <button class="pay-option${w.id === (missionExpect().pay || 'cash') ? ' hint' : ''}" data-action="sub-pay" data-arg="${w.id}">
+                <span class="pay-emoji" aria-hidden="true">${w.emoji}</span>${E(w.label)}
+              </button>`).join('')}
+          </div>
+          <p class="note">${E('새 발매기는 카드도 받아요. 오래된 발매기는 현금만 받기도 해요.')}</p>
+        </div>
+      </div>`,
+    guide: () => T('현금이나 카드 중에 골라 보세요'),
+    help: ex => `[data-action="sub-pay"][data-arg="${ex.pay || 'cash'}"]`,
+  },
+
+  subCard: {
+    render: () => {
+      const step = state.cardStep;
+      const itemClass = step === 'place' ? 'hint' : (once.placeAnim ? 'placing' : 'placed');
+      const title = step === 'done' ? E('카드를 읽었어요') : step === 'reading' ? E('카드를 읽고 있어요') : E('교통카드를 올려 주세요');
+      const sub = step === 'done' ? `<span class="ok-mark">${esc(msg('balanceNow', won(SUBWAY.balance)))}</span>`
+        : step === 'reading' ? `<span class="spinner" role="img" aria-label="${E('잠시 기다려 주세요')}"></span> ${E('카드를 떼지 말고 기다려 주세요')}`
+        : E('아래 카드 그림을 누르면 카드 올리는 곳에 올라가요');
+      return `
+      <div class="screen">
+        <div class="screen center" data-scroll="subCard-${step}">
+          <div class="center-inner">
+            <h2 class="title">${title}</h2>
+            <p class="sub">${sub}</p>
+            ${step === 'done' && SUBWAY.balance < SUBWAY.cardFare ? `<p class="pair-warn">${E('잔액이 기본요금보다 적어서 개찰구가 열리지 않아요. 충전해 주세요')}</p>` : ''}
+            <div class="scan-stage step-${step === 'reading' ? 'scanning' : step}">
+              <div class="scanner"><div class="scan-glass"></div><span>${E('카드 올리는 곳')}</span></div>
+              <button class="scan-item ${itemClass}" data-action="sub-card" aria-label="${E('교통카드 올리기')}"${step === 'place' ? '' : ' disabled'}>
+                <span class="tcard"><span class="tcard-top" aria-hidden="true">🚇</span><b>${E('교통카드')}</b><span>${E('연습용')}</span></span>
+              </button>
+            </div>
+            <p class="note">${E('연습용 카드예요. 진짜 카드 정보는 읽지 않아요.')}</p>
+          </div>
+        </div>
+        ${step === 'done' ? footNext() : ''}
+      </div>`;
+    },
+    guide: () => T({ place: '카드 그림을 눌러 카드를 올려 보세요', reading: '카드를 읽고 있어요. 잠시 기다려 주세요', done: "잔액을 확인하고 '다음'을 눌러 보세요" }[state.cardStep]),
+    help: () => (state.cardStep === 'place' ? '[data-action="sub-card"]' : state.cardStep === 'done' ? '[data-action="next"]' : null),
+  },
+
+  subAmount: {
+    render: () => `
+      <div class="screen">
+        <h2 class="title pad">${E('충전할 금액을 골라 주세요')}</h2>
+        <p class="sub bus-sub">${esc(msg('balanceNow', won(SUBWAY.balance)))}</p>
+        <div class="scroll-body" data-scroll="subAmount">
+          <div class="amount-grid">
+            ${SUBWAY.chargeAmounts.map(a => `<button class="amount-btn" data-action="sub-amount" data-arg="${a}">${won(a)}</button>`).join('')}
+          </div>
+          <p class="note">${E('충전한 돈은 탈 때마다 요금만큼 빠져나가요.')}</p>
+        </div>
+      </div>`,
+    guide: () => T('충전할 금액을 골라 보세요'),
+    help: ex => `[data-action="sub-amount"][data-arg="${ex.amount || SUBWAY.chargeAmounts[3]}"]`,
+  },
+
+  subCash: {
+    render: () => {
+      const due = subDue();
+      const busy = state.cashStep !== 'ready';
+      const charge = state.subMode === 'charge';
+      const busyTitle = charge ? '충전하고 있어요' : '1회용 교통카드를 만들고 있어요';
+      return `
+      <div class="screen">
+        <h2 class="title pad">${E(busy ? busyTitle : '현금을 넣어 주세요')}</h2>
+        <div class="scroll-body" data-scroll="subCash">
+          ${charge ? `<p class="pair-warn">${E('충전이 끝날 때까지 카드를 떼지 마세요')}</p>` : ''}
+          ${busy ? `<p class="sub"><span class="spinner" role="img" aria-label="${E('잠시 기다려 주세요')}"></span> ${E('잠시 기다려 주세요')}</p>` : `
+          <div class="bill-row">
+            ${SUBWAY.bills.map(b => `<button class="bill b${b}" data-action="bill" data-arg="${b}" aria-label="${esc(msg('billAria', won(b)))}"><span><b>${b.toLocaleString('en-US')}</b>${E('원')}</span></button>`).join('')}
+          </div>`}
+          <div class="info-table">
+            <div class="info-row"><span>${E('결제할 금액')}</span><b>${won(due)}</b></div>
+            <div class="info-row"><span>${E('넣은 돈')}</span><b>${won(state.cashIn)}</b></div>
+            <div class="info-row total"><span>${E(busy ? '거스름돈' : '남은 돈')}</span><b>${won(busy ? state.cashIn - due : Math.max(0, due - state.cashIn))}</b></div>
+          </div>
+          ${busy ? '' : `<p class="note">${E(charge ? '교통카드 충전은 현금만 받아요. 지폐 그림을 누르면 지폐가 들어가요.' : '지폐 그림을 누르면 지폐가 들어가요.')}</p>`}
+        </div>
+      </div>`;
+    },
+    guide: () => (state.cashStep !== 'ready' ? T('잠시 기다려 주세요') : msg('cashLeft', won(subDue() - state.cashIn))),
+    help: () => {
+      if (state.cashStep !== 'ready') return null;
+      const left = subDue() - state.cashIn;
+      const bill = SUBWAY.bills.find(b => b >= left) || SUBWAY.bills[SUBWAY.bills.length - 1];
+      return `[data-action="bill"][data-arg="${bill}"]`;
+    },
+    // 이전으로 가면 넣은 돈은 돌려줌
+    back: () => {
+      if (state.cashStep === 'ready' && state.cashIn > 0) {
+        toast(msg('cashBack', won(state.cashIn)));
+        state.cashIn = 0;
+      }
+      return false;
+    },
+  },
+
+  subGateIn: gateScreen('in'),
+  subGateOut: gateScreen('out'),
+
+  subRefund: {
+    render: () => {
+      const step = state.refundStep;
+      const cardClass = step === 'ready' ? 'hint' : (once.cardAnim ? 'inserting' : 'inserted');
+      return `
+      <div class="screen center" data-scroll="subRefund">
+        <div class="center-inner">
+          <h2 class="title">${E(step === 'ready' ? '다 쓴 1회용 교통카드를 넣어 주세요' : '카드를 확인하고 있어요')}</h2>
+          <p class="sub">${step === 'ready' ? E('아래 카드 그림을 누르면 카드가 들어가요') : `<span class="spinner" role="img" aria-label="${E('잠시 기다려 주세요')}"></span> ${E('잠시 기다려 주세요')}`}</p>
+          <div class="insert-stage step-${step === 'ready' ? 'ready' : 'inserted'}">
+            <div class="reader"><div class="slot"></div><span>${E('카드 넣는 곳')}</span></div>
+            <div class="arrow" aria-hidden="true">⬆</div>
+            <button class="card single-card ${cardClass}" data-action="sub-refund" aria-label="${E('1회용 교통카드 넣기')}"${step === 'ready' ? '' : ' disabled'}>
+              <span class="card-name">${E('1회용 교통카드')}</span><span class="card-icon" aria-hidden="true">🚇</span>
+            </button>
+          </div>
+          <p class="note">${E("실제로는 개찰구 근처에 있는 '보증금 환급기'라는 작은 기계에서 해요.")}</p>
+        </div>
+      </div>`;
+    },
+    guide: () => T(state.refundStep === 'ready' ? '카드 그림을 눌러 카드를 넣어 보세요' : '잠시 기다려 주세요'),
+    help: () => (state.refundStep === 'ready' ? '[data-action="sub-refund"]' : null),
+  },
+
+  subDone: {
+    render: () => {
+      const mode = state.subMode;
+      const change = state.cashIn - subDue();
+      const changeHTML = change > 0 ? `<p class="change-line">🪙 ${esc(msg('changeOut', won(change)))}</p>` : '';
+      let head = '';
+      let body = '';
+      let steps = SUBWAY.refundSteps;
+      if (mode === 'single') {
+        const st = findStation(state.subDest);
+        head = esc(msg('arrived', T(st.label)));
+        body = `
+          <div class="ticket-out">
+            ${Array.from({ length: state.subQty }, () => `<span class="single-ticket"><b>${E('1회용 교통카드')}</b><span>${esc(msg('subRoute', T(SUBWAY.here), T(st.label)))}</span></span>`).join('')}
+          </div>
+          <p class="pair-warn">${E("다 쓴 1회용 교통카드는 '보증금 환급기'에 넣으면 보증금 500원을 돌려받아요")}</p>`;
+        steps = SUBWAY.singleSteps;
+      } else if (mode === 'charge') {
+        head = E('충전한 카드로 개찰구를 지나갔어요');
+        body = `
+          <div class="info-table">
+            <div class="info-row"><span>${E('충전 전 잔액')}</span><b>${won(SUBWAY.balance)}</b></div>
+            <div class="info-row"><span>${E('충전한 금액')}</span><b>${won(state.chargeAmount)}</b></div>
+            <div class="info-row"><span>${E('개찰구에서 낸 기본요금')}</span><b>−${won(SUBWAY.cardFare)}</b></div>
+            <div class="info-row total"><span>${E('지금 잔액')}</span><b>${won(subBalanceAfter())}</b></div>
+          </div>${changeHTML}`;
+        steps = SUBWAY.chargeSteps;
+      } else {
+        head = E('보증금 500원이 나왔어요');
+        body = '<p class="coin-out" aria-hidden="true">🪙</p>';
+      }
+      return `
+      <div class="screen">
+        <div class="screen center" data-scroll="subDone">
+          <div class="center-inner">
+            <p class="done-msg"><span class="done-emoji" aria-hidden="true">🎉</span> ${head}</p>
+            ${body}
+            <p class="praise">${E('잘하셨어요! 👏')}</p>
+            ${stepsHTML(steps)}
+          </div>
+        </div>
+        ${restartFoot()}
+      </div>`;
+    },
+    guide: () => {
+      if (state.subMode === 'charge') return T('잔액을 확인해 보세요');
+      if (state.subMode === 'refund') return T('동전 나오는 곳에서 500원을 꺼내요');
+      return T('보증금 환급기에서 500원을 돌려받아요');
+    },
+    help: () => '[data-action="restart"]',
+  },
 };
+
+/* 지하철 개찰구: dir 'in' 들어갈 때 / 'out' 나갈 때 */
+function gateScreen(dir) {
+  const key = dir === 'in' ? 'gateIn' : 'gateOut';
+  return {
+    render: () => {
+      const open = state[key];
+      const single = state.subMode === 'single';
+      const st = findStation(state.subDest);
+      const change = state.cashIn - subDue();
+      let title;
+      let sub;
+      if (dir === 'in') {
+        title = E(open ? '문이 열렸어요. 지나가세요' : '개찰구에 카드를 대 주세요');
+        if (!open) sub = single ? (change > 0 ? esc(msg('cardChange', won(change))) : E('1회용 교통카드를 챙겼어요. 개찰구로 가요')) : E('충전한 교통카드로 개찰구를 지나가 봐요');
+        else sub = single ? E('들어갈 때 카드를 댔어요. 나갈 때도 대야 해요') : esc(msg('gateFare', won(SUBWAY.cardFare), won(subBalanceAfter())));
+      } else {
+        title = open ? E('문이 열렸어요. 밖으로 나가세요') : esc(msg('arrived', T(st.label)));
+        sub = E(open ? "다 쓴 1회용 교통카드는 '보증금 환급기'에 넣으면 보증금 500원을 돌려받아요" : '나갈 때도 카드를 단말기에 대요');
+      }
+      const display = !open ? E('카드를 대 주세요')
+        : dir === 'out' ? E('안녕히 가세요')
+        : single ? E('들어가세요') : esc(msg('gateBalance', won(subBalanceAfter())));
+      const itemClass = open ? (once.placeAnim ? 'placing' : 'placed') : 'hint';
+      const card = single
+        ? `<span class="tcard single"><span class="tcard-top" aria-hidden="true">🎫</span><b>${E('1회용 교통카드')}</b><span>${E('연습용')}</span></span>`
+        : `<span class="tcard"><span class="tcard-top" aria-hidden="true">🚇</span><b>${E('교통카드')}</b><span>${E('연습용')}</span></span>`;
+      return `
+      <div class="screen">
+        <div class="screen center" data-scroll="${key}-${open}">
+          <div class="center-inner">
+            <h2 class="title">${title}</h2>
+            <div class="gate${open ? ' open' : ''}">
+              <div class="gate-box">
+                <div class="gate-screen">${display}</div>
+                <div class="gate-reader"><span aria-hidden="true">💳</span>${E('카드 대는 곳')}</div>
+              </div>
+              <div class="gate-doors" aria-hidden="true"><i></i><i></i></div>
+            </div>
+            <button class="scan-item gate-card ${itemClass}" data-action="sub-tap" aria-label="${E('카드를 단말기에 대기')}"${open ? ' disabled' : ''}>${card}</button>
+            <p class="sub">${sub}</p>
+          </div>
+        </div>
+        ${open ? footNext(dir === 'in' ? '지나가기' : '나가기', 'sub-pass') : ''}
+      </div>`;
+    },
+    guide: () => {
+      if (!state[key]) return dir === 'in' ? T('카드 그림을 눌러 개찰구에 대 보세요') : msg('arrivedTap', T(findStation(state.subDest).label));
+      return T(dir === 'in' ? "문이 열렸어요. '지나가기'를 눌러 보세요" : "문이 열렸어요. '나가기'를 눌러 보세요");
+    },
+    help: () => (state[key] ? '[data-action="sub-pass"]' : '[data-action="sub-tap"]'),
+    // 돈을 낸 뒤라 앞 화면으로 돌아가지 않음
+    back: () => { toast(T('결제는 이미 끝났어요. 개찰구를 지나가 보세요')); return true; },
+  };
+}
 
 function menuCardHTML(item) {
   const n = qtyInCart(item.id);
@@ -6463,6 +7504,9 @@ function renderChrome() {
     if (type && state.screen !== 'start') badgeText = T(type.badge);
   } else if (P().bus) {
     if (state.screen !== 'busStart') badgeText = T(labelOf(BUS.menu, state.busMode || 'buy'));
+  } else if (P().subway) {
+    // 위 칸이 좁아서 짧은 이름(badge)을 씀
+    if (state.screen !== 'subStart') badgeText = T(SUBWAY.menu.find(m => m.id === (state.subMode || 'single')).badge);
   } else if (state.screen !== 'hospitalStart') {
     badgeText = T(labelOf(HOSPITAL.menu, P().hospital));
   }
@@ -6564,6 +7608,18 @@ function freshState() {
     busBase: busBaseTime(),
     busMode: null,
     lookup: { phone: '', field: 'phone' },
+    subMode: null,
+    subLine: SUBWAY.lines[0].id,
+    subDest: null,
+    subQty: 1,
+    subPay: null,
+    gateIn: false,
+    gateOut: false,
+    cardStep: 'place',
+    chargeAmount: null,
+    cashIn: 0,
+    cashStep: 'ready',
+    refundStep: 'ready',
     busArea: BUS.areas[0].id,
     busDest: null,
     busSlot: null,
@@ -7024,6 +8080,71 @@ const actions = {
     if (b.days) { toast(T('다른 날 출발하는 표예요. 오늘 표를 골라 주세요')); return; }
     Object.assign(state, { busDest: b.dest, busSlot: b.slot, adults: b.adults, children: b.children, seats: [...b.seats] });
     goNext();
+  },
+  smenu: id => {
+    if (state.subMode !== id) {
+      Object.assign(state, { subDest: null, subQty: 1, subPay: null, chargeAmount: null, cashIn: 0, cashStep: 'ready', payStep: 'ready',
+        cardStep: 'place', refundStep: 'ready', gateIn: false, gateOut: false });
+    }
+    state.subMode = id;
+    goNext();
+  },
+  'sub-line': id => { state.subLine = id; render(); },
+  'sub-dest': id => {
+    if (state.subDest !== id) { state.subQty = 1; state.cashIn = 0; }
+    state.subDest = id;
+    goNext();
+  },
+  'sub-inc': () => {
+    if (state.subQty >= SUBWAY.maxTickets) { toast(msg('maxTickets', SUBWAY.maxTickets)); return; }
+    state.subQty += 1;
+    render();
+  },
+  'sub-dec': () => { if (state.subQty > 1) { state.subQty -= 1; render(); } },
+  'sub-qty-next': () => goNext(),
+  'sub-pay': id => {
+    if (state.subPay !== id) { state.cashIn = 0; state.payStep = 'ready'; }
+    state.subPay = id;
+    goNext();
+  },
+  'sub-tap': () => {
+    const key = state.screen === 'subGateIn' ? 'gateIn' : 'gateOut';
+    if (state[key]) return;
+    state[key] = true;
+    once.placeAnim = true;
+    render();
+  },
+  'sub-pass': () => goNext(),
+  'sub-card': () => {
+    if (state.cardStep !== 'place') return;
+    state.cardStep = 'reading';
+    once.placeAnim = true;
+    render();
+    stepTimer = setTimeout(() => { state.cardStep = 'done'; render(); }, 1400);
+  },
+  'sub-amount': arg => {
+    const a = Number(arg);
+    if (state.chargeAmount !== a) state.cashIn = 0;
+    state.chargeAmount = a;
+    goNext();
+  },
+  bill: arg => {
+    if (state.cashStep !== 'ready') return;
+    state.cashIn += Number(arg);
+    if (state.cashIn >= subDue()) {
+      state.cashStep = 'busy';
+      render();
+      payTimer = setTimeout(() => goNext(), 1600);
+      return;
+    }
+    render();
+  },
+  'sub-refund': () => {
+    if (state.refundStep !== 'ready') return;
+    state.refundStep = 'checking';
+    once.cardAnim = true;
+    render();
+    payTimer = setTimeout(() => goNext(), 1500);
   },
   restart: () => restartPractice(),
   'mission-retry': () => restartPractice(),

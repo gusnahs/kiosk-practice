@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>사이트 소개 · 한국 키오스크 연습</title>
-<meta name="description" content="키오스크 앞에서 당황해 본 분들이 집에서 미리 눌러 보며 익히는 연습 사이트예요. 카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권 사기를 실제와 비슷한 화면으로 연습할 수 있어요. English · 日本語 · 中文도 지원해요.">
+<meta name="description" content="키오스크 앞에서 당황해 본 분들이 집에서 미리 눌러 보며 익히는 연습 사이트예요. 카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권 사기, 지하철 1회용 교통카드 사기·충전을 실제와 비슷한 화면으로 연습할 수 있어요. English · 日本語 · 中文도 지원해요.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="한국 키오스크 연습 · 사이트 소개">
-<meta property="og:description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권 키오스크를 집에서 미리 연습해 보세요. 회원가입 없이 무료, 실제로 결제되지 않아요.">
+<meta property="og:description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드 키오스크를 집에서 미리 연습해 보세요. 회원가입 없이 무료, 실제로 결제되지 않아요.">
 <meta name="theme-color" content="#3F3A36">
 <meta name="format-detection" content="telephone=no">
 <meta name="google-adsense-account" content="ca-pub-7426969547164889">
@@ -209,14 +209,20 @@
           <p class="place">가상 버스 회사 ‘누리공항버스’</p>
           <p>행선지와 출발 시각, 성인·어린이 인원 고르기, 좌석표에서 창가 자리·나란히 붙은 자리 고르기, 카드 결제, 미리 예매한 표 뽑기를 해 봐요.</p>
         </div>
+        <div class="card">
+          <div class="card-emoji" aria-hidden="true">🚇</div>
+          <h3>지하철 교통카드</h3>
+          <p class="place">가상 회사 ‘한빛지하철’</p>
+          <p>도착역과 장수 고르기, 현금·카드로 내기, 개찰구에 카드 대고 지나가기, 교통카드 충전, 보증금 500원 돌려받기를 해 봐요.</p>
+        </div>
       </div>
-      <p class="note">가게·병원·버스 회사 이름은 모두 지어낸 것이에요. 실제 키오스크는 가게마다 모양이 조금씩 다르지만, 고르는 순서는 대부분 비슷해요.</p>
+      <p class="note">가게·병원·버스·지하철 회사 이름은 모두 지어낸 것이에요. 실제 키오스크는 가게마다 모양이 조금씩 다르지만, 고르는 순서는 대부분 비슷해요.</p>
     </section>
 
     <section aria-labelledby="how" data-i="how">
       <h2 id="how">이렇게 쓰시면 돼요</h2>
       <ol class="steps">
-        <li><b>연습할 것을 골라요</b>첫 화면에서 카페, 햄버거, 병원, 공항버스 중 하나를 누르면 바로 시작해요. 회원가입이나 로그인은 없어요.</li>
+        <li><b>연습할 것을 골라요</b>첫 화면에서 카페, 햄버거, 병원, 공항버스, 지하철 중 하나를 누르면 바로 시작해요. 회원가입이나 로그인은 없어요.</li>
         <li><b>노란 칸의 ‘지금 할 일’을 따라 눌러요</b>화면 위에 <span class="guide-sample">지금 할 일</span>이 늘 나와요. 다음에 누를 버튼이 은은하게 깜빡이기도 해요.</li>
         <li><b>틀려도 괜찮아요</b>모든 화면에 ‘이전’과 ‘처음으로’ 버튼이 있어요. 끝까지 하면 ‘잘하셨어요!’와 ‘다시 하기’가 나와요.</li>
         <li><b>익숙해지면 미션에 도전해요</b>‘아이스 아메리카노 1잔 포장 주문하기’처럼 정해진 주문을 그대로 해 보는 연습이에요. 막히면 ‘💡 도움말’을 누르면 누를 곳이 반짝이고, 끝나면 맞았는지 알려 줘요.</li>
@@ -306,11 +312,12 @@ const I18N = {
         ${card('🧾', 'Hospital payment', 'Fictional hospital ‘Haneulsup Hospital’', 'Check the bill, choose whether to get a prescription and a receipt, insert your card and choose ‘Pay in full’.')}
         ${card('📄', 'Certificates', 'Fictional hospital ‘Haneulsup Hospital’', 'Reprint a lost prescription, or print papers such as a proof of visit for insurance claims.')}
         ${card('🚌', 'Airport bus ticket', 'Fictional company ‘Nuri Airport Bus’', 'Choose a destination and a departure time, set the number of adults and children, pick a window seat or two seats together on the seat map, pay by card, and print a ticket you booked in advance.')}
+        ${card('🚇', 'Subway ticket', 'Fictional company ‘Hanbit Subway’', 'Choose a destination and the number of tickets, pay with cash or a card, tap through the ticket gates, top up a transit card, and get the 500 won deposit back.')}
       </div>
-      <p class="note">All shop, hospital and bus company names are made up. Real kiosks look a little different in each shop, but the order of the steps is mostly the same.</p>`,
+      <p class="note">All shop, hospital, bus and subway company names are made up. Real kiosks look a little different in each shop, but the order of the steps is mostly the same.</p>`,
     how: `<h2 id="how">How to use it</h2>
       <ol class="steps">
-        <li><b>Choose what to practice</b>Tap cafe, burger, hospital or airport bus on the first screen and it starts right away. There is no sign-up or login.</li>
+        <li><b>Choose what to practice</b>Tap cafe, burger, hospital, airport bus or subway on the first screen and it starts right away. There is no sign-up or login.</li>
         <li><b>Follow ‘What to do’ in the yellow box</b>The <span class="guide-sample">What to do</span> box is always at the top of the screen. The next button to tap also gently flashes.</li>
         <li><b>Mistakes are fine</b>Every screen has ‘Back’ and ‘Start over’ buttons. When you finish, you will see ‘Well done!’ and ‘Try again’.</li>
         <li><b>Try missions when you are ready</b>A mission asks you to place a given order, such as ‘Order 1 iced Americano to go’. If you get stuck, tap ‘💡 Help’ and the spot to tap will flash. At the end, it tells you whether you got it right.</li>
@@ -370,11 +377,12 @@ const I18N = {
         ${card('🧾', '病院の会計', '架空の病院「ハヌルスプ病院」', '診察代の確認、処方せん・領収書を受け取るかの選択、カードを入れて「一括払い」を選ぶ練習をします。')}
         ${card('📄', '証明書の発行', '架空の病院「ハヌルスプ病院」', 'なくした処方せんの再発行や、診療確認書のように保険の請求に使う書類の発行をやってみます。')}
         ${card('🚌', '空港バスの乗車券', '架空の会社「ヌリ空港バス」', '行き先と出発時刻の選択、大人・子どもの人数の選択、座席表で窓側や隣り合った席を選ぶ、カード払い、予約した乗車券の発券をやってみます。')}
+        ${card('🚇', '地下鉄の交通カード', '架空の会社「ハンビッ地下鉄」', '到着駅と枚数の選択、現金かカードでの支払い、改札でのタッチ、交通カードのチャージ、保証金500ウォンの払い戻しをやってみます。')}
       </div>
-      <p class="note">店や病院、バス会社の名前はすべて架空のものです。実際のキオスクは店ごとに少しずつ見た目が違いますが、選ぶ順番はほとんど同じです。</p>`,
+      <p class="note">店や病院、バス会社、地下鉄会社の名前はすべて架空のものです。実際のキオスクは店ごとに少しずつ見た目が違いますが、選ぶ順番はほとんど同じです。</p>`,
     how: `<h2 id="how">使い方</h2>
       <ol class="steps">
-        <li><b>練習するものを選ぶ</b>最初の画面でカフェ、ハンバーガー、病院、空港バスのどれかを押すと、すぐに始まります。会員登録やログインはありません。</li>
+        <li><b>練習するものを選ぶ</b>最初の画面でカフェ、ハンバーガー、病院、空港バス、地下鉄のどれかを押すと、すぐに始まります。会員登録やログインはありません。</li>
         <li><b>黄色い欄の「やること」に従って押す</b>画面の上にいつも<span class="guide-sample">やること</span>が出ます。次に押すボタンがやさしく点滅することもあります。</li>
         <li><b>間違えても大丈夫</b>すべての画面に「戻る」と「最初へ」のボタンがあります。最後まで進むと「よくできました!」と「もう一度」が出ます。</li>
         <li><b>慣れたらミッションに挑戦</b>「アイスアメリカーノ1杯を持ち帰りで注文する」のように、決められた注文をそのとおりにする練習です。困ったら「💡 ヘルプ」を押すと押す所が光り、終わると正しくできたか教えてくれます。</li>
@@ -434,11 +442,12 @@ const I18N = {
         ${card('🧾', '医院缴费', '虚构医院“天林医院”', '确认诊疗费、选择是否领取处方和收据、插卡并选择“一次付清”。')}
         ${card('📄', '打印证明', '虚构医院“天林医院”', '重新打印丢失的处方,或打印就诊证明等用于保险理赔的文件。')}
         ${card('🚌', '机场巴士车票', '虚构公司“努里机场巴士”', '选择目的地和出发时间,选择成人和儿童人数,在座位图上选靠窗或相邻的座位,刷卡付款,领取提前预订的车票。')}
+        ${card('🚇', '地铁交通卡', '虚构公司“韩光地铁”', '选择到达站和张数,用现金或刷卡付款,在闸机刷卡通过,给交通卡充值,拿回500韩元押金。')}
       </div>
-      <p class="note">店铺、医院和巴士公司的名字都是虚构的。真实的自助机每家店样子略有不同,但操作顺序大多相似。</p>`,
+      <p class="note">店铺、医院、巴士和地铁公司的名字都是虚构的。真实的自助机每家店样子略有不同,但操作顺序大多相似。</p>`,
     how: `<h2 id="how">使用方法</h2>
       <ol class="steps">
-        <li><b>选择要练习的内容</b>在首页点咖啡店、汉堡店、医院或机场巴士中的一个,就会马上开始。无需注册或登录。</li>
+        <li><b>选择要练习的内容</b>在首页点咖啡店、汉堡店、医院、机场巴士或地铁中的一个,就会马上开始。无需注册或登录。</li>
         <li><b>按照黄色框里的“现在要做”操作</b>画面上方总会显示<span class="guide-sample">现在要做</span>。下一步要点的按钮也会轻轻闪烁。</li>
         <li><b>出错也没关系</b>每个画面都有“返回”和“回到开头”按钮。做到最后会显示“做得很好!”和“再来一次”。</li>
         <li><b>熟悉后挑战任务</b>例如“外带1杯冰美式咖啡”,按照指定内容点单的练习。遇到困难时点“💡 帮助”,要点的地方就会闪烁,完成后会告诉您是否正确。</li>
@@ -498,11 +507,12 @@ const I18N = {
         ${card('🧾', '醫院繳費', '虛構醫院「天林醫院」', '確認醫療費、選擇是否領取處方箋和收據、插卡並選擇「一次付清」。')}
         ${card('📄', '列印證明', '虛構醫院「天林醫院」', '重新列印遺失的處方箋,或列印就診證明等保險理賠用的文件。')}
         ${card('🚌', '機場巴士車票', '虛構公司「努里機場巴士」', '選擇目的地和出發時間,選擇成人和兒童人數,在座位圖上選靠窗或相鄰的座位,刷卡付款,領取事先預訂的車票。')}
+        ${card('🚇', '地鐵交通卡', '虛構公司「韓光地鐵」', '選擇到達站和張數,用現金或刷卡付款,在閘門刷卡通過,幫交通卡儲值,拿回500韓元押金。')}
       </div>
-      <p class="note">店家、醫院和巴士公司的名稱都是虛構的。真實的自助機每家店樣子略有不同,但操作順序大多相似。</p>`,
+      <p class="note">店家、醫院、巴士和地鐵公司的名稱都是虛構的。真實的自助機每家店樣子略有不同,但操作順序大多相似。</p>`,
     how: `<h2 id="how">使用方法</h2>
       <ol class="steps">
-        <li><b>選擇要練習的內容</b>在首頁點咖啡店、漢堡店、醫院或機場巴士其中一個,就會馬上開始。不需要註冊或登入。</li>
+        <li><b>選擇要練習的內容</b>在首頁點咖啡店、漢堡店、醫院、機場巴士或地鐵其中一個,就會馬上開始。不需要註冊或登入。</li>
         <li><b>照著黃色框裡的「現在要做」操作</b>畫面上方會一直顯示<span class="guide-sample">現在要做</span>。下一步要點的按鈕也會輕輕閃爍。</li>
         <li><b>出錯也沒關係</b>每個畫面都有「返回」和「回到開頭」按鈕。做到最後會顯示「做得很好!」和「再來一次」。</li>
         <li><b>熟悉後挑戰任務</b>例如「外帶1杯冰美式咖啡」,照著指定內容點餐的練習。遇到困難時點「💡 幫助」,要點的地方就會閃爍,完成後會告訴您是否正確。</li>
