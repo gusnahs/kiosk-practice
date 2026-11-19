@@ -3,14 +3,152 @@
   <url>
     <loc>https://kioskpractice.kr/</loc>
     <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/?lang=en</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/?lang=ja</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/?lang=zh-Hans</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/?lang=zh-Hant</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/"/>
   </url>
   <url>
     <loc>https://kioskpractice.kr/about.html</loc>
     <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/about.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/about.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/about.html?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/about.html?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/about.html"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/about.html?lang=en</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/about.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/about.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/about.html?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/about.html?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/about.html"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/about.html?lang=ja</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/about.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/about.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/about.html?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/about.html?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/about.html"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/about.html?lang=zh-Hans</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/about.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/about.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/about.html?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/about.html?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/about.html"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/about.html?lang=zh-Hant</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/about.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/about.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/about.html?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/about.html?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/about.html"/>
   </url>
   <url>
     <loc>https://kioskpractice.kr/privacy.html</loc>
     <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/privacy.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/privacy.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/privacy.html?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/privacy.html?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/privacy.html?lang=en</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/privacy.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/privacy.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/privacy.html?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/privacy.html?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/privacy.html?lang=ja</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/privacy.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/privacy.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/privacy.html?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/privacy.html?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/privacy.html?lang=zh-Hans</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/privacy.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/privacy.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/privacy.html?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/privacy.html?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://kioskpractice.kr/privacy.html?lang=zh-Hant</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kioskpractice.kr/privacy.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/privacy.html?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/privacy.html?lang=zh-Hans"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/privacy.html?lang=zh-Hant"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/privacy.html"/>
   </url>
   <url>
     <loc>https://kioskpractice.kr/guide-en.html</loc>

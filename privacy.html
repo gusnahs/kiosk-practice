@@ -8,6 +8,12 @@
 <meta name="theme-color" content="#3F3A36">
 <meta name="format-detection" content="telephone=no">
 <meta name="google-adsense-account" content="ca-pub-7426969547164889">
+<link rel="alternate" hreflang="ko" href="https://kioskpractice.kr/privacy.html">
+<link rel="alternate" hreflang="en" href="https://kioskpractice.kr/privacy.html?lang=en">
+<link rel="alternate" hreflang="ja" href="https://kioskpractice.kr/privacy.html?lang=ja">
+<link rel="alternate" hreflang="zh-Hans" href="https://kioskpractice.kr/privacy.html?lang=zh-Hans">
+<link rel="alternate" hreflang="zh-Hant" href="https://kioskpractice.kr/privacy.html?lang=zh-Hant">
+<link rel="alternate" hreflang="x-default" href="https://kioskpractice.kr/privacy.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%86%3C/text%3E%3C/svg%3E">
 <style>
   :root {
@@ -554,18 +560,8 @@ const I18N = {
 (function applyLang() {
   const LANGS = ['ko', 'en', 'ja', 'zh-Hans', 'zh-Hant'];
   const asked = new URLSearchParams(location.search).get('lang');
-  let lang = LANGS.includes(asked) ? asked : null;
-  if (!lang) {
-    lang = 'ko';
-    for (const raw of navigator.languages || [navigator.language || 'ko']) {
-      const l = String(raw).toLowerCase();
-      if (l.startsWith('ko')) { lang = 'ko'; break; }
-      if (l.startsWith('en')) { lang = 'en'; break; }
-      if (l.startsWith('ja')) { lang = 'ja'; break; }
-      if (/^zh-(tw|hk|mo|hant)/.test(l)) { lang = 'zh-Hant'; break; }
-      if (l.startsWith('zh')) { lang = 'zh-Hans'; break; }
-    }
-  }
+  // 주소에 ?lang= 이 없으면 한국어 (위 언어 버튼으로 바꿀 수 있음)
+  const lang = LANGS.includes(asked) ? asked : 'ko';
   const t = I18N[lang];
   if (t) {
     document.documentElement.lang = lang;
@@ -575,7 +571,7 @@ const I18N = {
     document.querySelector('.toc').setAttribute('aria-label', t.tocLabel);
   }
   document.querySelectorAll('.langs a').forEach(a => { if (a.dataset.lang === lang) a.setAttribute('aria-current', 'true'); });
-  if (asked || lang !== 'ko') {
+  if (asked) {
     document.querySelectorAll('a[data-keep]').forEach(a => { a.href = a.getAttribute('href').split('?')[0] + '?lang=' + lang; });
   }
 })();
