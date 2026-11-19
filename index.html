@@ -62,7 +62,8 @@
   html:lang(ja) body, html:lang(zh-Hans) body, html:lang(zh-Hant) body { word-break: normal; line-break: strict; }
   button { font: inherit; color: inherit; cursor: pointer; -webkit-user-select: none; user-select: none; }
   button:focus-visible, [tabindex]:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; }
-  #screen:focus, h1:focus { outline: none; }
+  /* 화면이 바뀔 때 읽어 주기용으로 제목에 포커스를 줌 — 테두리는 안 보이게 (위 [tabindex] 규칙보다 우선) */
+  #screen:focus, h1:focus, h1[tabindex]:focus-visible { outline: none; }
   h1, h2, h3, h4, p, dl, dd { margin: 0; }
   svg { display: block; width: 100%; height: 100%; }
   [hidden] { display: none !important; }
