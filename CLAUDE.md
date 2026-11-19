@@ -164,6 +164,7 @@ settings.json에 hooks를 등록한다. "매번 X 할 때마다 Y 해줘" 같은
   - 커밋 작성자 이메일은 GitHub 비공개 주소(`358472646+gusnahs@users.noreply.github.com`)를 이 저장소에만 설정해 두었다. 개인 이메일을 쓰지 않는다.
   - 저장소가 공개라서 이 CLAUDE.md도 누구나 볼 수 있다. 비밀번호·키·개인정보를 적지 않는다.
   - 구글 애드센스: 게시자 번호 `pub-7426969547164889`(공개되는 번호라 적어 둠). 사이트 확인은 모든 페이지 `<head>`의 `<meta name="google-adsense-account" content="ca-pub-7426969547164889">`로 하고(광고 스크립트는 아직 넣지 않음), 루트의 `ads.txt`에 `google.com, pub-7426969547164889, DIRECT, f08c47fec0942fa0` 한 줄을 둔다. 새 HTML 페이지를 만들면 이 메타 태그도 넣는다.
+  - 검색 등록: 구글 서치 콘솔은 "도메인" 속성 `kioskpractice.kr`(가비아 TXT `@` `google-site-verification=…`로 확인, 이 TXT는 지우지 않는다). 네이버 서치어드바이저는 `index.html`의 `<meta name="naver-site-verification" …>`로 확인한다(지우지 않는다). 루트의 `sitemap.xml`(페이지 7개)과 `robots.txt`를 둔다. 새 페이지를 만들면 `sitemap.xml`에도 넣는다. 네이버 서치어드바이저 사이트는 앱 브라우저에서 막혀 있어서 사용자가 직접 연다.
   - 광고는 승인 후에 넣는다. 키오스크 연습 화면 밖(첫 화면·미션 목록·소개·안내 페이지)에만 두고, 자동 광고는 연습 화면에 끼어들 수 있으니 쓰지 않는다. 광고를 실제로 넣을 때는 `privacy.html` 4번과 시행일을 고친다.
 - **코드 구조 (`<script>` 위쪽 데이터만 고치면 됨):**
   - `PRACTICES` — 연습 목록과 `flow`(화면 순서). 다음 화면은 이 순서로 정해진다. `{ screen, when }`은 조건이 맞을 때만 거치는 화면(예: 매장일 때 진동벨, 처음 방문일 때 동의, 수수료가 있을 때 결제).

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kioskpractice.kr/sitemap.xml
