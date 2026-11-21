@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>한국 키오스크 연습</title>
-<meta name="description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.">
+<meta name="description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드, 기차표 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="한국 키오스크 연습 · Korea Kiosk Practice">
-<meta property="og:description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드 키오스크를 미리 눌러 보며 연습해 보세요. English · 日本語 · 中文 지원. 실제로 결제되지 않아요.">
+<meta property="og:description" content="카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드, 기차표 키오스크를 미리 눌러 보며 연습해 보세요. English · 日本語 · 中文 지원. 실제로 결제되지 않아요.">
 <meta name="theme-color" content="#3F3A36">
 <meta name="format-detection" content="telephone=no">
 <meta name="google-adsense-account" content="ca-pub-7426969547164889">
@@ -631,6 +631,34 @@
   .booking-day { padding: 2px 10px; border-radius: 999px; background: #E7E5E4; color: var(--muted); font-size: 20px; font-weight: 800; white-space: nowrap; }
   .booking-day.today { background: var(--brand); color: #fff; }
   .booking-card.other-day { background: var(--soft); }
+  /* ---------- 기차 ---------- */
+  .train-card { flex-shrink: 0; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; background: #fff; border: 3px solid var(--line); border-radius: 18px; }
+  .train-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 21px; }
+  .train-type { padding: 2px 10px; border-radius: 999px; background: var(--brand); color: #fff; font-size: 20px; font-weight: 800; }
+  .train-type.normal { background: #57534E; }
+  .train-dur { margin-left: auto; font-size: 20px; color: var(--muted); }
+  .train-time { display: flex; align-items: baseline; gap: 10px; font-size: 24px; }
+  .train-time .time-big { font-size: 30px; }
+  .train-classes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .cls-btn { min-height: 66px; padding: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: var(--action-soft); border: 2px solid var(--action); border-radius: 14px; font-size: 20px; font-weight: 800; }
+  .cls-btn b { font-size: 21px; color: var(--action); }
+  .cls-btn.sold { background: #E7E5E4; border-color: #D6D3D1; color: #78716C; }
+  .cls-btn.sold b { color: #57534E; }
+  .cls-none { display: grid; place-items: center; min-height: 66px; border: 2px dashed var(--line); border-radius: 14px; color: var(--muted); font-size: 20px; }
+  .date-grid, .hour-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .date-btn { min-height: 92px; padding: 6px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: #fff; border: 3px solid var(--line); border-radius: 16px; font-size: 20px; }
+  .date-btn b { font-size: 28px; font-weight: 900; line-height: 1.1; }
+  .date-btn.wide { grid-column: span 2; }
+  .date-btn.on { border-color: var(--action); background: var(--action-soft); }
+  .date-tag { min-height: 24px; color: var(--action); font-weight: 800; white-space: nowrap; }
+  .hour-btn { min-height: 60px; padding: 0 2px; background: #fff; border: 3px solid var(--line); border-radius: 14px; font-size: 21px; font-weight: 800; white-space: nowrap; }
+  .hour-btn.wide { grid-column: span 2; border-color: var(--action); background: var(--action-soft); }
+  .hour-btn.past { background: #E7E5E4; border-color: #E7E5E4; color: #A8A29E; }
+  .seatmap.train { grid-template-columns: 1fr 1fr .4fr 1fr 1fr; }
+  .seatmap.train.first { grid-template-columns: 1fr .4fr 1fr 1fr; }
+  .dir-row { grid-column: 1 / -1; margin: 4px 0 0; color: var(--muted); font-size: 20px; font-weight: 800; text-align: center; }
+  .car-sign { padding: 8px 20px; border-radius: 14px; background: var(--brand); color: #fff; font-size: 28px; font-weight: 900; }
+
   /* ---------- 지하철 ---------- */
   .line-tab[aria-pressed="true"] { background: var(--line); border-color: var(--line); }
   .line-dots { flex: none; display: flex; gap: 4px; }
@@ -942,6 +970,19 @@ const M_KO = {
   cardChange: w => `1회용 교통카드와 거스름돈 ${w}을 챙겼어요. 개찰구로 가요`,
   gateBalance: w => `잔액 ${w}`,
   gateFare: (f, w) => `기본요금 ${f}이 빠지고 잔액 ${w}이 남았어요`,
+  // 기차
+  trainFrom: st => `출발역: ${st}`,
+  trainDestSub: d => `고속열차 ${d}`,
+  trainPeopleLine: (a, c, sn) => [a ? `어른 ${a}명` : '', c ? `어린이 ${c}명` : '', sn ? `경로 ${sn}명` : ''].filter(Boolean).join(', ') || '0명',
+  carSeats: (car, list) => `${car}호차 ${list}`,
+  carNo: car => `${car}호차`,
+  trainSeatPick: (c, t) => `좌석 고르기 ${c}/${t}`,
+  hourBtn: h => `${h}시`,
+  hourAfter: h => `${h}시 이후`,
+  trainWhen: (d, h) => (h ? `${d} ${h}` : d),
+  trainGo: () => '승차권이 나왔어요! 전광판에서 타는 곳을 확인해요',
+  dTrainFirst: () => '가장 빠른 열차를 고르지 않으셨어요',
+  dForward: () => '순방향 자리를 고르지 않으셨어요',
   langBtn: () => '언어 · Language',
   langChanged: () => '한국어로 바꿨어요',
   // 미션 결과: 다른 점
@@ -1072,6 +1113,19 @@ addLang('en', {
     cardChange: w => `You have your ticket and ${w} change. Go to the gate`,
     gateBalance: w => `Balance ${w}`,
     gateFare: (f, w) => `The base fare ${f} was taken. Balance: ${w}`,
+    // 기차
+    trainFrom: st => `From: ${st}`,
+    trainDestSub: d => `${d} by high-speed train`,
+    trainPeopleLine: (a, c, sn) => [a ? `${a} adult${a === 1 ? '' : 's'}` : '', c ? `${c} child${c === 1 ? '' : 'ren'}` : '', sn ? `${sn} senior${sn === 1 ? '' : 's'}` : ''].filter(Boolean).join(', ') || '0 people',
+    carSeats: (car, list) => `Car ${car}, ${list}`,
+    carNo: car => `Car ${car}`,
+    trainSeatPick: (c, t) => `Choose seats ${c}/${t}`,
+    hourBtn: h => `${h}:00`,
+    hourAfter: h => `after ${h}:00`,
+    trainWhen: (d, h) => (h ? `${d}, ${h}` : d),
+    trainGo: () => 'You have your ticket! Check the platform on the station board',
+    dTrainFirst: () => "You didn't choose the earliest train",
+    dForward: () => "You didn't choose a forward-facing seat",
     langBtn: () => 'Language',
     langChanged: () => 'Switched to English',
     dOrderType: (w, g) => `You chose '${g}' instead of '${w}'`,
@@ -1823,7 +1877,78 @@ addLang('en', {
     "결제는 이미 끝났어요. 개찰구를 지나가 보세요": "You've already paid. Go through the gate",
     "카드를 단말기에 대기": "Tap the card on the reader",
     // 검색 설명
-    "카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.": "Practice Korean kiosks before you go: cafe and burger orders, hospital check-in, payment and certificates, airport bus tickets and subway tickets, on screens like the real ones. Available in Korean, English, Japanese and Chinese. No sign-up, and nothing is really paid.",
+    "카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드, 기차표 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.": "Practice Korean kiosks before you go: cafe and burger orders, hospital check-in, payment and certificates, airport bus, subway and train tickets, on screens like the real ones. Available in Korean, English, Japanese and Chinese. No sign-up, and nothing is really paid.",
+    // 기차표
+    "기차표": "Train ticket",
+    "기차역에서 승차권 사기": "Buy a ticket at the train station",
+    "한결철도": "Hangyeol Rail",
+    "승차권 구입": "Buy ticket",
+    "오늘 타는 기차표를 사요": "Buy a ticket for a train today",
+    "예약 승차권 발권": "Print reservation",
+    "미리 예약한 표를 뽑아요": "Print a ticket you booked in advance",
+    "고속열차": "High-speed",
+    "일반열차": "Regular",
+    "일반실": "Standard",
+    "특실": "First class",
+    "동대구": "Dongdaegu",
+    "신경주": "Singyeongju",
+    "울산": "Ulsan",
+    "포항": "Pohang",
+    "강릉": "Gangneung",
+    "역 전광판에서 열차 번호를 찾아 타는 곳 번호를 확인해요": "Find your train number on the station board and check the platform number",
+    "승강장 바닥이나 기둥에 적힌 호차 번호 앞에서 기다려요": "On the platform, wait by your car number marked on the floor or a pillar",
+    "내릴 때까지 승차권을 잘 가지고 있어요": "Keep your ticket until you get off",
+    "부산 가는 가장 빠른 고속열차를 어른 1명, 일반실로 사기": "Buy a standard ticket for 1 adult on the earliest high-speed train to Busan",
+    "대전 가는 열차를 어른 1명, 경로 1명으로 사기": "Buy train tickets to Daejeon for 1 adult and 1 senior",
+    "동대구 가는 고속열차 특실을 어른 1명으로 사기": "Buy a first class ticket on a high-speed train to Dongdaegu for 1 adult",
+    "강릉 가는 열차를 어른 1명, 순방향 창가 자리로 사기": "Buy a train ticket to Gangneung for 1 adult, in a forward-facing window seat",
+    "열차 종류": "Train type",
+    "좌석 등급": "Seat class",
+    "어른": "Adult",
+    "만 13세 이상": "13 and over",
+    "만 6~12세": "Ages 6–12",
+    "경로": "Senior",
+    "만 65세 이상": "65 and over",
+    "어린이·경로 할인은 연습용 예시예요. 실제 할인은 열차와 요일에 따라 달라요.": "Child and senior discounts are practice examples. Real discounts depend on the train and the day.",
+    "자리 부족": "Not enough seats",
+    "열차를 골라 주세요": "Choose a train",
+    "일반열차는 느리지만 요금이 싸요. 특실은 자리가 넓고 요금이 비싸요.": "Regular trains are slower but cheaper. First class has wider seats and costs more.",
+    "열차와 좌석 등급을 골라 보세요": "Choose a train and a seat class",
+    "좌석을 어떻게 정할까요?": "How do you want to choose seats?",
+    "좌석 자동 배정": "Assign seats for me",
+    "빈자리를 기계가 골라 줘요": "The machine picks free seats",
+    "좌석 직접 선택": "Choose seats myself",
+    "좌석을 정하는 방법을 골라 보세요": "Choose how to pick your seats",
+    "순방향": "facing forward",
+    "역방향": "facing backward",
+    "▼ 역방향 (뒤를 보고 앉아요)": "▼ Facing backward",
+    "▲ 순방향 (앞을 보고 앉아요)": "▲ Facing forward",
+    "앞 · 진행 방향": "Front · Direction of travel",
+    "열차": "Train",
+    "구간": "Route",
+    "도착 시각": "Arrival",
+    "외국에서 만든 카드는 받지 않는 발매기도 있어요. 그럴 때는 외국 카드를 받는 발매기나 매표 창구를 이용하세요.": "Some machines do not accept cards issued abroad. If yours is refused, use a machine that takes foreign cards or the ticket counter.",
+    "타는 곳 번호는 역 전광판에서 확인해요": "Check the platform number on the station board",
+    "매진된 열차예요. 다른 열차를 골라 주세요": "This train is sold out. Please choose another train",
+    "남은 자리가 모자라요. 다른 열차를 골라 주세요": "Not enough seats left. Please choose another train",
+    "호차": "Cars",
+    // 기차표: 날짜·시각, 창측·내측
+    "열차 안에서 좌석 위에 적힌 번호를 보고 앉아요. A·D는 창측(창가)이에요": "Inside, find the seat number shown above the seats. A and D are on the window side",
+    "내일 오전 9시 이후에 대전 가는 첫 열차를 어른 1명으로 사기": "Buy a ticket for 1 adult on the first train to Daejeon after 9 a.m. tomorrow",
+    "내일": "Tomorrow",
+    "지금 이후": "From now",
+    "출발 날짜": "Date",
+    "출발 날짜를 골라 주세요": "Choose a date",
+    "며칠 뒤 표까지 미리 살 수 있는지는 열차마다 달라요. 연습에서는 일주일만 보여 줘요.": "How far ahead you can buy depends on the train. This practice shows one week.",
+    "타는 날짜를 골라 보세요": "Choose the day you travel",
+    "몇 시 이후 열차를 볼까요?": "Show trains after what time?",
+    "고른 시각 뒤에 출발하는 열차를 보여 줘요.": "You will see trains leaving after the time you choose.",
+    "경로 할인으로 사면 열차 안에서 신분증을 보여 달라고 할 수 있어요. 꼭 가지고 타세요.": "If you buy a senior ticket, you may be asked to show ID on the train. Be sure to bring it.",
+    "창측·순방향 같은 자리를 골라요": "Pick a window-side or forward-facing seat",
+    "A와 D는 창측(창가), B와 C는 내측(통로 쪽) 자리예요": "A and D are window-side seats. B and C are aisle-side seats",
+    "이미 지난 시각이에요. 다른 시각을 골라 주세요": "That time has passed. Please choose another time",
+    "창측": "window side",
+    "내측": "aisle side",
   },
 });
 addLang('ja', {
@@ -1916,6 +2041,19 @@ addLang('ja', {
     cardChange: w => `1回用交通カードとおつり${w}を受け取りました。改札へ行きましょう`,
     gateBalance: w => `残高 ${w}`,
     gateFare: (f, w) => `基本運賃${f}が引かれ、残高は${w}です`,
+    // 기차
+    trainFrom: st => `出発駅: ${st}`,
+    trainDestSub: d => `高速列車で${d}`,
+    trainPeopleLine: (a, c, sn) => [a ? `大人${a}人` : '', c ? `子ども${c}人` : '', sn ? `シニア${sn}人` : ''].filter(Boolean).join('、') || '0人',
+    carSeats: (car, list) => `${car}号車 ${list}`,
+    carNo: car => `${car}号車`,
+    trainSeatPick: (c, t) => `座席を選ぶ ${c}/${t}`,
+    hourBtn: h => `${h}時`,
+    hourAfter: h => `${h}時以降`,
+    trainWhen: (d, h) => (h ? `${d} ${h}` : d),
+    trainGo: () => '乗車券が出てきました!電光掲示板で乗り場を確認しましょう',
+    dTrainFirst: () => 'いちばん早い列車を選んでいません',
+    dForward: () => '進行方向向きの席を選んでいません',
     langBtn: () => '言語 · Language',
     langChanged: () => '日本語に切り替えました',
     dOrderType: (w, g) => `「${w}」ではなく「${g}」を選びました`,
@@ -2667,7 +2805,78 @@ addLang('ja', {
     "결제는 이미 끝났어요. 개찰구를 지나가 보세요": "支払いはもう終わっています。改札を通ってみましょう",
     "카드를 단말기에 대기": "カードを読み取り機にタッチする",
     // 검색 설명
-    "카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.": "カフェ・ハンバーガーの注文、病院の受付・会計・証明書発行、空港バスの乗車券、地下鉄の交通カードのキオスクを、本物に近い画面で前もって練習できます。韓国語・英語・日本語・中国語に対応。会員登録不要で、実際の支払いはありません。",
+    "카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드, 기차표 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.": "カフェ・ハンバーガーの注文、病院の受付・会計・証明書発行、空港バスの乗車券、地下鉄の交通カード、列車の乗車券のキオスクを、本物に近い画面で前もって練習できます。韓国語・英語・日本語・中国語に対応。会員登録不要で、実際の支払いはありません。",
+    // 기차표
+    "기차표": "列車の切符",
+    "기차역에서 승차권 사기": "駅で乗車券を買う",
+    "한결철도": "ハンギョル鉄道",
+    "승차권 구입": "乗車券の購入",
+    "오늘 타는 기차표를 사요": "今日乗る列車の切符を買います",
+    "예약 승차권 발권": "予約した乗車券の発券",
+    "미리 예약한 표를 뽑아요": "事前に予約した乗車券を印刷します",
+    "고속열차": "高速列車",
+    "일반열차": "一般列車",
+    "일반실": "一般室",
+    "특실": "特室",
+    "동대구": "東大邱",
+    "신경주": "新慶州",
+    "울산": "蔚山",
+    "포항": "浦項",
+    "강릉": "江陵",
+    "역 전광판에서 열차 번호를 찾아 타는 곳 번호를 확인해요": "駅の電光掲示板で列車番号を探し、乗り場の番号を確認します",
+    "승강장 바닥이나 기둥에 적힌 호차 번호 앞에서 기다려요": "ホームの床や柱に書かれた号車番号の前で待ちます",
+    "내릴 때까지 승차권을 잘 가지고 있어요": "降りるまで乗車券をなくさないように持っておきます",
+    "부산 가는 가장 빠른 고속열차를 어른 1명, 일반실로 사기": "釜山行きのいちばん早い高速列車の一般室を大人1人分買う",
+    "대전 가는 열차를 어른 1명, 경로 1명으로 사기": "大田行きの列車の乗車券を大人1人、シニア1人分買う",
+    "동대구 가는 고속열차 특실을 어른 1명으로 사기": "東大邱行きの高速列車の特室を大人1人分買う",
+    "강릉 가는 열차를 어른 1명, 순방향 창가 자리로 사기": "江陵行きの列車の乗車券を大人1人分、進行方向向きの窓側の席で買う",
+    "열차 종류": "列車の種類",
+    "좌석 등급": "座席の等級",
+    "어른": "大人",
+    "만 13세 이상": "13歳以上",
+    "만 6~12세": "6~12歳",
+    "경로": "シニア",
+    "만 65세 이상": "65歳以上",
+    "어린이·경로 할인은 연습용 예시예요. 실제 할인은 열차와 요일에 따라 달라요.": "子ども・シニアの割引は練習用の例です。実際の割引は列車や曜日によって違います。",
+    "자리 부족": "席が足りません",
+    "열차를 골라 주세요": "列車を選んでください",
+    "일반열차는 느리지만 요금이 싸요. 특실은 자리가 넓고 요금이 비싸요.": "一般列車は遅いですが安いです。特室は席が広く、料金が高いです。",
+    "열차와 좌석 등급을 골라 보세요": "列車と座席の等級を選んでください",
+    "좌석을 어떻게 정할까요?": "座席はどう決めますか?",
+    "좌석 자동 배정": "座席を自動で指定",
+    "빈자리를 기계가 골라 줘요": "空いている席を機械が選びます",
+    "좌석 직접 선택": "座席を自分で選ぶ",
+    "좌석을 정하는 방법을 골라 보세요": "座席の決め方を選んでください",
+    "순방향": "進行方向向き",
+    "역방향": "進行方向と逆向き",
+    "▼ 역방향 (뒤를 보고 앉아요)": "▼ 逆向き(後ろ向きに座ります)",
+    "▲ 순방향 (앞을 보고 앉아요)": "▲ 進行方向向き(前向きに座ります)",
+    "앞 · 진행 방향": "前 · 進行方向",
+    "열차": "列車",
+    "구간": "区間",
+    "도착 시각": "到着時刻",
+    "외국에서 만든 카드는 받지 않는 발매기도 있어요. 그럴 때는 외국 카드를 받는 발매기나 매표 창구를 이용하세요.": "海外で発行されたカードが使えない券売機もあります。その場合は、海外カードが使える券売機か切符売り場を利用してください。",
+    "타는 곳 번호는 역 전광판에서 확인해요": "乗り場の番号は駅の電光掲示板で確認します",
+    "매진된 열차예요. 다른 열차를 골라 주세요": "満席の列車です。別の列車を選んでください",
+    "남은 자리가 모자라요. 다른 열차를 골라 주세요": "残りの席が足りません。別の列車を選んでください",
+    "호차": "号車",
+    // 기차표: 날짜·시각, 창측·내측
+    "열차 안에서 좌석 위에 적힌 번호를 보고 앉아요. A·D는 창측(창가)이에요": "車内では座席の上に書かれた番号を見て座ります。AとDが窓側です",
+    "내일 오전 9시 이후에 대전 가는 첫 열차를 어른 1명으로 사기": "明日の午前9時以降に大田へ行く最初の列車の乗車券を大人1人分買う",
+    "내일": "明日",
+    "지금 이후": "今から",
+    "출발 날짜": "出発日",
+    "출발 날짜를 골라 주세요": "出発日を選んでください",
+    "며칠 뒤 표까지 미리 살 수 있는지는 열차마다 달라요. 연습에서는 일주일만 보여 줘요.": "何日先まで買えるかは列車によって違います。練習では1週間だけ表示します。",
+    "타는 날짜를 골라 보세요": "乗る日を選んでください",
+    "몇 시 이후 열차를 볼까요?": "何時以降の列車を見ますか?",
+    "고른 시각 뒤에 출발하는 열차를 보여 줘요.": "選んだ時刻より後に出発する列車を表示します。",
+    "경로 할인으로 사면 열차 안에서 신분증을 보여 달라고 할 수 있어요. 꼭 가지고 타세요.": "シニア割引で買うと、車内で身分証の提示を求められることがあります。必ず持って乗りましょう。",
+    "창측·순방향 같은 자리를 골라요": "窓側や進行方向向きの席を選べます",
+    "A와 D는 창측(창가), B와 C는 내측(통로 쪽) 자리예요": "AとDが窓側、BとCが通路側の席です",
+    "이미 지난 시각이에요. 다른 시각을 골라 주세요": "すでに過ぎた時刻です。別の時刻を選んでください",
+    "창측": "窓側",
+    "내측": "通路側",
   },
 });
 addLang('zh-Hans', {
@@ -2760,6 +2969,19 @@ addLang('zh-Hans', {
     cardChange: w => `拿好了一次性交通卡和找零${w},去闸机吧`,
     gateBalance: w => `余额 ${w}`,
     gateFare: (f, w) => `扣除基本票价${f}后,余额为${w}`,
+    // 기차
+    trainFrom: st => `出发站: ${st}`,
+    trainDestSub: d => `高速列车${d}`,
+    trainPeopleLine: (a, c, sn) => [a ? `成人${a}名` : '', c ? `儿童${c}名` : '', sn ? `敬老${sn}名` : ''].filter(Boolean).join('、') || '0人',
+    carSeats: (car, list) => `${car}车 ${list}`,
+    carNo: car => `${car}车`,
+    trainSeatPick: (c, t) => `选择座位 ${c}/${t}`,
+    hourBtn: h => `${h}点`,
+    hourAfter: h => `${h}点以后`,
+    trainWhen: (d, h) => (h ? `${d} ${h}` : d),
+    trainGo: () => '车票出来了!请在电子显示屏上确认站台',
+    dTrainFirst: () => '您没有选择最早的一班列车',
+    dForward: () => '您没有选择顺向座位',
     langBtn: () => '语言 · Language',
     langChanged: () => '已切换为简体中文',
     dOrderType: (w, g) => `您选了“${g}”,而不是“${w}”`,
@@ -3511,7 +3733,78 @@ addLang('zh-Hans', {
     "결제는 이미 끝났어요. 개찰구를 지나가 보세요": "已经付过款了。请通过闸机",
     "카드를 단말기에 대기": "在读卡器上刷卡",
     // 검색 설명
-    "카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.": "用和真实画面相似的界面,提前练习咖啡店和汉堡店点餐、医院挂号·缴费·打印证明、机场巴士车票和地铁交通卡等韩国自助机。支持韩语、英语、日语和中文,无需注册,不会真的付款。",
+    "카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드, 기차표 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.": "用和真实画面相似的界面,提前练习咖啡店和汉堡店点餐、医院挂号·缴费·打印证明、机场巴士车票、地铁交通卡和火车票等韩国自助机。支持韩语、英语、日语和中文,无需注册,不会真的付款。",
+    // 기차표
+    "기차표": "火车票",
+    "기차역에서 승차권 사기": "在火车站买车票",
+    "한결철도": "韩洁铁路",
+    "승차권 구입": "购买车票",
+    "오늘 타는 기차표를 사요": "购买今天乘坐的车票",
+    "예약 승차권 발권": "领取预订车票",
+    "미리 예약한 표를 뽑아요": "打印提前预订的车票",
+    "고속열차": "高速列车",
+    "일반열차": "普通列车",
+    "일반실": "普通车厢",
+    "특실": "特等车厢",
+    "동대구": "东大邱",
+    "신경주": "新庆州",
+    "울산": "蔚山",
+    "포항": "浦项",
+    "강릉": "江陵",
+    "역 전광판에서 열차 번호를 찾아 타는 곳 번호를 확인해요": "在车站电子显示屏上找到车次,确认站台号",
+    "승강장 바닥이나 기둥에 적힌 호차 번호 앞에서 기다려요": "在站台地面或柱子上标示的车厢号前等候",
+    "내릴 때까지 승차권을 잘 가지고 있어요": "下车前请保管好车票",
+    "부산 가는 가장 빠른 고속열차를 어른 1명, 일반실로 사기": "购买去釜山最早一班高速列车的普通车厢车票,成人1名",
+    "대전 가는 열차를 어른 1명, 경로 1명으로 사기": "购买去大田的车票,成人1名、敬老1名",
+    "동대구 가는 고속열차 특실을 어른 1명으로 사기": "购买去东大邱的高速列车特等车厢车票,成人1名",
+    "강릉 가는 열차를 어른 1명, 순방향 창가 자리로 사기": "购买去江陵的车票,成人1名,顺向靠窗座位",
+    "열차 종류": "列车种类",
+    "좌석 등급": "座位等级",
+    "어른": "成人",
+    "만 13세 이상": "13周岁以上",
+    "만 6~12세": "6~12周岁",
+    "경로": "敬老",
+    "만 65세 이상": "65周岁以上",
+    "어린이·경로 할인은 연습용 예시예요. 실제 할인은 열차와 요일에 따라 달라요.": "儿童和敬老优惠是练习用的示例。实际优惠因列车和日期而不同。",
+    "자리 부족": "座位不足",
+    "열차를 골라 주세요": "请选择列车",
+    "일반열차는 느리지만 요금이 싸요. 특실은 자리가 넓고 요금이 비싸요.": "普通列车慢但便宜。特等车厢座位宽敞,价格较高。",
+    "열차와 좌석 등급을 골라 보세요": "请选择列车和座位等级",
+    "좌석을 어떻게 정할까요?": "要怎么选座位?",
+    "좌석 자동 배정": "自动分配座位",
+    "빈자리를 기계가 골라 줘요": "由机器挑选空座位",
+    "좌석 직접 선택": "自己选座位",
+    "좌석을 정하는 방법을 골라 보세요": "请选择选座位的方式",
+    "순방향": "顺向",
+    "역방향": "逆向",
+    "▼ 역방향 (뒤를 보고 앉아요)": "▼ 逆向(背对行进方向)",
+    "▲ 순방향 (앞을 보고 앉아요)": "▲ 顺向(面向行进方向)",
+    "앞 · 진행 방향": "前方 · 行进方向",
+    "열차": "列车",
+    "구간": "区间",
+    "도착 시각": "到达时间",
+    "외국에서 만든 카드는 받지 않는 발매기도 있어요. 그럴 때는 외국 카드를 받는 발매기나 매표 창구를 이용하세요.": "有些售票机不接受国外发行的卡。遇到这种情况,请使用可刷国外卡的售票机或售票窗口。",
+    "타는 곳 번호는 역 전광판에서 확인해요": "站台号请看车站电子显示屏",
+    "매진된 열차예요. 다른 열차를 골라 주세요": "这班列车已满座。请选择其他列车",
+    "남은 자리가 모자라요. 다른 열차를 골라 주세요": "剩余座位不够。请选择其他列车",
+    "호차": "车厢",
+    // 기차표: 날짜·시각, 창측·내측
+    "열차 안에서 좌석 위에 적힌 번호를 보고 앉아요. A·D는 창측(창가)이에요": "上车后看座位上方的号码入座。A和D是靠窗座位",
+    "내일 오전 9시 이후에 대전 가는 첫 열차를 어른 1명으로 사기": "购买明天上午9点以后去大田的第一班列车车票,成人1名",
+    "내일": "明天",
+    "지금 이후": "现在以后",
+    "출발 날짜": "出发日期",
+    "출발 날짜를 골라 주세요": "请选择出发日期",
+    "며칠 뒤 표까지 미리 살 수 있는지는 열차마다 달라요. 연습에서는 일주일만 보여 줘요.": "能提前多少天买票因列车而异。练习中只显示一周。",
+    "타는 날짜를 골라 보세요": "请选择乘车日期",
+    "몇 시 이후 열차를 볼까요?": "要看几点以后的列车?",
+    "고른 시각 뒤에 출발하는 열차를 보여 줘요.": "会显示所选时间之后出发的列车。",
+    "경로 할인으로 사면 열차 안에서 신분증을 보여 달라고 할 수 있어요. 꼭 가지고 타세요.": "用敬老优惠购票时,车上可能会要求出示身份证件。请务必随身携带。",
+    "창측·순방향 같은 자리를 골라요": "可以选靠窗、顺向等座位",
+    "A와 D는 창측(창가), B와 C는 내측(통로 쪽) 자리예요": "A和D靠窗,B和C靠走道",
+    "이미 지난 시각이에요. 다른 시각을 골라 주세요": "这个时间已经过了。请选择其他时间",
+    "창측": "靠窗",
+    "내측": "靠走道",
   },
 });
 addLang('zh-Hant', {
@@ -3604,6 +3897,19 @@ addLang('zh-Hant', {
     cardChange: w => `拿好了一次性交通卡和找零${w},去閘門吧`,
     gateBalance: w => `餘額 ${w}`,
     gateFare: (f, w) => `扣除基本票價${f}後,餘額為${w}`,
+    // 기차
+    trainFrom: st => `出發站: ${st}`,
+    trainDestSub: d => `高速列車${d}`,
+    trainPeopleLine: (a, c, sn) => [a ? `成人${a}名` : '', c ? `兒童${c}名` : '', sn ? `敬老${sn}名` : ''].filter(Boolean).join('、') || '0人',
+    carSeats: (car, list) => `${car}車 ${list}`,
+    carNo: car => `${car}車`,
+    trainSeatPick: (c, t) => `選擇座位 ${c}/${t}`,
+    hourBtn: h => `${h}點`,
+    hourAfter: h => `${h}點以後`,
+    trainWhen: (d, h) => (h ? `${d} ${h}` : d),
+    trainGo: () => '車票出來了!請在電子看板上確認月台',
+    dTrainFirst: () => '您沒有選擇最早的一班列車',
+    dForward: () => '您沒有選擇順向座位',
     langBtn: () => '語言 · Language',
     langChanged: () => '已切換為繁體中文',
     dOrderType: (w, g) => `您選了「${g}」,而不是「${w}」`,
@@ -4355,7 +4661,78 @@ addLang('zh-Hant', {
     "결제는 이미 끝났어요. 개찰구를 지나가 보세요": "已經付過款了。請通過閘門",
     "카드를 단말기에 대기": "在感應器上刷卡",
     // 검색 설명
-    "카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.": "用和真實畫面相似的介面,事先練習咖啡店和漢堡店點餐、醫院掛號·繳費·列印證明、機場巴士車票和地鐵交通卡等韓國自助機。支援韓文、英文、日文和中文,不需要註冊,也不會真的付款。",
+    "카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드, 기차표 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.": "用和真實畫面相似的介面,事先練習咖啡店和漢堡店點餐、醫院掛號·繳費·列印證明、機場巴士車票、地鐵交通卡和火車票等韓國自助機。支援韓文、英文、日文和中文,不需要註冊,也不會真的付款。",
+    // 기차표
+    "기차표": "火車票",
+    "기차역에서 승차권 사기": "在火車站買車票",
+    "한결철도": "韓潔鐵路",
+    "승차권 구입": "購買車票",
+    "오늘 타는 기차표를 사요": "購買今天搭乘的車票",
+    "예약 승차권 발권": "領取預訂車票",
+    "미리 예약한 표를 뽑아요": "列印事先預訂的車票",
+    "고속열차": "高速列車",
+    "일반열차": "普通列車",
+    "일반실": "標準車廂",
+    "특실": "商務車廂",
+    "동대구": "東大邱",
+    "신경주": "新慶州",
+    "울산": "蔚山",
+    "포항": "浦項",
+    "강릉": "江陵",
+    "역 전광판에서 열차 번호를 찾아 타는 곳 번호를 확인해요": "在車站電子看板上找到車次,確認月台號碼",
+    "승강장 바닥이나 기둥에 적힌 호차 번호 앞에서 기다려요": "在月台地面或柱子上標示的車廂號碼前等候",
+    "내릴 때까지 승차권을 잘 가지고 있어요": "下車前請保管好車票",
+    "부산 가는 가장 빠른 고속열차를 어른 1명, 일반실로 사기": "購買去釜山最早一班高速列車的標準車廂車票,成人1名",
+    "대전 가는 열차를 어른 1명, 경로 1명으로 사기": "購買去大田的車票,成人1名、敬老1名",
+    "동대구 가는 고속열차 특실을 어른 1명으로 사기": "購買去東大邱的高速列車商務車廂車票,成人1名",
+    "강릉 가는 열차를 어른 1명, 순방향 창가 자리로 사기": "購買去江陵的車票,成人1名,順向靠窗座位",
+    "열차 종류": "列車種類",
+    "좌석 등급": "座位等級",
+    "어른": "成人",
+    "만 13세 이상": "13歲以上",
+    "만 6~12세": "6~12歲",
+    "경로": "敬老",
+    "만 65세 이상": "65歲以上",
+    "어린이·경로 할인은 연습용 예시예요. 실제 할인은 열차와 요일에 따라 달라요.": "兒童和敬老優惠是練習用的範例。實際優惠依列車和日期而不同。",
+    "자리 부족": "座位不足",
+    "열차를 골라 주세요": "請選擇列車",
+    "일반열차는 느리지만 요금이 싸요. 특실은 자리가 넓고 요금이 비싸요.": "普通列車慢但便宜。商務車廂座位寬敞,價格較高。",
+    "열차와 좌석 등급을 골라 보세요": "請選擇列車和座位等級",
+    "좌석을 어떻게 정할까요?": "要怎麼選座位?",
+    "좌석 자동 배정": "自動分配座位",
+    "빈자리를 기계가 골라 줘요": "由機器挑選空位",
+    "좌석 직접 선택": "自己選座位",
+    "좌석을 정하는 방법을 골라 보세요": "請選擇選座位的方式",
+    "순방향": "順向",
+    "역방향": "逆向",
+    "▼ 역방향 (뒤를 보고 앉아요)": "▼ 逆向(背對行進方向)",
+    "▲ 순방향 (앞을 보고 앉아요)": "▲ 順向(面向行進方向)",
+    "앞 · 진행 방향": "前方 · 行進方向",
+    "열차": "列車",
+    "구간": "區間",
+    "도착 시각": "到達時間",
+    "외국에서 만든 카드는 받지 않는 발매기도 있어요. 그럴 때는 외국 카드를 받는 발매기나 매표 창구를 이용하세요.": "有些售票機不接受國外發行的卡。遇到這種情況,請使用可刷國外卡的售票機或售票窗口。",
+    "타는 곳 번호는 역 전광판에서 확인해요": "月台號碼請看車站電子看板",
+    "매진된 열차예요. 다른 열차를 골라 주세요": "這班列車已客滿。請選擇其他列車",
+    "남은 자리가 모자라요. 다른 열차를 골라 주세요": "剩餘座位不夠。請選擇其他列車",
+    "호차": "車廂",
+    // 기차표: 날짜·시각, 창측·내측
+    "열차 안에서 좌석 위에 적힌 번호를 보고 앉아요. A·D는 창측(창가)이에요": "上車後看座位上方的號碼入座。A和D是靠窗座位",
+    "내일 오전 9시 이후에 대전 가는 첫 열차를 어른 1명으로 사기": "購買明天上午9點以後去大田的第一班列車車票,成人1名",
+    "내일": "明天",
+    "지금 이후": "現在以後",
+    "출발 날짜": "出發日期",
+    "출발 날짜를 골라 주세요": "請選擇出發日期",
+    "며칠 뒤 표까지 미리 살 수 있는지는 열차마다 달라요. 연습에서는 일주일만 보여 줘요.": "能提前多少天買票依列車而異。練習中只顯示一週。",
+    "타는 날짜를 골라 보세요": "請選擇搭乘日期",
+    "몇 시 이후 열차를 볼까요?": "要看幾點以後的列車?",
+    "고른 시각 뒤에 출발하는 열차를 보여 줘요.": "會顯示所選時間之後出發的列車。",
+    "경로 할인으로 사면 열차 안에서 신분증을 보여 달라고 할 수 있어요. 꼭 가지고 타세요.": "用敬老優惠購票時,車上可能會要求出示身分證件。請務必隨身攜帶。",
+    "창측·순방향 같은 자리를 골라요": "可以選靠窗、順向等座位",
+    "A와 D는 창측(창가), B와 C는 내측(통로 쪽) 자리예요": "A和D靠窗,B和C靠走道",
+    "이미 지난 시각이에요. 다른 시각을 골라 주세요": "這個時間已經過了。請選擇其他時間",
+    "창측": "靠窗",
+    "내측": "靠走道",
   },
 });
 /* @@LANG-PACKS@@ */
@@ -4450,6 +4827,12 @@ const PRACTICES = {
       { screen: 'subCash', when: subCashPay }, { screen: 'insert', when: subCardPay },
       { screen: 'subGateIn', when: subPays }, { screen: 'subGateOut', when: subSingle },
       { screen: 'subRefund', when: subRefund }, 'subDone'],
+  },
+  train: {
+    title: '기차표', emoji: '🚄', desc: '기차역에서 승차권 사기', train: true,
+    // 도착역 → 날짜 → 시각 → 인원 → 열차·좌석 등급 → 좌석 정하는 방법(자동 배정이면 좌석표는 건너뜀) → 확인 → 결제 → 승차권
+    flow: ['trainStart', 'trainDest', 'trainDate', 'trainTime', 'trainPeople', 'trainList', 'trainSeatWay',
+      { screen: 'trainSeat', when: st => st.trainWay === 'pick' }, 'trainConfirm', 'pay', 'insert', 'trainTicket'],
   },
 };
 
@@ -4876,6 +5259,49 @@ const SUBWAY = {
   refundSteps: ['동전 나오는 곳에서 500원을 꺼내요', '다 쓴 카드는 기계가 가져가요'],
 };
 
+/* ----- 기차표 발매기 (가상 '한결철도', 역 이름은 실제 역. 시간·요금·할인은 연습용 예시) ----- */
+const TRAIN = {
+  name: '한결철도',
+  emoji: '🚄',
+  theme: { brand: '#4C1D95', action: '#6D28D9', press: '#5B21B6', soft: '#F3EEFF', pulse: '109, 40, 217' },
+  here: '서울', // 발매기가 있는 역
+  menu: [
+    { id: 'buy', label: '승차권 구입', emoji: '🎫', sub: '오늘 타는 기차표를 사요' },
+    { id: 'booked', label: '예약 승차권 발권', emoji: '📱', sub: '미리 예약한 표를 뽑아요' },
+  ],
+  types: [{ id: 'fast', label: '고속열차' }, { id: 'normal', label: '일반열차' }],
+  classes: [{ id: 'std', label: '일반실' }, { id: 'first', label: '특실' }],
+  // fast·normal: [걸리는 분, 일반실 요금]. normal 이 없으면 고속열차만 다님. every: 몇 분마다 출발
+  dests: [
+    { id: 'daejeon', label: '대전', fast: [60, 23700], normal: [115, 16000], every: 20 },
+    { id: 'dongdaegu', label: '동대구', fast: [110, 43500], normal: [220, 26900], every: 25 },
+    { id: 'singyeongju', label: '신경주', fast: [130, 49300], every: 30 },
+    { id: 'ulsan', label: '울산', fast: [140, 52600], every: 30 },
+    { id: 'pohang', label: '포항', fast: [150, 52600], every: 40 },
+    { id: 'busan', label: '부산', fast: [160, 59800], normal: [330, 35800], every: 20 },
+    { id: 'gangneung', label: '강릉', fast: [120, 27600], every: 40 },
+  ],
+  firstRate: 1.4, // 특실 = 일반실 × 1.4
+  childRate: 0.5, // 어린이(만 6~12세)
+  seniorRate: 0.7, // 경로(만 65세 이상)
+  // 출발 순서마다 열차 종류와 남은 자리(일반실·특실). 일반열차는 특실이 없음. 첫 열차 일반실은 매진
+  slots: [
+    { type: 'fast', std: 0, first: 6 },
+    { type: 'fast', std: 14, first: 0 },
+    { type: 'normal', std: 30, first: 0 },
+    { type: 'fast', std: 3, first: 10 },
+    { type: 'normal', std: 40, first: 0 },
+    { type: 'fast', std: 26, first: 12 },
+  ],
+  cars: { std: ['2', '3', '4', '5'], first: ['1'] },
+  // 좌석 배치: 일반실은 A B | C D 10줄, 특실은 A | C D 8줄. 앞쪽 절반은 역방향, 뒤쪽 절반은 순방향
+  layout: { std: { cols: ['A', 'B', 'C', 'D'], rows: 10 }, first: { cols: ['A', 'C', 'D'], rows: 8 } },
+  maxPeople: 9,
+  days: 7, // 오늘부터 며칠까지 고를 수 있는지
+  hours: [6, 22], // 고를 수 있는 출발 시각(몇 시 이후)
+  ticketSteps: ['역 전광판에서 열차 번호를 찾아 타는 곳 번호를 확인해요', '승강장 바닥이나 기둥에 적힌 호차 번호 앞에서 기다려요', '열차 안에서 좌석 위에 적힌 번호를 보고 앉아요. A·D는 창측(창가)이에요', '내릴 때까지 승차권을 잘 가지고 있어요'],
+};
+
 /* =====================================================================
    4) 미션 — practice: 어느 연습인지, expect: 맞았는지 볼 내용
    ===================================================================== */
@@ -4924,6 +5350,16 @@ const MISSIONS = [
     expect: { mode: 'single', dest: 'cityhall', qty: 1, pay: 'card' } },
   { id: 'sub-charge', practice: 'subway', text: '교통카드에 10,000원 충전하기',
     expect: { mode: 'charge', amount: 10000 } },
+  { id: 'train-busan-first', practice: 'train', text: '부산 가는 가장 빠른 고속열차를 어른 1명, 일반실로 사기',
+    expect: { dest: 'busan', time: 'first', type: 'fast', cls: 'std', adults: 1, children: 0, seniors: 0 } },
+  { id: 'train-daejeon-senior', practice: 'train', text: '대전 가는 열차를 어른 1명, 경로 1명으로 사기',
+    expect: { dest: 'daejeon', adults: 1, children: 0, seniors: 1 } },
+  { id: 'train-dongdaegu-first', practice: 'train', text: '동대구 가는 고속열차 특실을 어른 1명으로 사기',
+    expect: { dest: 'dongdaegu', type: 'fast', cls: 'first', adults: 1, children: 0, seniors: 0 } },
+  { id: 'train-tomorrow-morning', practice: 'train', text: '내일 오전 9시 이후에 대전 가는 첫 열차를 어른 1명으로 사기',
+    expect: { dest: 'daejeon', day: 1, hour: 9, time: 'first', adults: 1, children: 0, seniors: 0 } },
+  { id: 'train-gangneung-forward', practice: 'train', text: '강릉 가는 열차를 어른 1명, 순방향 창가 자리로 사기',
+    expect: { dest: 'gangneung', adults: 1, children: 0, seniors: 0, forward: true, window: true } },
   { id: 'sub-refund', practice: 'subway', text: '다 쓴 1회용 교통카드로 보증금 500원 돌려받기',
     expect: { mode: 'refund' } },
 ];
@@ -5129,7 +5565,8 @@ const won = n => msg('won', n);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const P = () => PRACTICES[app.practice];
-const place = () => store || (app.practice && P().bus ? BUS : app.practice && P().subway ? SUBWAY : HOSPITAL);
+const place = () => store || (app.practice && P().bus ? BUS : app.practice && P().subway ? SUBWAY
+  : app.practice && P().train ? TRAIN : HOSPITAL);
 const currentMission = () => (app.mission ? MISSIONS.find(m => m.id === app.mission) : null);
 const missionExpect = () => (currentMission() || { expect: {} }).expect;
 const labelOf = (list, id) => { const x = list.find(o => o.id === id); return x ? x.label : '고르지 않음'; };
@@ -5264,6 +5701,7 @@ function totalDue() {
   if (store) return cartTotal();
   if (P().bus) return busTotal();
   if (P().subway) return subDue();
+  if (P().train) return trainTotal();
   return P().hospital === 'certificate' ? certFee() : billTotal();
 }
 
@@ -5316,6 +5754,95 @@ function subDue() {
   return 0;
 }
 const subBalanceAfter = () => SUBWAY.balance + (state.chargeAmount || 0) - SUBWAY.cardFare;
+/* ----- 기차 계산 ----- */
+const findTDest = id => TRAIN.dests.find(d => d.id === id);
+const trainPeopleN = () => state.adults + state.children + state.seniors;
+// 고른 도착역의 오늘 열차 목록 (연습을 시작한 때부터)
+function trainList(destId = state.trainDest) {
+  const d = findTDest(destId);
+  if (!d) return [];
+  const di = TRAIN.dests.indexOf(d);
+  return TRAIN.slots.map((sl, i) => {
+    const type = sl.type === 'normal' && d.normal ? 'normal' : 'fast';
+    const [min, fare] = d[type];
+    const dep = new Date(state.trainBase + i * d.every * 60000);
+    const arr = new Date(dep.getTime() + min * 60000);
+    const hm = x => `${pad2(x.getHours())}:${pad2(x.getMinutes())}`;
+    return {
+      i, type, min, dep, depTime: hm(dep), arrTime: hm(arr),
+      no: String((type === 'fast' ? 101 : 1201) + di * 20 + i * 2),
+      left: { std: sl.std, first: type === 'fast' ? sl.first : null },
+      fare: { std: fare, first: type === 'fast' ? Math.round(fare * TRAIN.firstRate / 100) * 100 : null },
+    };
+  });
+}
+const curTrain = () => trainList()[state.trainIdx] || null;
+// 날짜·시각: day 0 = 오늘, hour 'now' = 지금 이후
+function dayDate(i) { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + i); return d; }
+function trainBaseFor(day, hour) {
+  if (hour === 'now') return busBaseTime();
+  const d = dayDate(day);
+  d.setHours(hour);
+  return d.getTime();
+}
+const weekdayShort = d => d.toLocaleDateString(curLang().locale, { weekday: 'short' });
+const dayText = i => (i == null ? '-' : i === 0 ? T('오늘') : i === 1 ? T('내일') : `${dayDate(i).getMonth() + 1}/${dayDate(i).getDate()} (${weekdayShort(dayDate(i))})`);
+const dayFull = i => (i < 2 ? `${T(i ? '내일' : '오늘')} · ` : '') + fmtDay(dayDate(i));
+const hourText = h => (h == null ? '-' : h === 'now' ? T('지금 이후') : msg('hourAfter', h));
+const hourPast = h => h !== 'now' && state.trainDay === 0 && h <= new Date().getHours();
+const roundWon = x => Math.round(x / 100) * 100;
+function trainTotal() {
+  const t = curTrain();
+  if (!t || !state.trainCls) return 0;
+  const f = t.fare[state.trainCls];
+  return state.adults * f + state.children * roundWon(f * TRAIN.childRate) + state.seniors * roundWon(f * TRAIN.seniorRate);
+}
+// 그 열차·등급에 지금 인원이 다 탈 수 있는지
+const trainFits = (t, cls, need = Math.max(1, trainPeopleN())) => t.left[cls] != null && t.left[cls] >= need;
+// 조건에 맞는 첫 열차 (미션 '가장 빠른 열차'와 도움말에 씀)
+function firstTrain(ex) {
+  const need = Math.max(1, (ex.adults || 0) + (ex.children || 0) + (ex.seniors || 0));
+  const cls = ex.cls || 'std';
+  const t = trainList().find(x => (!ex.type || x.type === ex.type) && trainFits(x, cls, need));
+  return t ? t.i : null;
+}
+function trainSeats(cls) {
+  const lay = TRAIN.layout[cls];
+  const out = [];
+  for (let r = 1; r <= lay.rows; r++) lay.cols.forEach((c, ci) => out.push({ id: `${r}${c}`, row: r, col: c, ci }));
+  return out;
+}
+const isTrainWindow = id => /[AD]$/.test(id);
+const isForward = (cls, id) => parseInt(id, 10) > TRAIN.layout[cls].rows / 2;
+// 팔린 자리 (열차 번호·호차로 정해짐, 약 40%)
+function trainTaken(no, car, seat) {
+  return (Number(no) * 7 + Number(car) * 13 + seat.row * 5 + seat.ci * 3) % 10 < 4;
+}
+const seatTaken = (car, id) => {
+  const t = curTrain();
+  const seat = trainSeats(state.trainCls).find(x => x.id === id);
+  return !t || !seat || trainTaken(t.no, car, seat);
+};
+const pickedSeat = (car, id) => state.tSeats.some(x => x.car === car && x.id === id);
+function carSeatsText(seats) {
+  const byCar = {};
+  seats.forEach(x => { (byCar[x.car] = byCar[x.car] || []).push(x.id); });
+  return Object.keys(byCar).map(car => msg('carSeats', car, byCar[car].join(', '))).join(' / ') || '-';
+}
+// 자동 배정: 앞 호차부터 빈자리를 차례로
+function autoSeats() {
+  const t = curTrain();
+  const need = trainPeopleN();
+  const out = [];
+  for (const car of TRAIN.cars[state.trainCls]) {
+    for (const seat of trainSeats(state.trainCls)) {
+      if (out.length >= need) break;
+      if (!trainTaken(t.no, car, seat)) out.push({ car, id: seat.id });
+    }
+  }
+  return out;
+}
+
 const lineDot = id => `<span class="line-dot" style="background:${findLine(id).color}">${id}</span>`;
 const busPeople = () => state.adults + state.children;
 const busTotal = () => {
@@ -5403,7 +5930,7 @@ function saveDone() {
 
 function evaluateMission(m) {
   const diffs = store ? evaluateOrder(m.expect) : P().bus ? evaluateBus(m.expect)
-    : P().subway ? evaluateSubway(m.expect) : evaluateHospital(m.expect);
+    : P().subway ? evaluateSubway(m.expect) : P().train ? evaluateTrain(m.expect) : evaluateHospital(m.expect);
   const seen = new Set();
   return diffs.filter(d => { const key = JSON.stringify(d); if (seen.has(key)) return false; seen.add(key); return true; });
 }
@@ -5496,6 +6023,30 @@ function evaluateBus(ex) {
   return out;
 }
 
+function evaluateTrain(ex) {
+  const out = [];
+  if (ex.dest && state.trainDest !== ex.dest) {
+    out.push({ k: 'pick', what: '도착역', w: labelOf(TRAIN.dests, ex.dest), g: labelOf(TRAIN.dests, state.trainDest) });
+  }
+  const t = curTrain();
+  if (ex.type && t && t.type !== ex.type) out.push({ k: 'pick', what: '열차 종류', w: labelOf(TRAIN.types, ex.type), g: labelOf(TRAIN.types, t.type) });
+  if (ex.cls && state.trainCls !== ex.cls) out.push({ k: 'pick', what: '좌석 등급', w: labelOf(TRAIN.classes, ex.cls), g: labelOf(TRAIN.classes, state.trainCls) });
+  if (ex.day != null && state.trainDay !== ex.day) out.push({ k: 'tday', w: ex.day, g: state.trainDay });
+  if (ex.hour != null && state.trainHour !== ex.hour) out.push({ k: 'thour', w: ex.hour, g: state.trainHour });
+  // '가장 빠른(첫) 열차': 정한 날짜·시각(없으면 오늘 지금 이후)에서 첫 열차
+  const sameWhen = state.trainDay === (ex.day != null ? ex.day : 0) && state.trainHour === (ex.hour != null ? ex.hour : 'now');
+  if (ex.time === 'first' && ((sameWhen && state.trainIdx !== firstTrain(ex)) || (!sameWhen && ex.day == null && ex.hour == null))) {
+    out.push({ k: 'trainFirst' });
+  }
+  const w = [ex.adults || 0, ex.children || 0, ex.seniors || 0];
+  const g = [state.adults, state.children, state.seniors];
+  if (ex.adults != null && w.join() !== g.join()) out.push({ k: 'tpeople', w, g });
+  const seats = state.tSeats;
+  if (ex.window && !(seats.length && seats.every(x => isTrainWindow(x.id)))) out.push({ k: 'window' });
+  if (ex.forward && !(seats.length && seats.every(x => isForward(state.trainCls, x.id)))) out.push({ k: 'forward' });
+  return out;
+}
+
 function evaluateSubway(ex) {
   const out = [];
   const wantMode = ex.mode || 'single';
@@ -5522,6 +6073,11 @@ function fmtDiff(x) {
     case 'together': return msg('dTogether');
     case 'tickets': return msg('dTickets', x.w, x.g);
     case 'chargeAmt': return msg('dPick', T('충전 금액'), won(x.w), won(x.g));
+    case 'trainFirst': return msg('dTrainFirst');
+    case 'tday': return msg('dPick', T('출발 날짜'), dayText(x.w), dayText(x.g));
+    case 'thour': return msg('dPick', T('출발 시각'), hourText(x.w), hourText(x.g));
+    case 'tpeople': return msg('dPeople', msg('trainPeopleLine', ...x.w), msg('trainPeopleLine', ...x.g));
+    case 'forward': return msg('dForward');
     case 'orderType': return msg('dOrderType', T(x.w), T(x.g));
     case 'missing': return msg('dMissing', T(x.n));
     case 'choice': return msg('dChoice', T(x.n), T(x.l));
@@ -6983,6 +7539,334 @@ const SCREENS = {
     },
     help: () => '[data-action="restart"]',
   },
+
+  /* ---------- 기차표 발매기 ---------- */
+  trainStart: {
+    render: () => `
+      <div class="screen center" data-scroll="trainStart">
+        <div class="center-inner">
+          <h2 class="title">${T('원하시는 메뉴를<br>골라 주세요')}</h2>
+          <div class="hosp-menu">
+            ${TRAIN.menu.map(m => `
+              <button class="hosp-btn${m.id === 'buy' ? ' hint' : ''}" data-action="tmenu" data-arg="${m.id}">
+                <span class="hosp-emoji" aria-hidden="true">${m.emoji}</span>
+                <span class="hosp-text"><b>${E(m.label)}</b><span>${E(m.sub)}</span></span>
+              </button>`).join('')}
+          </div>
+          <p class="note">${E('연습용 화면이에요. 실제로 표가 팔리지 않아요.')}</p>
+          ${kioskLangBtn()}
+        </div>
+      </div>`,
+    guide: () => msg('tap', T('승차권 구입')),
+    help: () => '[data-action="tmenu"][data-arg="buy"]',
+  },
+
+  trainDest: {
+    render: () => `
+      <div class="screen">
+        <h2 class="title pad">${E('도착역을 골라 주세요')}</h2>
+        <p class="sub bus-sub">${esc(msg('trainFrom', T(TRAIN.here)))}</p>
+        <div class="scroll-body" data-scroll="trainDest">
+          <div class="choice-list">
+            ${TRAIN.dests.map(d => `
+              <button class="choice-card" data-action="train-dest" data-arg="${d.id}">
+                <span class="choice-emoji" aria-hidden="true">🚄</span>
+                <span class="choice-text"><b>${E(d.label)}</b><span class="keep">${esc(msg('trainDestSub', durationText(d.fast[0])))}</span></span>
+              </button>`).join('')}
+          </div>
+          <p class="note">${E('요금과 시간은 연습용 예시예요.')}</p>
+        </div>
+      </div>`,
+    guide: () => T('가실 곳을 골라 보세요'),
+    help: ex => `[data-action="train-dest"][data-arg="${ex.dest || TRAIN.dests[0].id}"]`,
+  },
+
+  trainDate: {
+    render: () => {
+      const d = findTDest(state.trainDest);
+      return `
+      <div class="screen">
+        <h2 class="title pad">${E('출발 날짜를 골라 주세요')}</h2>
+        <p class="sub bus-sub">${esc(msg('subRoute', T(TRAIN.here), T(d.label)))}</p>
+        <div class="scroll-body" data-scroll="trainDate">
+          <div class="date-grid">
+            ${Array.from({ length: TRAIN.days }, (_, i) => {
+              const dt = dayDate(i);
+              return `
+              <button class="date-btn${i < 2 ? ' wide' : ''}${state.trainDay === i ? ' on' : ''}" data-action="train-day" data-arg="${i}" aria-pressed="${state.trainDay === i}" aria-label="${esc(dayFull(i))}">
+                <span class="date-tag">${i < 2 ? E(i ? '내일' : '오늘') : esc(dt.toLocaleDateString(curLang().locale, { month: 'short' }))}</span>
+                <b>${dt.getDate()}</b>
+                <span>${esc(weekdayShort(dt))}</span>
+              </button>`;
+            }).join('')}
+          </div>
+          <p class="note">${E('며칠 뒤 표까지 미리 살 수 있는지는 열차마다 달라요. 연습에서는 일주일만 보여 줘요.')}</p>
+        </div>
+      </div>`;
+    },
+    guide: () => T('타는 날짜를 골라 보세요'),
+    help: ex => `[data-action="train-day"][data-arg="${ex.day != null ? ex.day : 0}"]`,
+  },
+
+  trainTime: {
+    render: () => {
+      const hours = state.trainDay === 0 ? ['now'] : [];
+      for (let h = TRAIN.hours[0]; h <= TRAIN.hours[1]; h++) hours.push(h);
+      return `
+      <div class="screen">
+        <h2 class="title pad">${E('몇 시 이후 열차를 볼까요?')}</h2>
+        <p class="sub bus-sub">${esc(dayFull(state.trainDay))}</p>
+        <div class="scroll-body" data-scroll="trainTime">
+          <div class="hour-grid">
+            ${hours.map(h => {
+              const past = hourPast(h);
+              return `<button class="hour-btn${h === 'now' ? ' wide' : ''}${past ? ' past' : ''}" data-action="train-hour" data-arg="${h}" aria-disabled="${past}">${h === 'now' ? E('지금 이후') : esc(msg('hourBtn', h))}</button>`;
+            }).join('')}
+          </div>
+          <p class="note">${E('고른 시각 뒤에 출발하는 열차를 보여 줘요.')}</p>
+        </div>
+      </div>`;
+    },
+    guide: () => T('출발 시각을 골라 보세요'),
+    help: ex => `[data-action="train-hour"][data-arg="${ex.hour != null ? ex.hour : 'now'}"]`,
+  },
+
+  trainPeople: {
+    render: () => {
+      const total = trainPeopleN();
+      const row = (key, label, sub, n) => `
+        <div class="qty-row people-row">
+          <span class="people-label"><b>${E(label)}</b><span class="keep">${E(sub)}</span></span>
+          <div class="qty" role="group" aria-label="${E(label)} ${E('인원')}">
+            <button class="qty-btn" data-action="train-dec" data-arg="${key}" aria-label="${E('하나 줄이기')}"${n <= 0 ? ' disabled' : ''}>−</button>
+            <span class="qty-num">${n}</span>
+            <button class="qty-btn" data-action="train-inc" data-arg="${key}" aria-label="${E('하나 늘리기')}"${total >= TRAIN.maxPeople ? ' disabled' : ''}>+</button>
+          </div>
+        </div>`;
+      return `
+      <div class="screen">
+        <h2 class="title pad">${E('인원을 골라 주세요')}</h2>
+        <div class="scroll-body" data-scroll="trainPeople">
+          ${row('adults', '어른', '만 13세 이상', state.adults)}
+          ${row('children', '어린이', '만 6~12세', state.children)}
+          ${row('seniors', '경로', '만 65세 이상', state.seniors)}
+          <p class="note">${E('어린이·경로 할인은 연습용 예시예요. 실제 할인은 열차와 요일에 따라 달라요.')}</p>
+          ${state.seniors ? `<p class="pair-warn">${E('경로 할인으로 사면 열차 안에서 신분증을 보여 달라고 할 수 있어요. 꼭 가지고 타세요.')}</p>` : ''}
+        </div>
+        ${footNext('다음', 'train-people-next', total > 0)}
+      </div>`;
+    },
+    guide: () => T(trainPeopleN() ? "인원을 확인하고 '다음'을 눌러 보세요" : '타는 사람 수를 골라 보세요'),
+    help: ex => {
+      const want = { adults: ex.adults != null ? ex.adults : Math.max(1, state.adults), children: ex.children || 0, seniors: ex.seniors || 0 };
+      for (const k of ['adults', 'children', 'seniors']) {
+        if (state[k] < want[k]) return `[data-action="train-inc"][data-arg="${k}"]`;
+        if (state[k] > want[k]) return `[data-action="train-dec"][data-arg="${k}"]`;
+      }
+      return '[data-action="train-people-next"]';
+    },
+  },
+
+  trainList: {
+    render: () => {
+      const d = findTDest(state.trainDest);
+      const need = Math.max(1, trainPeopleN());
+      const clsBtn = (t, cls) => {
+        if (t.left[cls] == null) return `<span class="cls-none">${E(labelOf(TRAIN.classes, cls))} —</span>`;
+        const ok = trainFits(t, cls, need);
+        const state2 = t.left[cls] === 0 ? '매진' : '자리 부족';
+        return `<button class="cls-btn${ok ? '' : ' sold'}" data-action="train-pick" data-arg="${t.i}:${cls}"
+          aria-label="${esc(`${T(labelOf(TRAIN.types, t.type))} ${t.no}, ${t.depTime}, ${T(labelOf(TRAIN.classes, cls))}, ${ok ? won(t.fare[cls]) : T(state2)}`)}">
+          <span>${E(labelOf(TRAIN.classes, cls))}</span><b>${ok ? won(t.fare[cls]) : E(state2)}</b></button>`;
+      };
+      return `
+      <div class="screen">
+        <h2 class="title pad">${E('열차를 골라 주세요')}</h2>
+        <p class="sub bus-sub">${esc(msg('subRoute', T(TRAIN.here), T(d.label)))} · ${esc(msg('trainWhen', dayText(state.trainDay), state.trainHour === 'now' ? '' : hourText(state.trainHour)))}</p>
+        <div class="scroll-body" data-scroll="trainList">
+          ${trainList().map(t => `
+            <div class="train-card">
+              <div class="train-head"><span class="train-type ${t.type}">${E(labelOf(TRAIN.types, t.type))}</span><b>${t.no}</b><span class="train-dur">${esc(durationText(t.min))}</span></div>
+              <div class="train-time"><span class="time-big">${t.depTime}</span><span aria-hidden="true">→</span><span class="time-big">${t.arrTime}</span></div>
+              <div class="train-classes">${clsBtn(t, 'std')}${clsBtn(t, 'first')}</div>
+            </div>`).join('')}
+          <p class="note">${E('일반열차는 느리지만 요금이 싸요. 특실은 자리가 넓고 요금이 비싸요.')}</p>
+        </div>
+      </div>`;
+    },
+    guide: () => T('열차와 좌석 등급을 골라 보세요'),
+    help: ex => {
+      if ((ex.dest && state.trainDest !== ex.dest) || (ex.day != null && state.trainDay !== ex.day)
+        || (ex.hour != null && state.trainHour !== ex.hour)) return '.kiosk-nav [data-action="back"]';
+      const i = firstTrain({ ...ex, adults: state.adults, children: state.children, seniors: state.seniors });
+      return `[data-action="train-pick"][data-arg="${i}:${ex.cls || 'std'}"]`;
+    },
+  },
+
+  trainSeatWay: {
+    render: () => `
+      <div class="screen center" data-scroll="trainSeatWay">
+        <div class="center-inner">
+          <h2 class="title">${E('좌석을 어떻게 정할까요?')}</h2>
+          <div class="hosp-menu">
+            <button class="hosp-btn" data-action="train-way" data-arg="auto">
+              <span class="hosp-emoji" aria-hidden="true">✨</span>
+              <span class="hosp-text"><b>${E('좌석 자동 배정')}</b><span>${E('빈자리를 기계가 골라 줘요')}</span></span>
+            </button>
+            <button class="hosp-btn" data-action="train-way" data-arg="pick">
+              <span class="hosp-emoji" aria-hidden="true">💺</span>
+              <span class="hosp-text"><b>${E('좌석 직접 선택')}</b><span>${E('창측·순방향 같은 자리를 골라요')}</span></span>
+            </button>
+          </div>
+        </div>
+      </div>`,
+    guide: () => T('좌석을 정하는 방법을 골라 보세요'),
+    help: ex => `[data-action="train-way"][data-arg="${ex.window || ex.forward ? 'pick' : 'auto'}"]`,
+  },
+
+  trainSeat: {
+    render: () => {
+      const cls = state.trainCls;
+      const lay = TRAIN.layout[cls];
+      const car = state.trainCar;
+      const need = trainPeopleN();
+      const half = lay.rows / 2;
+      const seatBtn = seat => {
+        const sel = pickedSeat(car, seat.id);
+        const status = sel ? 'sel' : seatTaken(car, seat.id) ? 'taken' : 'free';
+        const label = T({ sel: '고른 자리', taken: '팔린 자리', free: '빈자리' }[status]);
+        const win = isTrainWindow(seat.id);
+        const dir = T(isForward(cls, seat.id) ? '순방향' : '역방향');
+        return `<button class="seat ${status}" data-action="tseat" data-arg="${seat.id}" aria-pressed="${sel}"
+          aria-label="${esc(`${seat.id}, ${label}, ${T(win ? '창측' : '내측')}, ${dir}`)}">${seat.id}</button>`;
+      };
+      let cells = '';
+      for (let r = 1; r <= lay.rows; r++) {
+        if (r === 1) cells += `<p class="dir-row">${E('▼ 역방향 (뒤를 보고 앉아요)')}</p>`;
+        if (r === half + 1) cells += `<p class="dir-row">${E('▲ 순방향 (앞을 보고 앉아요)')}</p>`;
+        const row = trainSeats(cls).filter(x => x.row === r);
+        if (cls === 'std') cells += `${seatBtn(row[0])}${seatBtn(row[1])}<span class="aisle" aria-hidden="true"></span>${seatBtn(row[2])}${seatBtn(row[3])}`;
+        else cells += `${seatBtn(row[0])}<span class="aisle" aria-hidden="true"></span>${seatBtn(row[1])}${seatBtn(row[2])}`;
+      }
+      const cars = TRAIN.cars[cls];
+      return `
+      <div class="screen">
+        <h2 class="title pad">${esc(msg('trainSeatPick', state.tSeats.length, need))}</h2>
+        ${cars.length > 1 ? `<div class="tabs" aria-label="${E('호차')}">
+          ${cars.map(c => `<button class="tab" aria-pressed="${c === car}" data-action="train-car" data-arg="${c}">${esc(msg('carNo', c))}</button>`).join('')}
+        </div>` : ''}
+        <div class="scroll-body" data-scroll="trainSeat-${car}">
+          <div class="bus-body">
+            <p class="bus-front">${E('앞 · 진행 방향')} ⬆</p>
+            <div class="seatmap train ${cls}">${cells}</div>
+          </div>
+          <div class="seat-legend">
+            <span><i class="seat-dot free"></i>${E('빈자리')}</span>
+            <span><i class="seat-dot sel"></i>${E('고른 자리')}</span>
+            <span><i class="seat-dot taken"></i>${E('팔린 자리')}</span>
+          </div>
+          <p class="note">${E('A와 D는 창측(창가), B와 C는 내측(통로 쪽) 자리예요')}</p>
+        </div>
+        ${footNext('다음', 'train-seat-next', state.tSeats.length === need)}
+      </div>`;
+    },
+    guide: () => {
+      const more = trainPeopleN() - state.tSeats.length;
+      return more > 0 ? msg('seatMore', more) : T("다 고르셨으면 '다음'을 눌러 보세요");
+    },
+    help: ex => {
+      const cls = state.trainCls;
+      const good = (car, id) => (!ex.window || isTrainWindow(id)) && (!ex.forward || isForward(cls, id));
+      const bad = state.tSeats.find(x => !good(x.car, x.id));
+      if (bad) return bad.car === state.trainCar ? `[data-action="tseat"][data-arg="${bad.id}"]` : `[data-action="train-car"][data-arg="${bad.car}"]`;
+      if (trainPeopleN() - state.tSeats.length <= 0) return '[data-action="train-seat-next"]';
+      const free = car => trainSeats(cls).find(x => good(car, x.id) && !seatTaken(car, x.id) && !pickedSeat(car, x.id));
+      const here = free(state.trainCar);
+      if (here) return `[data-action="tseat"][data-arg="${here.id}"]`;
+      const other = TRAIN.cars[cls].find(c => free(c));
+      return other ? `[data-action="train-car"][data-arg="${other}"]` : '.kiosk-nav [data-action="back"]';
+    },
+  },
+
+  trainConfirm: {
+    render: () => {
+      const d = findTDest(state.trainDest);
+      const t = curTrain();
+      const rows = [
+        ['열차', `${T(labelOf(TRAIN.types, t.type))} ${t.no}`],
+        ['구간', msg('subRoute', T(TRAIN.here), T(d.label))],
+        ['날짜', fmtDay(t.dep)],
+        ['출발 시각', t.depTime],
+        ['도착 시각', t.arrTime],
+        ['좌석 등급', T(labelOf(TRAIN.classes, state.trainCls))],
+        ['인원', msg('trainPeopleLine', state.adults, state.children, state.seniors)],
+        ['좌석', carSeatsText(state.tSeats)],
+      ];
+      return `
+      <div class="screen">
+        <h2 class="title pad">${E('승차권 내용을 확인해 주세요')}</h2>
+        <div class="scroll-body" data-scroll="trainConfirm">
+          <div class="info-table">
+            ${rows.map(([k, val]) => `<div class="info-row"><span>${E(k)}</span><b>${esc(val)}</b></div>`).join('')}
+            <div class="info-row total"><span>${E('결제 금액')}</span><b>${won(trainTotal())}</b></div>
+          </div>
+          <p class="pair-warn">${E('외국에서 만든 카드는 받지 않는 발매기도 있어요. 그럴 때는 외국 카드를 받는 발매기나 매표 창구를 이용하세요.')}</p>
+          <p class="note">${E("내용이 다르면 아래 '이전'을 눌러 다시 고르세요.")}</p>
+        </div>
+        ${footNext('결제하기', 'train-confirm')}
+      </div>`;
+    },
+    guide: () => T("확인하고 '결제하기'를 눌러 보세요"),
+    help: ex => {
+      const t = curTrain();
+      const w = [ex.adults || 0, ex.children || 0, ex.seniors || 0].join();
+      const off = (ex.dest && state.trainDest !== ex.dest) || (ex.cls && state.trainCls !== ex.cls) || (ex.type && t.type !== ex.type)
+        || (ex.day != null && state.trainDay !== ex.day) || (ex.hour != null && state.trainHour !== ex.hour)
+        || (ex.adults != null && w !== [state.adults, state.children, state.seniors].join())
+        || (ex.time === 'first' && state.trainIdx !== firstTrain(ex))
+        || (ex.window && !state.tSeats.every(x => isTrainWindow(x.id)))
+        || (ex.forward && !state.tSeats.every(x => isForward(state.trainCls, x.id)));
+      return off ? '.kiosk-nav [data-action="back"]' : '[data-action="train-confirm"]';
+    },
+  },
+
+  trainTicket: {
+    render: () => {
+      const d = findTDest(state.trainDest);
+      const t = curTrain();
+      const firstCar = (state.tSeats[0] || {}).car;
+      return `
+      <div class="screen">
+        <div class="screen center" data-scroll="trainTicket">
+          <div class="center-inner">
+            <p class="done-msg"><span class="done-emoji" aria-hidden="true">🎉</span> ${E('승차권이 나왔어요')}</p>
+            ${printerHTML(`
+              <p class="r-store">${E('승차권')}</p>
+              <p class="r-line">${E(TRAIN.name)} · ${E('연습용')}</p>
+              <div class="r-sep"></div>
+              <p class="r-line">${esc(msg('subRoute', T(TRAIN.here), T(d.label)))}</p>
+              <p class="r-big">${t.depTime}</p>
+              <div class="r-sep"></div>
+              <div class="r-row"><span>${E('날짜')}</span><b>${fmtDot(t.dep)}</b></div>
+              <div class="r-row"><span>${E('도착 시각')}</span><b>${t.arrTime}</b></div>
+              <div class="r-row"><span>${E('열차')}</span><b>${esc(`${T(labelOf(TRAIN.types, t.type))} ${t.no}`)}</b></div>
+              <div class="r-row"><span>${E('좌석')}</span><b>${esc(carSeatsText(state.tSeats))}</b></div>
+              <div class="r-row"><span>${E('좌석 등급')}</span><b>${E(labelOf(TRAIN.classes, state.trainCls))}</b></div>
+              <div class="r-row"><span>${E('인원')}</span><b>${esc(msg('trainPeopleLine', state.adults, state.children, state.seniors))}</b></div>
+              <div class="r-sep"></div>
+              <div class="r-row r-total"><span>${E('결제 금액')}</span><span>${won(trainTotal())}</span></div>
+              <p class="r-note">${E('타는 곳 번호는 역 전광판에서 확인해요')}</p>`)}
+            <p class="car-sign">🚃 ${esc(msg('carNo', firstCar))}</p>
+            <p class="praise">${E('잘하셨어요! 👏')}</p>
+            ${stepsHTML(TRAIN.ticketSteps)}
+          </div>
+        </div>
+        ${restartFoot()}
+      </div>`;
+    },
+    guide: () => msg('trainGo'),
+    help: () => '[data-action="restart"]',
+  },
 };
 
 /* 지하철 개찰구: dir 'in' 들어갈 때 / 'out' 나갈 때 */
@@ -7524,6 +8408,8 @@ function renderChrome() {
     if (type && state.screen !== 'start') badgeText = T(type.badge);
   } else if (P().bus) {
     if (state.screen !== 'busStart') badgeText = T(labelOf(BUS.menu, state.busMode || 'buy'));
+  } else if (P().train) {
+    if (state.screen !== 'trainStart') badgeText = T('승차권 구입');
   } else if (P().subway) {
     // 위 칸이 좁아서 짧은 이름(badge)을 씀
     if (state.screen !== 'subStart') badgeText = T(SUBWAY.menu.find(m => m.id === (state.subMode || 'single')).badge);
@@ -7640,6 +8526,16 @@ function freshState() {
     cashIn: 0,
     cashStep: 'ready',
     refundStep: 'ready',
+    trainBase: busBaseTime(),
+    trainDest: null,
+    trainDay: null,
+    trainHour: null,
+    trainIdx: null,
+    trainCls: null,
+    trainWay: null,
+    trainCar: null,
+    tSeats: [],
+    seniors: 0,
     busArea: BUS.areas[0].id,
     busDest: null,
     busSlot: null,
@@ -8135,6 +9031,76 @@ const actions = {
     render();
   },
   'sub-pass': () => goNext(),
+  tmenu: id => {
+    if (id === 'buy') { goNext(); return; }
+    toast(msg('wrongTask', T('승차권 구입')));
+  },
+  'train-dest': id => {
+    if (state.trainDest !== id) Object.assign(state, { trainIdx: null, trainCls: null, trainWay: null, tSeats: [] });
+    state.trainDest = id;
+    goNext();
+  },
+  'train-day': arg => {
+    const day = Number(arg);
+    if (state.trainDay !== day) Object.assign(state, { trainHour: null, trainIdx: null, trainCls: null, trainWay: null, tSeats: [] });
+    state.trainDay = day;
+    goNext();
+  },
+  'train-hour': arg => {
+    const hour = arg === 'now' ? 'now' : Number(arg);
+    if (hourPast(hour)) { toast(T('이미 지난 시각이에요. 다른 시각을 골라 주세요')); return; }
+    if (state.trainHour !== hour) Object.assign(state, { trainIdx: null, trainCls: null, trainWay: null, tSeats: [] });
+    state.trainHour = hour;
+    state.trainBase = trainBaseFor(state.trainDay, hour);
+    goNext();
+  },
+  'train-inc': key => {
+    if (trainPeopleN() >= TRAIN.maxPeople) return;
+    state[key] += 1;
+    state.tSeats = [];
+    render();
+  },
+  'train-dec': key => {
+    if (state[key] <= 0) return;
+    state[key] -= 1;
+    state.tSeats = [];
+    render();
+  },
+  'train-people-next': () => {
+    if (!trainPeopleN()) { toast(T('타는 사람 수를 골라 보세요')); return; }
+    goNext();
+  },
+  'train-pick': arg => {
+    const [i, cls] = arg.split(':');
+    const t = trainList()[Number(i)];
+    if (!trainFits(t, cls)) {
+      toast(T(t.left[cls] === 0 ? '매진된 열차예요. 다른 열차를 골라 주세요' : '남은 자리가 모자라요. 다른 열차를 골라 주세요'));
+      return;
+    }
+    if (state.trainIdx !== t.i || state.trainCls !== cls) state.tSeats = [];
+    Object.assign(state, { trainIdx: t.i, trainCls: cls, trainCar: TRAIN.cars[cls][0] });
+    goNext();
+  },
+  'train-way': way => {
+    state.trainWay = way;
+    state.tSeats = way === 'auto' ? autoSeats() : [];
+    goNext();
+  },
+  'train-car': car => { state.trainCar = car; render(); },
+  tseat: id => {
+    const car = state.trainCar;
+    if (pickedSeat(car, id)) { state.tSeats = state.tSeats.filter(x => !(x.car === car && x.id === id)); render(); return; }
+    if (seatTaken(car, id)) { toast(T('이미 팔린 자리예요')); return; }
+    if (state.tSeats.length >= trainPeopleN()) { toast(msg('seatFull', trainPeopleN())); return; }
+    state.tSeats = [...state.tSeats, { car, id }];
+    render();
+  },
+  'train-seat-next': () => {
+    const more = trainPeopleN() - state.tSeats.length;
+    if (more > 0) { toast(msg('seatMore', more)); return; }
+    goNext();
+  },
+  'train-confirm': () => goNext(),
   'sub-card': () => {
     if (state.cardStep !== 'place') return;
     state.cardStep = 'reading';
@@ -8316,7 +9282,7 @@ function browserLang() {
   return 'ko';
 }
 
-const SITE_DESC = '카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.';
+const SITE_DESC = '카페·햄버거 주문, 병원 접수·수납·증명서 발급, 공항버스 승차권, 지하철 교통카드, 기차표 키오스크를 실제와 비슷한 화면으로 미리 연습해 보세요. 한국어, English, 日本語, 简体中文, 繁體中文을 지원하고, 회원가입 없이 바로 시작해요. 실제로 결제되지 않아요.';
 function applyStatic() {
   document.documentElement.lang = lang;
   document.title = T('한국 키오스크 연습');
